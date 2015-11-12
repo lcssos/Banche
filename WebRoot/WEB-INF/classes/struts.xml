@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.1//EN"
+        "http://struts.apache.org/dtds/struts-2.3.dtd">
+
+<struts>
+    <!-- 上传的全部图片的最大限制-->
+    <constant name="struts.multipart.maxSize" value="1024102400"/>
+
+    <package name="/" extends="struts-default">
+        <action name="denglu" class="denglu">
+            <result name="success">/index.jsp</result>
+            <result name="faild">/login.jsp</result>
+        </action>
+        <action name="addbanche" class="addbanche">
+            <result name="success">/index.jsp</result>
+        </action>
+        <action name="addshebei" class="addshebei">
+            <result name="success">/addshebei.jsp</result>
+        </action>
+        <action name="addcheliang" class="addcheliang">
+            <result name="success">/addcheliang.jsp</result>
+            <result name="faild">/addcheliang.jsp</result>
+        </action>
+        <action name="addcompany" class="addcompany">
+            <result name="success">/addgongsi.jsp</result>
+        </action>
+        <action name="changshebei" class="changshebei">
+            <result name="success">/changshebei.jsp</result>
+            <result name="faild">/changshebei.jsp</result>
+        </action>
+        <action name="changzhandian" class="changzhandian">
+            <result name="success">/listzhandian.jsp</result>
+            <result name="xiugai">/xiugaizhandian.jsp</result>
+            <result name="update">/changzhandian.jsp</result>
+            <result name="delete">/changzhandian.jsp</result>
+            <result name="faild">/changzhandian.jsp</result>
+        </action>
+        <action name="changbanche" class="changbanche">
+            <result name="searchzhandian">/changzhandian.jsp</result>
+            <result name="searchbanche">/changbanche.jsp</result>
+            <result name="xiugai">/listbanche.jsp</result>
+            <result name="wxsearchbanche">/weixin/xianlulist.jsp</result>
+        </action>
+        <action name="changcheliang" class="changcheliang">
+            <result name="success">/changcheliang.jsp</result>
+            <result name="xiugai">/xiugaicheliang.jsp</result>
+            <result name="faild">/changcheliang.jsp</result>
+        </action>
+        <action name="changcompany" class="changcompany">
+            <result name="success">/changcompany.jsp</result>
+            <result name="xiugai">/listcompany.jsp</result>
+            <result name="faild">/index.jsp</result>
+        </action>
+        <action name="uploadimage" class="uploadimage">
+
+            <!-- 限制图片的格式和图片的大小 -->
+            <interceptor-ref name="fileUpload">
+                <param name="allowedTypes">
+                    image/bmp,image/png,image/gif,image/jpeg,image/jpg
+                </param>
+                <param name="maximumSize">102400</param>
+            </interceptor-ref>
+
+            <!-- 默认的拦截器，必须要写 -->
+            <interceptor-ref name="defaultStack"/>
+
+            <result name="success">/login.jsp</result>
+            <result name="input">/login.jsp</result>
+        </action>
+        <action name="gpsservice" class="gpsservice">
+        </action>
+        <action name="gpsservicenew" class="gpsservicenew">
+        </action>
+        <action name="fujinxianlu" class="fujinxianlu">
+            <result name="success">/weixin/zhanshi2.jsp</result>
+        </action>
+        <action name="daozhanshijian" class="daozhanshijian">
+        </action>
+        <action name="wxzhuce" class="wxzhuce">
+            <result name="success">/weixin/zhuce.jsp</result>
+        </action>
+        <action name="wxguanzhu" class="wxguanzhu">
+        </action>
+        <action name="xingcheguiji" class="xingcheguiji">
+        </action>
+        <action name="wxfujinzhandian" class="wxfujinzhandian">
+        </action>
+        <action name="wxzhandian" class="wxzhandian">
+            <result name="success">/weixin/bancheshow.jsp</result>
+            <result name="wxshijing">/weixin/zhandianshijing.jsp</result>
+        </action>
+        <action name="wxdingwei" class="wxdingwei">
+        </action>
+        <action name="wxgotozhandian" class="wxgotozhandian">
+        </action>
+    </package>
+</struts>
