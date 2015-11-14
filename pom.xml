@@ -10,6 +10,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
     <dependencies>
+
         <dependency>
             <groupId>javax</groupId>
             <artifactId>javaee-api</artifactId>
@@ -21,16 +22,48 @@
         <!--<artifactId>javax.servlet.jsp.jstl</artifactId>-->
         <!--<version>1.2.2</version>-->
         <!--</dependency>-->
+
+        <!--持久化-->
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>5.1.32</version>
+        </dependency>
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-core</artifactId>
             <version>4.3.6.Final</version>
         </dependency>
         <dependency>
+            <groupId>commons-dbcp</groupId>
+            <artifactId>commons-dbcp</artifactId>
+            <version>1.4</version>
+        </dependency>
+
+        <!--控制层-->
+        <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-context</artifactId>
             <version>4.1.0.RELEASE</version>
+            <exclusions>
+                <exclusion>
+                    <artifactId>commons-logging</artifactId>
+                    <groupId>commons-logging</groupId>
+                </exclusion>
+            </exclusions>
         </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-orm</artifactId>
+            <version>4.1.0.RELEASE</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-web</artifactId>
+            <version>4.1.0.RELEASE</version>
+        </dependency>
+
+        <!--展现层-->
         <dependency>
             <groupId>org.apache.struts</groupId>
             <artifactId>struts2-core</artifactId>
@@ -43,41 +76,34 @@
             </exclusions>
         </dependency>
         <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-orm</artifactId>
-            <version>4.1.0.RELEASE</version>
+            <groupId>org.apache.struts</groupId>
+            <artifactId>struts2-spring-plugin</artifactId>
+            <version>2.3.16.3</version>
         </dependency>
+
+
+        <!--工具-->
         <dependency>
             <groupId>net.sf.json-lib</groupId>
             <artifactId>json-lib</artifactId>
             <version>2.4</version>
             <classifier>jdk15</classifier>
+            <exclusions>
+                <exclusion>
+                    <artifactId>commons-logging</artifactId>
+                    <groupId>commons-logging</groupId>
+                </exclusion>
+            </exclusions>
         </dependency>
-        <dependency>
-            <groupId>commons-dbcp</groupId>
-            <artifactId>commons-dbcp</artifactId>
-            <version>1.4</version>
-        </dependency>
+
         <dependency>
             <groupId>org.aspectj</groupId>
             <artifactId>aspectjtools</artifactId>
             <version>1.8.2</version>
         </dependency>
-        <dependency>
-            <groupId>mysql</groupId>
-            <artifactId>mysql-connector-java</artifactId>
-            <version>5.1.32</version>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.struts</groupId>
-            <artifactId>struts2-spring-plugin</artifactId>
-            <version>2.3.16.3</version>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-web</artifactId>
-            <version>4.1.0.RELEASE</version>
-        </dependency>
+
+
+
         <dependency>
             <groupId>net.coobird</groupId>
             <artifactId>thumbnailator</artifactId>
@@ -87,11 +113,23 @@
             <groupId>org.apache.httpcomponents</groupId>
             <artifactId>httpclient</artifactId>
             <version>4.4</version>
+            <exclusions>
+                <exclusion>
+                    <artifactId>commons-logging</artifactId>
+                    <groupId>commons-logging</groupId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>org.apache.camel</groupId>
             <artifactId>camel-core</artifactId>
             <version>2.15.2</version>
+            <exclusions>
+                <exclusion>
+                    <artifactId>slf4j-api</artifactId>
+                    <groupId>org.slf4j</groupId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>org.apache.camel</groupId>
@@ -108,7 +146,17 @@
         <!--<artifactId>json-lib</artifactId>-->
         <!--<version>2.4</version>-->
         <!--</dependency>-->
+
+        <!-- 日志系统 -->
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-log4j12</artifactId>
+            <version>1.7.6</version>
+        </dependency>
     </dependencies>
+
+
+
     <build>
         <sourceDirectory>src</sourceDirectory>
         <resources>
@@ -125,8 +173,8 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>2.3.2</version>
                 <configuration>
-                    <source>1.7</source>
-                    <target>1.7</target>
+                    <source>1.8</source>
+                    <target>1.8</target>
                 </configuration>
             </plugin>
             <plugin>
@@ -138,6 +186,31 @@
                     <warName>Banche</warName>
                 </configuration>
             </plugin>
+
+            <!-- 跳过单元测试 -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <configuration>
+                    <skip>true</skip>
+                </configuration>
+            </plugin>
+
+            <!-- tomcat插件 -->
+            <plugin>
+                <groupId>org.apache.tomcat.maven</groupId>
+                <artifactId>tomcat7-maven-plugin</artifactId>
+                <version>2.2</version>
+                <configuration>
+                    <port>8000</port>
+                    <path>/Banche</path>
+                    <uriEncoding>UTF-8</uriEncoding>
+                    <finalName>banche</finalName>
+                    <server>tomcat7</server>
+                    <warSourceDirectory>WebRoot</warSourceDirectory>
+                </configuration>
+            </plugin>
+
         </plugins>
     </build>
 </project>
