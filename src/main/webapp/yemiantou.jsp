@@ -17,9 +17,10 @@
                 <s:if test="#attr.myparam.equals('kaishi')">
                     <li class="active"><a href="index.jsp" class="icon-home"> 开始</a>
                         <ul>
-                            <li class="active"><a href="addbanche.jsp">班车管理</a></li>
-                            <li><a href="addcheliang.jsp">车辆管理</a></li>
+                            <li class="active"><a href="addbanche.jsp">线路管理</a></li>
                             <li><a href="changzhandian.jsp">站点管理</a></li>
+                            <li><a href="addcheliang.jsp">车辆管理</a></li>
+                            <li><a href="addcheci.jsp">车次管理</a></li>
                             <li><a href="addshebei.jsp">设备管理</a></li>
                             <li><a href="addgongsi.jsp">公司管理</a></li>
                         </ul>
@@ -29,23 +30,23 @@
                 <li><a href="index.jsp" class="icon-home"> 开始</a>
                     </s:else>
                     <s:if test="#attr.myparam.equals('addbanche')">
-                <li class="active"><a href="addbanche.jsp" class="icon-cog"> 班车管理</a>
+                <li class="active"><a href="addbanche.jsp" class="icon-cog"> 线路管理</a>
                     <ul>
-                        <li class="active"><a href="addbanche.jsp">新增班车</a></li>
-                        <li><a href="changbanche.jsp">修改班车</a></li>
+                        <li class="active"><a href="addbanche.jsp">新增线路</a></li>
+                        <li><a href="changbanche.jsp">修改线路</a></li>
                     </ul>
                 </li>
                 </s:if>
                 <s:elseif test="#attr.myparam.equals('changbanche')">
-                    <li class="active"><a href="addbanche.jsp" class="icon-cog"> 班车管理</a>
+                    <li class="active"><a href="addbanche.jsp" class="icon-cog"> 线路管理</a>
                         <ul>
-                            <li><a href="addbanche.jsp">新增班车</a></li>
-                            <li class="active"><a href="changbanche.jsp">修改班车</a></li>
+                            <li><a href="addbanche.jsp">新增线路</a></li>
+                            <li class="active"><a href="changbanche.jsp">修改线路</a></li>
                         </ul>
                     </li>
                 </s:elseif>
                 <s:else>
-                    <li><a href="addbanche.jsp" class="icon-cog"> 班车管理</a>
+                    <li><a href="addbanche.jsp" class="icon-cog"> 线路管理</a>
                     </li>
                 </s:else>
 
@@ -70,6 +71,7 @@
                     </li>
                 </s:else>
 
+
                 <s:if test="#attr.myparam.equals('zhandian')">
                     <li class="active"><a href="changzhandian.jsp" class="icon-shopping-cart"> 站点管理</a>
                         <ul>
@@ -82,6 +84,29 @@
 
                     </li>
                 </s:else>
+
+
+                <s:if test="#attr.myparam.equals('addcheci')">
+                    <li class="active"><a href="addcheci.jsp" class="icon-file-text"> 车次管理</a>
+                        <%--<ul>--%>
+                            <%--<li class="active"><a href="addcheci.jsp">新增车次</a></li>--%>
+                            <%--<li><a href="changcheci.jsp">修改车次</a></li>--%>
+                        <%--</ul>--%>
+                    </li>
+                </s:if>
+                <s:elseif test="#attr.myparam.equals('changcheci')">
+                    <li class="active"><a href="addcheci.jsp" class="icon-file-text"> 车次管理</a>
+                        <%--<ul>--%>
+                            <%--<li><a href="addcheci.jsp">新增车次</a></li>--%>
+                            <%--<li class="active"><a href="changcheci.jsp">修改车次</a></li>--%>
+                        <%--</ul>--%>
+                    </li>
+                </s:elseif>
+                <s:else>
+                    <li><a href="addcheci.jsp" class="icon-file-text"> 车次管理</a>
+                    </li>
+                </s:else>
+
 
                 <s:if test="#attr.myparam.equals('addshebei')">
                     <li class="active"><a href="addshebei.jsp" class="icon-shopping-cart"> 设备管理 </a>

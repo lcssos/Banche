@@ -25,9 +25,9 @@
 </s:include>
 <form action="addbanche.action" method="post" id="addbanche" name="addbanche">
     <div class="admin">
-        班车名称：<input type="text"  class="easyui-textbox" id="addbanchename" name="addbanchename"/>
+        线路名称：<input type="text"  class="easyui-textbox" id="addbanchename" name="addbanchename"/>
         <br/>
-        班车简介：<input type="text"  class="easyui-textbox" id="addbanchejianjie" name="addbanchejianjie"/>
+        新路简介：<input type="text"  class="easyui-textbox" id="addbanchejianjie" name="addbanchejianjie"/>
         <br/>
         间隔时间：<input type="text"  class="easyui-textbox" id="addbanchejiange" name="addbanchejiange"/>
         <br/>
@@ -98,12 +98,12 @@
         input4.placeholder = "请填写站点描述";
         document.getElementById("showText").appendChild(input4);
 
-        document.getElementById("showText").appendChild(document.createTextNode("预计到站："));
-        var input5 = document.createElement("input");
-        input5.type = "text";
-        input5.name = "daozhan";
-        input5.placeholder = "请填写预计到站时间，以逗号分隔";
-        document.getElementById("showText").appendChild(input5);
+//        document.getElementById("showText").appendChild(document.createTextNode("预计到站："));
+//        var input5 = document.createElement("input");
+//        input5.type = "text";
+//        input5.name = "daozhan";
+//        input5.placeholder = "请填写预计到站时间，以逗号分隔";
+//        document.getElementById("showText").appendChild(input5);
 
         document.getElementById("showText").appendChild(document.createTextNode("是否隐藏："));
         var checkbox = document.createElement("input");

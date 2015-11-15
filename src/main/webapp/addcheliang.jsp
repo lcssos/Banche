@@ -36,8 +36,8 @@
             <br/>
             车上设备：<input type="text" id="addclshebeiid" name="addclshebeiid"/>
             <br/>
-            所属线路：<input type="text" id="addclbancheid" name="addclbancheid"/>
-            <br/>
+            <%--所属线路：<input type="text" id="addclbancheid" name="addclbancheid"/>--%>
+            <%--<br/>--%>
             <input type="submit" value="保存"/>
         </form>
     </s:if>

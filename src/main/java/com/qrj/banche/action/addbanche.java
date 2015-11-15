@@ -78,7 +78,7 @@ public class addbanche extends ActionSupport implements ModelDriven<Object> {
                     zhandian.setZhandianDizhi(dizhi[i]);
                     zhandian.setZhandianMiaoshu(miaoshu[i]);
                     zhandian.setZhandianStatus(1);
-                    zhandian.setZhandianYuji(daozhan[i]);
+//                    zhandian.setZhandianYuji(daozhan[i]);
                     zhandian.setBancheId(banches.get(banches.size() - 1).getBancheId());
                     zhandianDao.save(zhandian);
                 }

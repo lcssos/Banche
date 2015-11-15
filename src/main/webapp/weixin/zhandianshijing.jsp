@@ -42,7 +42,7 @@
 
 <div class="head_top">
     <div class="head_left">
-        <img src="../images/fanhui.png"  onclick="window.history.back();"/>
+        <img src="../images/fanhui.png" onclick="window.history.back();"/>
     </div>
     <div class="head_right">
             <font color="#FFFFFF">实景地图</font>
