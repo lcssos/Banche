@@ -2,12 +2,10 @@ package com.qrj.banche.action;
 
 import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.ModelDriven;
-import com.qrj.banche.dao.ShebeiDao;
-import com.qrj.banche.dao.ShebeishuxingDao;
-import com.qrj.banche.dao.ZhandianDao;
-import com.qrj.banche.model.Shebei;
-import com.qrj.banche.model.Shebeishuxing;
-import com.qrj.banche.model.Zhandian;
+import com.qrj.banche.entity.Shebei;
+import com.qrj.banche.entity.Shebeishuxing;
+import com.qrj.banche.repository.ShebeiMapper;
+import com.qrj.banche.repository.ShebeishuxingMapper;
 import com.qrj.banche.vo.SearchInfo;
 import org.apache.struts2.ServletActionContext;
 import org.springframework.stereotype.Component;
@@ -20,23 +18,23 @@ public class addshebei extends ActionSupport implements ModelDriven<Object> {
     private SearchInfo searchInfo = new SearchInfo();
 
     @Resource
-    private ShebeiDao shebeiDao;
+    private ShebeiMapper shebeiMapper;
 
     @Resource
-    private ShebeishuxingDao shebeishuxingDao;
+    private ShebeishuxingMapper shebeishuxingMapper;
 
     @Override
     public String execute() throws Exception {
         HttpServletRequest request = ServletActionContext.getRequest();
         Shebei shebei = new Shebei();
         shebei.setShebeiId(searchInfo.getAddsheibeiid());
-        shebeiDao.save(shebei);
+        shebeiMapper.insert(shebei);
         //1是启用，0是停用
         Shebeishuxing shebeishuxing = new Shebeishuxing();
         shebeishuxing.setShebeishuxingShebeiid(searchInfo.getAddsheibeiid());
         shebeishuxing.setShebeishuxingShebeistatus(searchInfo.getAddshebeizhuangtai());
         shebeishuxing.setShebeishuxingShoujihao(searchInfo.getAddshebeishoujihao());
-        shebeishuxingDao.save(shebeishuxing);
+        shebeishuxingMapper.insert(shebeishuxing);
         return "success";
     }
 

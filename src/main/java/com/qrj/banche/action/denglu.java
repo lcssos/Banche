@@ -2,12 +2,10 @@ package com.qrj.banche.action;
 
 import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.ModelDriven;
-import com.qrj.banche.dao.CompanyDao;
-import com.qrj.banche.dao.UserDao;
-import com.qrj.banche.dao.ZhandianDao;
-import com.qrj.banche.model.Company;
-import com.qrj.banche.model.User;
-import com.qrj.banche.model.Zhandian;
+import com.qrj.banche.entity.Company;
+import com.qrj.banche.entity.User;
+import com.qrj.banche.repository.CompanyMapper;
+import com.qrj.banche.repository.UserMapper;
 import com.qrj.banche.vo.SearchInfo;
 import org.apache.struts2.ServletActionContext;
 import org.springframework.stereotype.Component;
@@ -21,10 +19,10 @@ public class denglu extends ActionSupport implements ModelDriven<Object> {
     private SearchInfo searchInfo = new SearchInfo();
 
     @Resource
-    private UserDao userDao;
+    private UserMapper userMapper;
 
     @Resource
-    private CompanyDao companyDao;
+    private CompanyMapper companyMapper;
 
     private int a = 1;
 
@@ -37,14 +35,14 @@ public class denglu extends ActionSupport implements ModelDriven<Object> {
             searchInfo.setTuichu(0);
             return "faild";
         }
-        List<User> users = userDao.findByUsernameAndPasswork(searchInfo.getUsername(), searchInfo.getPassword());
+        List<User> users = userMapper.findByUsernameAndPasswork(searchInfo.getUsername(), searchInfo.getPassword());
         if (users.size() > 0) {
             request.getSession().setAttribute("username", users.get(0).getUserName());
             request.getSession().setAttribute("userid", users.get(0).getUserId());
             request.getSession().setAttribute("comid", 0);
             return "success";
         } else {
-            List<Company> companies = companyDao.findByNameAndPassword(searchInfo.getUsername(), searchInfo.getPassword());
+            List<Company> companies = companyMapper.findByNameAndPassword(searchInfo.getUsername(), searchInfo.getPassword());
             if (companies.size() > 0) {
                 request.getSession().setAttribute("username", companies.get(0).getCompanyName());
                 request.getSession().setAttribute("userid", companies.get(0).getCompanyId());

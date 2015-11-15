@@ -2,14 +2,15 @@ package com.qrj.banche.action;
 
 import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.ModelDriven;
-import com.qrj.banche.dao.BancheDao;
-import com.qrj.banche.dao.WxaccesstokenDao;
-import com.qrj.banche.dao.ZhandianDao;
-import com.qrj.banche.model.Banche;
-import com.qrj.banche.model.Wxaccesstoken;
-import com.qrj.banche.model.Zhandian;
+import com.qrj.banche.entity.Banche;
+import com.qrj.banche.entity.Wxaccesstoken;
+import com.qrj.banche.entity.Zhandian;
+import com.qrj.banche.repository.BancheMapper;
+import com.qrj.banche.repository.WxaccesstokenMapper;
+import com.qrj.banche.repository.ZhandianMapper;
 import com.qrj.banche.vo.SearchInfo;
 import com.qrj.weixin.servlet.sign;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.struts2.ServletActionContext;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
@@ -29,13 +30,13 @@ public class changbanche extends ActionSupport implements ModelDriven<Object> {
     private SearchInfo searchInfo = new SearchInfo();
 
     @Resource
-    private BancheDao bancheDao;
+    private BancheMapper bancheMapper;
 
     @Resource
-    private ZhandianDao zhandianDao;
+    private ZhandianMapper zhandianMapper;
 
     @Resource
-    private WxaccesstokenDao wxaccesstokenDao;
+    private WxaccesstokenMapper wxaccesstokenMapper;
 
     private List<Banche> banches;
 
@@ -50,9 +51,9 @@ public class changbanche extends ActionSupport implements ModelDriven<Object> {
         HttpServletRequest request = ServletActionContext.getRequest();
         if (searchInfo.getSearchform() == 2) {
             if ((String)request.getSession().getAttribute("wxcomid") == null) {
-                banches = bancheDao.findBycomdetid(1);
+                banches = bancheMapper.findBycomdetid(1);
             } else {
-            banches = bancheDao.findBycomdetid(Integer.valueOf((String)request.getSession().getAttribute("wxcomid")).intValue());
+            banches = bancheMapper.findBycomdetid(Integer.valueOf((String)request.getSession().getAttribute("wxcomid")).intValue());
             }
 //            creatjsconfig();
             return "wxsearchbanche";
@@ -63,9 +64,10 @@ public class changbanche extends ActionSupport implements ModelDriven<Object> {
             //查询
             case 1:
                 if (comid == 0) {
-                    banches = bancheDao.findByBancheNameAndstatus(searchInfo.getSearchbanchename(), searchInfo.getSearchbanchezhuangtai());
+                    String bancheName = StringUtils.isBlank(searchInfo.getSearchbanchename()) ? null :("%"+searchInfo.getSearchbanchename()+"%");
+                    banches = bancheMapper.findByBancheNameAndstatus(bancheName, searchInfo.getSearchbanchezhuangtai());
                 } else {
-                    banches = bancheDao.findByBancheNameAndComidAndstatus(searchInfo.getSearchbanchename(), comid, searchInfo.getSearchbanchezhuangtai());
+                    banches = bancheMapper.findByBancheNameAndComidAndstatus(searchInfo.getSearchbanchename(), comid, searchInfo.getSearchbanchezhuangtai());
                 }
                 //来自修改班车还是修改站点的请求
                 if (searchInfo.getSearchform() == 1) {
@@ -76,7 +78,7 @@ public class changbanche extends ActionSupport implements ModelDriven<Object> {
                 }
                 //修改状态
             case 2:
-                banches = bancheDao.findByBancheId(searchInfo.getXiugaibancheid());
+                banches = bancheMapper.findByBancheId(searchInfo.getXiugaibancheid());
                 if (banches.size() > 0) {
                     Banche banche = banches.get(0);
                     if (banche.getComdetId() == comid || comid == 0) {
@@ -85,29 +87,29 @@ public class changbanche extends ActionSupport implements ModelDriven<Object> {
                         } else {
                             banche.setBancheStatus(1);
                         }
-                        bancheDao.update(banche);
+                        bancheMapper.updateByPrimaryKeySelective(banche);
                     }
                 }
                 banches = null;
                 return "searchbanche";
             //删除
             case 3:
-                banches = bancheDao.findByBancheId(searchInfo.getXiugaibancheid());
+                banches = bancheMapper.findByBancheId(searchInfo.getXiugaibancheid());
                 if (banches.size() > 0) {
                     Banche banche = banches.get(0);
                     if (banche.getComdetId() == comid || comid == 0) {
-                        List<Zhandian> zhandians = zhandianDao.findByBancheId(banche.getBancheId());
+                        List<Zhandian> zhandians = zhandianMapper.findByBancheId(banche.getBancheId());
                         for (Zhandian zhandian : zhandians) {
-                            zhandianDao.delete(zhandian);
+                            zhandianMapper.deleteByPrimaryKey(zhandian.getZhandianId());
                         }
-                        bancheDao.delete(banche);
+                        bancheMapper.deleteByPrimaryKey(banche.getBancheId());
                     }
                 }
                 banches = null;
                 return "searchbanche";
             //查询
             case 4:
-                banches = bancheDao.findByBancheId(searchInfo.getXiugaibancheid());
+                banches = bancheMapper.findByBancheId(searchInfo.getXiugaibancheid());
 
                 if (banches.size() > 0) {
                     Banche banche = banches.get(0);
@@ -118,7 +120,7 @@ public class changbanche extends ActionSupport implements ModelDriven<Object> {
                 return "searchbanche";
             //更新
             case 5:
-                banches = bancheDao.findByBancheId(searchInfo.getXiugaibancheid());
+                banches = bancheMapper.findByBancheId(searchInfo.getXiugaibancheid());
                 if (banches.size() > 0) {
                     Banche banche = banches.get(0);
                     if (banche.getComdetId() == comid || comid == 0) {
@@ -133,7 +135,7 @@ public class changbanche extends ActionSupport implements ModelDriven<Object> {
                         banche.setBancheStarttime(searchInfo.getXiugaibcstarttime());
                         banche.setBancheEndday(searchInfo.getXiugaibcendday());
                         banche.setBancheEndtime(searchInfo.getXiugaibcendtime());
-                        bancheDao.update(banche);
+                        bancheMapper.updateByPrimaryKeySelective(banche);
                     }
                 }
                 return "searchbanche";
@@ -151,7 +153,7 @@ public class changbanche extends ActionSupport implements ModelDriven<Object> {
      * 生成微信JS所需配置
      */
     private void creatjsconfig() {
-        Wxaccesstoken wxaccesstoken = wxaccesstokenDao.findByid(2).get(0);
+        Wxaccesstoken wxaccesstoken = wxaccesstokenMapper.findByid(2).get(0);
 
         String url = "http://www.banchezaina.com/Banche/changbanche.action?searchform=2";
         Map<String, String> ret = sign.creatsign(wxaccesstoken.getAccessToken(), url);

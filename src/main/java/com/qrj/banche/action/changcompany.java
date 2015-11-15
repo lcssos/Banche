@@ -2,12 +2,12 @@ package com.qrj.banche.action;
 
 import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.ModelDriven;
-import com.qrj.banche.dao.BancheDao;
-import com.qrj.banche.dao.ComdetDao;
-import com.qrj.banche.dao.CompanyDao;
-import com.qrj.banche.model.Banche;
-import com.qrj.banche.model.Comdet;
-import com.qrj.banche.model.Company;
+import com.qrj.banche.entity.Banche;
+import com.qrj.banche.entity.Comdet;
+import com.qrj.banche.entity.Company;
+import com.qrj.banche.repository.BancheMapper;
+import com.qrj.banche.repository.ComdetMapper;
+import com.qrj.banche.repository.CompanyMapper;
 import com.qrj.banche.vo.SearchInfo;
 import org.apache.struts2.ServletActionContext;
 import org.springframework.context.annotation.Scope;
@@ -24,13 +24,13 @@ public class changcompany extends ActionSupport implements ModelDriven<Object> {
     private SearchInfo searchInfo = new SearchInfo();
 
     @Resource
-    private CompanyDao companyDao;
+    private CompanyMapper companyMapper;
 
     @Resource
-    private ComdetDao comdetDao;
+    private ComdetMapper comdetMapper;
 
     @Resource
-    private BancheDao bancheDao;
+    private BancheMapper bancheMapper;
 
     private List<Company> companies;
 
@@ -45,31 +45,31 @@ public class changcompany extends ActionSupport implements ModelDriven<Object> {
                 //查询
                 case 1:
                     if (searchInfo.getSearchcomdetname().equals("")) {
-                        comdets = comdetDao.findAll();
+                        comdets = comdetMapper.findAll();
                     } else {
-                        comdets = comdetDao.findByname(searchInfo.getSearchcomdetname());
+                        comdets = comdetMapper.findByname(searchInfo.getSearchcomdetname());
                     }
                     return "success";
                 //更新
                 case 2:
-                    Comdet comdetq = new Comdet();
-                    comdetq.setComdetId(searchInfo.getXiugaicomdetid());
-                    comdetDao.delete(comdetq);
-                    companies = companyDao.findBycomdetid(searchInfo.getXiugaicomdetid());
-                    companyDao.delete(companies.get(0));
-                    List<Banche> banches = bancheDao.findBycomdetid(searchInfo.getXiugaicomdetid());
+//                    Comdet comdetq = new Comdet();
+//                    comdetq.setComdetId(searchInfo.getXiugaicomdetid());
+                    comdetMapper.deleteByPrimaryKey(searchInfo.getXiugaicomdetid());
+                    companies = companyMapper.findBycomdetid(searchInfo.getXiugaicomdetid());
+                    companyMapper.deleteByPrimaryKey(companies.get(0).getCompanyId());
+                    List<Banche> banches = bancheMapper.findBycomdetid(searchInfo.getXiugaicomdetid());
                     for (Banche banche : banches) {
                         banche.setBancheStatus(0);
-                        bancheDao.update(banche);
+                        bancheMapper.updateByPrimaryKeySelective(banche);
                     }
                     return "success";
                 case 3:
-                    comdets = comdetDao.findBycomdetId(searchInfo.getXiugaicomdetid());
-                    companies = companyDao.findBycomdetid(searchInfo.getXiugaicomdetid());
+                    comdets = comdetMapper.findBycomdetId(searchInfo.getXiugaicomdetid());
+                    companies = companyMapper.findBycomdetid(searchInfo.getXiugaicomdetid());
                     return "xiugai";
                 case 4:
-                    comdets = comdetDao.findBycomdetId(searchInfo.getXiugaicomdetid());
-                    companies = companyDao.findBycomdetid(searchInfo.getXiugaicomdetid());
+                    comdets = comdetMapper.findBycomdetId(searchInfo.getXiugaicomdetid());
+                    companies = companyMapper.findBycomdetid(searchInfo.getXiugaicomdetid());
                     if (comdets.size() > 0 && companies.size() > 0) {
                         Comdet comdet = comdets.get(0);
                         Company company = companies.get(0);
@@ -78,12 +78,12 @@ public class changcompany extends ActionSupport implements ModelDriven<Object> {
                         comdet.setComdetDizhi(searchInfo.getAddcomdetaddress());
                         comdet.setComdetLianxiren(searchInfo.getXiugaicompanylxname());
                         comdet.setComdetLianxitele(searchInfo.getXiugaicompanylxtele());
-                        comdetDao.update(comdet);
+                        comdetMapper.updateByPrimaryKeySelective(comdet);
                         company.setCompanyName(searchInfo.getXiugaicompanyname());
                         company.setCompanyPassword(searchInfo.getXiugaicompanypass());
                         company.setCompanyLxname(searchInfo.getXiugaicompanylxname());
                         company.setCompanyLxtele(searchInfo.getXiugaicompanylxtele());
-                        companyDao.update(company);
+                        companyMapper.updateByPrimaryKeySelective(company);
                     }
                     comdets = null;
                     companies = null;

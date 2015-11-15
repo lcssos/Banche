@@ -2,13 +2,14 @@ package com.qrj.banche.action;
 
 import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.ModelDriven;
-import com.qrj.banche.dao.BancheDao;
-import com.qrj.banche.dao.CheliangDao;
-import com.qrj.banche.dao.ShebeiDao;
-import com.qrj.banche.model.Banche;
-import com.qrj.banche.model.Cheliang;
-import com.qrj.banche.model.Shebei;
+import com.qrj.banche.entity.Banche;
+import com.qrj.banche.entity.Cheliang;
+import com.qrj.banche.entity.Shebei;
+import com.qrj.banche.repository.BancheMapper;
+import com.qrj.banche.repository.CheliangMapper;
+import com.qrj.banche.repository.ShebeiMapper;
 import com.qrj.banche.vo.SearchInfo;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.struts2.ServletActionContext;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
@@ -28,13 +29,13 @@ public class changcheliang extends ActionSupport implements ModelDriven<Object> 
     private SearchInfo searchInfo = new SearchInfo();
 
     @Resource
-    private CheliangDao cheliangDao;
+    private CheliangMapper cheliangMapper;
 
     @Resource
-    private ShebeiDao shebeiDao;
+    private ShebeiMapper shebeiMapper;
 
     @Resource
-    private BancheDao bancheDao;
+    private BancheMapper bancheMapper;
 
     private List<Cheliang> cheliangs;
 
@@ -54,29 +55,31 @@ public class changcheliang extends ActionSupport implements ModelDriven<Object> 
             //查找
             case 1:
                 if (comid == 0) {
-                    cheliangs = cheliangDao.findByChepaiAndshebeiId(searchInfo.getSearchclchepai(), searchInfo.getSearchclshebeiid());
+                    cheliangs = cheliangMapper.findByChepaiAndshebeiId(searchInfo.getSearchclchepai(), searchInfo.getSearchclshebeiid());
                 } else {
-                    cheliangs = cheliangDao.findByChepaiAndshebeiIdandcomid(searchInfo.getSearchclchepai(), searchInfo.getSearchclshebeiid(), comid);
+                    String chepai = StringUtils.isBlank(searchInfo.getSearchclchepai()) ? null : "%"+searchInfo.getSearchclchepai()+"%";
+                    cheliangs = cheliangMapper.findByChepaiAndshebeiIdandcomid(chepai, searchInfo.getSearchclshebeiid(), comid);
                 }
                 return "success";
             //查找具体
             case 2:
                 if (comid == 0) {
-                    cheliangs = cheliangDao.findByChepai(searchInfo.getXiugaiclchepai());
-                    banches = bancheDao.findAll();
+                    cheliangs = cheliangMapper.findByChepai("%"+searchInfo.getXiugaiclchepai()+"%");
+                    banches = bancheMapper.findAll();
                 } else {
-                    cheliangs = cheliangDao.findByChepaiAndcomid(searchInfo.getXiugaiclchepai(), comid);
-                    banches = bancheDao.findBycomdetid(cheliangs.get(0).getComdetId());
+                    String chepai = StringUtils.isBlank(searchInfo.getSearchclchepai()) ? null : "%"+searchInfo.getSearchclchepai()+"%";
+                    cheliangs = cheliangMapper.findByChepaiAndcomid(chepai, comid);
+                    banches = bancheMapper.findBycomdetid(cheliangs.get(0).getComdetId());
                 }
                 return "xiugai";
             //修改
             case 3:
-                cheliangs = cheliangDao.findByCheliangid(searchInfo.getXiugaicheliangid());
+                cheliangs = cheliangMapper.findByCheliangid(searchInfo.getXiugaicheliangid());
                 if (searchInfo.getXiugaiclshebeiid() == 0 || searchInfo.getXiugaiclbancheid() == 0) {
 
                 } else {
-                    List<Shebei> shebeis = shebeiDao.findByshebeiId(searchInfo.getXiugaiclshebeiid());
-                    List<Banche> banches = bancheDao.findByBancheId(searchInfo.getXiugaiclbancheid());
+                    List<Shebei> shebeis = shebeiMapper.findByshebeiId(searchInfo.getXiugaiclshebeiid());
+                    List<Banche> banches = bancheMapper.findByBancheId(searchInfo.getXiugaiclbancheid());
                     if (shebeis.size() == 0) {
                         cuowumessage = "没有该设备ID，请重新修改";
                         return "faild";
@@ -116,7 +119,7 @@ public class changcheliang extends ActionSupport implements ModelDriven<Object> 
                     if (searchInfo.getClfilename().length() > 0) {
                         cheliang.setCheliangImage("/upload/" + time + prefix);
                     }
-                    cheliangDao.update(cheliang);
+                    cheliangMapper.updateByPrimaryKeySelective(cheliang);
                 } else {
                     cheliangs = null;
                     cuowumessage = "没有该车辆，请重新修改";
@@ -126,9 +129,9 @@ public class changcheliang extends ActionSupport implements ModelDriven<Object> 
                 return "success";
             //删除
             case 4:
-                Cheliang cheliang = new Cheliang();
-                cheliang.setCheliangId(searchInfo.getDeletecheliangid());
-                cheliangDao.delete(cheliang);
+//                Cheliang cheliang = new Cheliang();
+//                cheliang.setCheliangId(searchInfo.getDeletecheliangid());
+                cheliangMapper.deleteByPrimaryKey(searchInfo.getDeletecheliangid());
                 return "success";
             default:
                 break;

@@ -2,12 +2,10 @@ package com.qrj.banche.action;
 
 import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.ModelDriven;
-import com.qrj.banche.dao.ComdetDao;
-import com.qrj.banche.dao.CompanyDao;
-import com.qrj.banche.dao.ShebeiDao;
-import com.qrj.banche.model.Comdet;
-import com.qrj.banche.model.Company;
-import com.qrj.banche.model.Shebei;
+import com.qrj.banche.entity.Comdet;
+import com.qrj.banche.entity.Company;
+import com.qrj.banche.repository.ComdetMapper;
+import com.qrj.banche.repository.CompanyMapper;
 import com.qrj.banche.vo.SearchInfo;
 import org.apache.struts2.ServletActionContext;
 import org.springframework.stereotype.Component;
@@ -21,10 +19,10 @@ public class addcompany extends ActionSupport implements ModelDriven<Object> {
     private SearchInfo searchInfo = new SearchInfo();
 
     @Resource
-    private CompanyDao companyDao;
+    private CompanyMapper companyMapper;
 
     @Resource
-    private ComdetDao comdetDao;
+    private ComdetMapper comdetMapper;
 
     @Override
     public String execute() throws Exception {
@@ -36,8 +34,8 @@ public class addcompany extends ActionSupport implements ModelDriven<Object> {
         comdet.setComdetDizhi(searchInfo.getAddcomdetaddress());
         comdet.setComdetLianxiren(searchInfo.getAddcompanylxname());
         comdet.setComdetLianxitele(searchInfo.getAddcompanylxtele());
-        comdetDao.save(comdet);
-        List<Comdet> comdets = comdetDao.findByname(searchInfo.getAddcomdetname());
+        comdetMapper.insert(comdet);
+        List<Comdet> comdets = comdetMapper.findByname(searchInfo.getAddcomdetname());
         if (comdets.size() > 0) {
             company.setComdetId(comdets.get(0).getComdetId());
             company.setCompanyLxname(searchInfo.getAddcompanylxname());
@@ -45,7 +43,7 @@ public class addcompany extends ActionSupport implements ModelDriven<Object> {
             company.setCompanyName(searchInfo.getAddcompanyname());
             company.setCompanyPassword(searchInfo.getAddcompanypass());
             company.setCompanyQuanxian("1");
-            companyDao.save(company);
+            companyMapper.insert(company);
         }
         return "success";
     }

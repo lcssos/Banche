@@ -3,9 +3,11 @@ package com.qrj.banche.action;
 import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.ModelDriven;
 import com.qrj.banche.entity.Banche;
+import com.qrj.banche.entity.Zhandian;
 import com.qrj.banche.repository.BancheMapper;
 import com.qrj.banche.repository.ZhandianMapper;
 import com.qrj.banche.vo.SearchInfo;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.struts2.ServletActionContext;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
@@ -61,7 +63,8 @@ public class addbanche extends ActionSupport implements ModelDriven<Object> {
         }
         jingweidu = null;
         bancheMapper.insert(banche);
-        List<Banche> banches = bancheMapper.findByBancheNameAndComidAndstatus(searchInfo.getAddbanchename(), (Integer) request.getSession().getAttribute("comid"), searchInfo.getAddbanchestatus());
+        String bancheName = StringUtils.isBlank(searchInfo.getAddbanchename()) ? null : ("%"+searchInfo.getAddbanchename()+"%");
+        List<Banche> banches = bancheMapper.findByBancheNameAndComidAndstatus(bancheName, (Integer) request.getSession().getAttribute("comid"), searchInfo.getAddbanchestatus());
         if (banches.size() > 0) {
 
             if (zhandianname != null && zhandianname.length > 0) {
@@ -79,7 +82,7 @@ public class addbanche extends ActionSupport implements ModelDriven<Object> {
                     zhandian.setZhandianStatus(1);
 //                    zhandian.setZhandianYuji(daozhan[i]);
                     zhandian.setBancheId(banches.get(banches.size() - 1).getBancheId());
-                    zhandianDao.save(zhandian);
+                    zhandianMapper.insert(zhandian);
                 }
             }
         }
