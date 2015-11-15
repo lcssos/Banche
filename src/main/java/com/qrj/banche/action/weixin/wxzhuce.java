@@ -2,12 +2,8 @@ package com.qrj.banche.action.weixin;
 
 import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.ModelDriven;
-import com.qrj.banche.dao.CompanyDao;
-import com.qrj.banche.dao.UserDao;
-import com.qrj.banche.dao.WxuserDao;
-import com.qrj.banche.model.Company;
-import com.qrj.banche.model.User;
-import com.qrj.banche.model.Wxuser;
+import com.qrj.banche.entity.Wxuser;
+import com.qrj.banche.repository.WxuserMapper;
 import com.qrj.banche.vo.SearchInfo;
 import net.coobird.thumbnailator.Thumbnails;
 import org.apache.struts2.ServletActionContext;
@@ -28,7 +24,7 @@ public class wxzhuce extends ActionSupport implements ModelDriven<Object> {
     private SearchInfo searchInfo = new SearchInfo();
 
     @Resource
-    private WxuserDao wxuserDao;
+    private WxuserMapper wxuserMapper;
 
     private File upload;
 
@@ -63,7 +59,7 @@ public class wxzhuce extends ActionSupport implements ModelDriven<Object> {
         if (searchInfo.getWxfilename().length() > 0) {
             wxuser.setWxuserTouxiang(lujing + "/weixin/user/256/" + time + prefix);
         }
-        wxuserDao.save(wxuser);
+        wxuserMapper.insert(wxuser);
         return "success";
     }
 

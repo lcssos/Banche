@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.qrj.banche.repository.FunctionMapper" >
+  <resultMap id="FujinzdBaseResultMap" type="com.qrj.banche.vo.Fujinzd">
+    <result column="distance" property="distance" jdbcType="FLOAT" />
+      <result column="zhandian_xuhao" property="zhandianXuhao" jdbcType="INTEGER" />
+  </resultMap>
+
+
+    <select id="callfujinzd" resultMap="FujinzdBaseResultMap" statementType="CALLABLE">
+        {CALL callfujinzd(#{juli,jdbcType=INTEGER},#{openId,jdbcType=VARCHAR},#{bancheid,jdbcType=INTEGER})}
+    </select>
+
+</mapper>

@@ -2,8 +2,8 @@ package com.qrj.banche.action.weixin;
 
 import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.ModelDriven;
-import com.qrj.banche.dao.WxguanzhuDao;
-import com.qrj.banche.model.Wxguanzhu;
+import com.qrj.banche.entity.Wxguanzhu;
+import com.qrj.banche.repository.WxguanzhuMapper;
 import com.qrj.banche.vo.SearchInfo;
 import org.apache.struts2.ServletActionContext;
 import org.springframework.stereotype.Component;
@@ -16,7 +16,7 @@ public class wxguanzhu extends ActionSupport implements ModelDriven<Object> {
     private SearchInfo searchInfo = new SearchInfo();
 
     @Resource
-    private WxguanzhuDao wxguanzhuDao;
+    private WxguanzhuMapper wxguanzhuMapper;
 
     @Override
     public String execute() throws Exception {
@@ -25,7 +25,7 @@ public class wxguanzhu extends ActionSupport implements ModelDriven<Object> {
         Wxguanzhu wxguanzhu = new Wxguanzhu();
         wxguanzhu.setWxguanzhuWxuserid(searchInfo.getGuanzhuwxuserid());
         wxguanzhu.setWxguanzhuBanchid(searchInfo.getGuanzhubancheid());
-        wxguanzhuDao.save(wxguanzhu);
+        wxguanzhuMapper.insert(wxguanzhu);
 
         return null;
     }

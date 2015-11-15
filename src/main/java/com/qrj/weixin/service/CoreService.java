@@ -1,7 +1,9 @@
 package com.qrj.weixin.service;
 
 import com.qrj.banche.dao.WxlocationDao;
+import com.qrj.banche.entity.Wxlocation;
 import com.qrj.banche.model.Wxlocation;
+import com.qrj.banche.repository.WxlocationMapper;
 import com.qrj.weixin.message.resp.TextMessage;
 import com.qrj.weixin.util.MessageUtil;
 import org.dom4j.Document;
@@ -25,7 +27,7 @@ import javax.servlet.http.HttpServletRequest;
 public class CoreService {
 
     @Resource
-    private WxlocationDao wxlocationDao;
+    private WxlocationMapper wxlocationMapper;
 
     /**
      * 处理微信发来的请求
@@ -113,7 +115,7 @@ public class CoreService {
                         wxlocationDao.update(wxlocations.get(0));
                     } else {
                         Wxlocation wxlocation = new Wxlocation();
-                        wxlocation.setOpenId(openId);
+                        wxlocation.setOpenid(openId);
                         wxlocation.setJingdu(Double.parseDouble(baidujingweidu.split(",")[0]));
                         wxlocation.setWeidu(Double.parseDouble(baidujingweidu.split(",")[1]));
                         wxlocationDao.save(wxlocation);

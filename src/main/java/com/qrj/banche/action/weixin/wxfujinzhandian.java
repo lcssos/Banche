@@ -2,7 +2,7 @@ package com.qrj.banche.action.weixin;
 
 import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.ModelDriven;
-import com.qrj.banche.dao.ZhandianDao;
+import com.qrj.banche.repository.ZhandianMapper;
 import com.qrj.banche.vo.SearchInfo;
 import org.apache.struts2.ServletActionContext;
 import org.dom4j.Document;
@@ -24,32 +24,33 @@ public class wxfujinzhandian extends ActionSupport implements ModelDriven<Object
     private SearchInfo searchInfo = new SearchInfo();
 
     @Resource
-    private ZhandianDao zhandianDao;
+    private ZhandianMapper zhandianMapper;
 
     @Override
     public String execute() throws Exception {
         HttpServletRequest request = ServletActionContext.getRequest();
         //前一个属性为附近几公里的站点
-        List<Object[]> zhandians = zhandianDao.callwxgeo(5, searchInfo.getWxopenId());
-        Document document = DocumentHelper.createDocument();
-        Element rootelement = document.addElement("Message");
-        Element zhandianselement = rootelement.addElement("Zhandians");
-        for (Object[] zhandian : zhandians) {
-            Element zhandianelement = zhandianselement.addElement("Zhandian");
-            Element banchenameelement = zhandianelement.addElement("Banchename");
-            banchenameelement.addText((String) zhandian[0]);
-            Element zhandiannameelement = zhandianelement.addElement("Zhandianname");
-            zhandiannameelement.addText((String) zhandian[1]);
-            Element zhandianjingduelement = zhandianelement.addElement("Zhandianjingdu");
-            zhandianjingduelement.addText(String.valueOf(zhandian[2]));
-            Element zhandianweiduelement = zhandianelement.addElement("Zhandianweidu");
-            zhandianweiduelement.addText(String.valueOf(zhandian[3]));
-            Element zhandiandizhielement = zhandianelement.addElement("Zhandiandizhi");
-            zhandiandizhielement.addText((String) zhandian[4]);
-            Element zhandianmiaoshuelement = zhandianelement.addElement("Zhandianmiaoshu");
-            zhandianmiaoshuelement.addText((String) zhandian[5]);
-        }
-        returnxml(document);
+        //todo
+//        List<Object[]> zhandians = zhandianMapper.callwxgeo(5, searchInfo.getWxopenId());
+//        Document document = DocumentHelper.createDocument();
+//        Element rootelement = document.addElement("Message");
+//        Element zhandianselement = rootelement.addElement("Zhandians");
+//        for (Object[] zhandian : zhandians) {
+//            Element zhandianelement = zhandianselement.addElement("Zhandian");
+//            Element banchenameelement = zhandianelement.addElement("Banchename");
+//            banchenameelement.addText((String) zhandian[0]);
+//            Element zhandiannameelement = zhandianelement.addElement("Zhandianname");
+//            zhandiannameelement.addText((String) zhandian[1]);
+//            Element zhandianjingduelement = zhandianelement.addElement("Zhandianjingdu");
+//            zhandianjingduelement.addText(String.valueOf(zhandian[2]));
+//            Element zhandianweiduelement = zhandianelement.addElement("Zhandianweidu");
+//            zhandianweiduelement.addText(String.valueOf(zhandian[3]));
+//            Element zhandiandizhielement = zhandianelement.addElement("Zhandiandizhi");
+//            zhandiandizhielement.addText((String) zhandian[4]);
+//            Element zhandianmiaoshuelement = zhandianelement.addElement("Zhandianmiaoshu");
+//            zhandianmiaoshuelement.addText((String) zhandian[5]);
+//        }
+//        returnxml(document);
 
         return null;
     }

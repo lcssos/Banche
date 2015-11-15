@@ -2,9 +2,10 @@ package com.qrj.banche.action.weixin;
 
 import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.ModelDriven;
-import com.qrj.banche.dao.*;
-import com.qrj.banche.model.*;
+import com.qrj.banche.entity.*;
+import com.qrj.banche.repository.*;
 import com.qrj.banche.util.Getdistance;
+import com.qrj.banche.vo.Fujinzd;
 import com.qrj.banche.vo.SearchInfo;
 import org.apache.struts2.ServletActionContext;
 import org.dom4j.Document;
@@ -28,24 +29,27 @@ public class wxzhandian extends ActionSupport implements ModelDriven<Object> {
     private SearchInfo searchInfo = new SearchInfo();
 
     @Resource
-    private ZhandianDao zhandianDao;
+    private ZhandianMapper zhandianMapper;
 
     @Resource
-    private CheliangDao cheliangDao;
+    private CheliangMapper cheliangMapper;
 
     @Resource
-    private ShebeilishiDao shebeilishiDao;
+    private ShebeilishiMapper shebeilishiMapper;
 
     @Resource
-    private ShebeiDao shebeiDao;
+    private ShebeiMapper shebeiMapper;
 
     @Resource
-    private CompanyDao companyDao;
+    private CompanyMapper companyMapper;
 
     @Resource
-    private BancheDao bancheDao;
+    private BancheMapper bancheMapper;
     @Resource
-    private ComdetDao comdetDao;
+    private ComdetMapper comdetMapper;
+
+    @Resource
+    private FunctionMapper functionMapper;
 
 
 
@@ -71,7 +75,7 @@ public class wxzhandian extends ActionSupport implements ModelDriven<Object> {
         //TODO 查询车辆信息，有用的是当前站点，算出和用户所在地差几站（可以前台），到站时间
         // TODO 处理预计时间看当前时间和预计时间，超过就下一个预计时间，都超过就不显示
         if (searchInfo.getSearchform() == 3) {
-            zhandians = zhandianDao.findByZhandianId(searchInfo.getXiugaizhandianid());
+            zhandians = zhandianMapper.findByZhandianId(searchInfo.getXiugaizhandianid());
             Document document = DocumentHelper.createDocument();
             Element rootelement = document.addElement("Message");
             Element imageelement = rootelement.addElement("image");
@@ -87,7 +91,7 @@ public class wxzhandian extends ActionSupport implements ModelDriven<Object> {
         }
         if (this.searchInfo.getCheci() != 0)
         {
-            this.zhandians = this.zhandianDao.findByBancheIdandyincang(this.searchInfo.getXiugaibancheid(), 1);
+            this.zhandians = zhandianMapper.findByBancheIdandyincang(this.searchInfo.getXiugaibancheid(), 1);
             String ss = "";
             for (Zhandian zhandian : this.zhandians) {
                 zhandian.setZhandianYuji(zhandian.getZhandianYuji().replaceAll("：", ":"));
@@ -108,27 +112,28 @@ public class wxzhandian extends ActionSupport implements ModelDriven<Object> {
             return null;
         }
 
-        List<Object[]> list;
+        //todo
+        List<Fujinzd> list;
         if (((String)request.getSession().getAttribute("openId")) == null || ((String) request.getSession().getAttribute("openId")).equals("")) {
-        list = zhandianDao.callfujinzd(10,"ol-XJwr-LwhyQcHFnfxQQkyl4v5o",searchInfo.getXiugaibancheid());
+        list = functionMapper.callfujinzd(10,"ol-XJwr-LwhyQcHFnfxQQkyl4v5o",searchInfo.getXiugaibancheid());
         } else {
-            list = zhandianDao.callfujinzd(5, (String)request.getSession().getAttribute("openId"), searchInfo.getXiugaibancheid());
+            list = functionMapper.callfujinzd(5, (String)request.getSession().getAttribute("openId"), searchInfo.getXiugaibancheid());
 
         }
         if (list.size() > 0) {
-            userzhandian = (Integer) list.get(0)[0];
+            userzhandian = (Integer) list.get(0).getZhandianXuhao();
         } else {
             userzhandian = 2;
         }
-        zhandians = zhandianDao.findByBancheIdandyincang(searchInfo.getXiugaibancheid(), 1);
-        cheliangs = cheliangDao.findByBancheid(searchInfo.getXiugaibancheid());
+        zhandians = zhandianMapper.findByBancheIdandyincang(searchInfo.getXiugaibancheid(), 1);
+        cheliangs = cheliangMapper.findByBancheid(searchInfo.getXiugaibancheid());
         if (cheliangs.size() > 0) {
-            this.comdets = this.comdetDao.findBycomdetId(((Cheliang) this.cheliangs.get(0)).getComdetId().intValue());
+            this.comdets = comdetMapper.findBycomdetId(((Cheliang) this.cheliangs.get(0)).getComdetId().intValue());
         dzshijian = daozhanshijian(cheliangs.get(0), cheliangs.get(0).getShebeiId(), zhandians);
 
         } else {
-            List banches = this.bancheDao.findByBancheId(this.searchInfo.getXiugaibancheid());
-            this.comdets = this.comdetDao.findBycomdetId(((Banche) banches.get(0)).getComdetId().intValue());
+            List<Banche> banches = bancheMapper.findByBancheId(this.searchInfo.getXiugaibancheid());
+            this.comdets = comdetMapper.findBycomdetId(banches.get(0).getComdetId().intValue());
             dzshijian = 100;
         }
         String[] yuji = null;
@@ -176,13 +181,13 @@ public class wxzhandian extends ActionSupport implements ModelDriven<Object> {
      * @author 刘健
      */
     private int daozhanshijian(Cheliang cheliang, long shebeiid, List<Zhandian> zhandians) {
-        List<Shebei> theshebei = shebeiDao.findByshebeiId(shebeiid);
+        List<Shebei> theshebei = shebeiMapper.findByshebeiId(shebeiid);
         Shebei shebei = theshebei.get(0);
         List<Zhandian> thezhandian;
         //出发
         thezhandian = zhandians;
         //获取设备最后5条GPS数据
-        List<Shebeilishi> the5lishi = shebeilishiDao.findByshebeiidthelast5(shebeiid);
+        List<Shebeilishi> the5lishi = shebeilishiMapper.findByshebeiidthelast5(shebeiid);
         int sudu = 0;
         for (int i = 0; i < the5lishi.size(); i++) {
             //最后5条平均速度

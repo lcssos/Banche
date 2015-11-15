@@ -2,14 +2,12 @@ package com.qrj.banche.action;
 
 import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.ModelDriven;
-import com.qrj.banche.dao.BancheDao;
-import com.qrj.banche.dao.CheliangDao;
-import com.qrj.banche.dao.ShebeiDao;
-import com.qrj.banche.dao.ShebeishuxingDao;
-import com.qrj.banche.model.Banche;
-import com.qrj.banche.model.Cheliang;
-import com.qrj.banche.model.Shebei;
-import com.qrj.banche.model.Shebeishuxing;
+import com.qrj.banche.entity.Banche;
+import com.qrj.banche.entity.Cheliang;
+import com.qrj.banche.entity.Shebeishuxing;
+import com.qrj.banche.repository.BancheMapper;
+import com.qrj.banche.repository.CheliangMapper;
+import com.qrj.banche.repository.ShebeishuxingMapper;
 import com.qrj.banche.vo.SearchInfo;
 import org.apache.struts2.ServletActionContext;
 import org.springframework.stereotype.Component;
@@ -23,13 +21,13 @@ public class addcheliang extends ActionSupport implements ModelDriven<Object> {
     private SearchInfo searchInfo = new SearchInfo();
 
     @Resource
-    private CheliangDao cheliangDao;
+    private CheliangMapper cheliangMapper;
 
     @Resource
-    private ShebeishuxingDao shebeishuxingDao;
+    private ShebeishuxingMapper shebeishuxingMapper;
 
     @Resource
-    private BancheDao bancheDao;
+    private BancheMapper bancheMapper;
 
     private String cuowumessage;
 
@@ -42,8 +40,8 @@ public class addcheliang extends ActionSupport implements ModelDriven<Object> {
         if (searchInfo.getAddclshebeiid() == 0 || searchInfo.getAddclbancheid() == 0) {
 
         } else {
-            List<Shebeishuxing> shebeis = shebeishuxingDao.findByshebeiid(searchInfo.getAddclshebeiid());
-            List<Banche> banches = bancheDao.findByBancheId(searchInfo.getAddclbancheid());
+            List<Shebeishuxing> shebeis = shebeishuxingMapper.findByshebeiid(searchInfo.getAddclshebeiid());
+            List<Banche> banches = bancheMapper.findByBancheId(searchInfo.getAddclbancheid());
             if (shebeis.size() == 0) {
                 cuowumessage = "没有该设备ID，请重新添加";
                 return "faild";
@@ -64,7 +62,7 @@ public class addcheliang extends ActionSupport implements ModelDriven<Object> {
         cheliang.setShebeiId(searchInfo.getAddclshebeiid());
         cheliang.setBancheId(searchInfo.getAddclbancheid());
         cheliang.setComdetId(comid);
-        cheliangDao.save(cheliang);
+        cheliangMapper.insert(cheliang);
         return "success";
     }
 

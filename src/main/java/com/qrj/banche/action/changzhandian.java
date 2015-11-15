@@ -2,10 +2,10 @@ package com.qrj.banche.action;
 
 import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.ModelDriven;
-import com.qrj.banche.dao.BancheDao;
-import com.qrj.banche.dao.ZhandianDao;
-import com.qrj.banche.model.Banche;
-import com.qrj.banche.model.Zhandian;
+import com.qrj.banche.entity.Banche;
+import com.qrj.banche.entity.Zhandian;
+import com.qrj.banche.repository.BancheMapper;
+import com.qrj.banche.repository.ZhandianMapper;
 import com.qrj.banche.vo.SearchInfo;
 import net.coobird.thumbnailator.Thumbnails;
 import org.apache.struts2.ServletActionContext;
@@ -25,11 +25,11 @@ import java.util.List;
 public class changzhandian extends ActionSupport implements ModelDriven<Object> {
     private SearchInfo searchInfo = new SearchInfo();
 
-    @Resource
-    private BancheDao bancheDao;
+//    @Resource
+//    private BancheMapper bancheMapper;
 
     @Resource
-    private ZhandianDao zhandianDao;
+    private ZhandianMapper zhandianMapper;
 
     private List<Zhandian> zhandians;
 
@@ -48,13 +48,13 @@ public class changzhandian extends ActionSupport implements ModelDriven<Object> 
         //1根据班车ID搜站点 2查找具体站点信息 3update站点信息
         switch (searchInfo.getSearchzhandian()) {
             case 1:
-                zhandians = zhandianDao.findByBancheId(searchInfo.getXiugaibancheid());
+                zhandians = zhandianMapper.findByBancheId(searchInfo.getXiugaibancheid());
                 return "success";
             case 2:
-                zhandians = zhandianDao.findByZhandianId(searchInfo.getXiugaizhandianid());
+                zhandians = zhandianMapper.findByZhandianId(searchInfo.getXiugaizhandianid());
                 return "xiugai";
             case 3:
-                zhandians = zhandianDao.findByBancheIdandXuhao(searchInfo.getXiugaizhandianbancheid(), searchInfo.getXiugaizhandianxuhao());
+                zhandians = zhandianMapper.findByBancheIdandXuhao(searchInfo.getXiugaizhandianbancheid(), searchInfo.getXiugaizhandianxuhao());
                 if (zhandians.get(0).getZhandianXuhao() == searchInfo.getXiugaizhandianxuhao()) {
                 } else {
                     if (zhandians.size() > 0) {
@@ -91,7 +91,7 @@ public class changzhandian extends ActionSupport implements ModelDriven<Object> 
                     is.close();
                     Thumbnails.of(yuantulujing).size(360, 187).keepAspectRatio(false).toFile(lujing + "/zhandian/" + searchInfo.getXiugaizhandianbancheid() + "/360/" + time + prefix);
                 }
-                zhandians = zhandianDao.findByZhandianId(searchInfo.getXiugaizhandianid());
+                zhandians = zhandianMapper.findByZhandianId(searchInfo.getXiugaizhandianid());
                 if (zhandians.size() > 0) {
                     Zhandian zhandian = zhandians.get(0);
                     zhandian.setZhandianName(searchInfo.getXiugaizhandianname());
@@ -103,7 +103,7 @@ public class changzhandian extends ActionSupport implements ModelDriven<Object> 
                     if (searchInfo.getZdfilename().length() > 0) {
                         zhandian.setZhandianImage("http://123.57.61.220:80/Banche/upload/zhandian/" + searchInfo.getXiugaizhandianbancheid() + "/360/" + time + prefix);
                     }
-                    zhandianDao.update(zhandian);
+                    zhandianMapper.updateByPrimaryKeySelective(zhandian);
                 } else {
                     cuowumessage = "更新失败，请重新修改";
                     return "faild";
@@ -111,20 +111,20 @@ public class changzhandian extends ActionSupport implements ModelDriven<Object> 
                 zhandians = null;
                 return "update";
             case 4:
-                zhandians = zhandianDao.findByZhandianId(searchInfo.getDeletezhandianid());
+                zhandians = zhandianMapper.findByZhandianId(searchInfo.getDeletezhandianid());
                 int deletexuhao = zhandians.get(0).getZhandianXuhao();
                 int deletebancheid = zhandians.get(0).getBancheId();
-                zhandians = zhandianDao.findByBancheId(deletebancheid);
+                zhandians = zhandianMapper.findByBancheId(deletebancheid);
                 for (Zhandian zhandian1 : zhandians) {
                     int newxuhao = zhandian1.getZhandianXuhao();
                     if (newxuhao > deletexuhao) {
                         zhandian1.setZhandianXuhao(newxuhao - 1);
-                        zhandianDao.update(zhandian1);
+                        zhandianMapper.updateByPrimaryKeySelective(zhandian1);
                     }
                 }
-                Zhandian zhandian = new Zhandian();
-                zhandian.setZhandianId(searchInfo.getDeletezhandianid());
-                zhandianDao.delete(zhandian);
+//                Zhandian zhandian = new Zhandian();
+//                zhandian.setZhandianId(searchInfo.getDeletezhandianid());
+                zhandianMapper.deleteByPrimaryKey(searchInfo.getDeletezhandianid());
                 zhandians = null;
                 return "delete";
             default:

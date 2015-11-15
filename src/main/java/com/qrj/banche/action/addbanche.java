@@ -2,10 +2,9 @@ package com.qrj.banche.action;
 
 import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.ModelDriven;
-import com.qrj.banche.dao.BancheDao;
-import com.qrj.banche.dao.ZhandianDao;
-import com.qrj.banche.model.Banche;
-import com.qrj.banche.model.Zhandian;
+import com.qrj.banche.entity.Banche;
+import com.qrj.banche.repository.BancheMapper;
+import com.qrj.banche.repository.ZhandianMapper;
 import com.qrj.banche.vo.SearchInfo;
 import org.apache.struts2.ServletActionContext;
 import org.springframework.context.annotation.Scope;
@@ -23,10 +22,10 @@ public class addbanche extends ActionSupport implements ModelDriven<Object> {
 
 
     @Resource
-    private BancheDao bancheDao;
+    private BancheMapper bancheMapper;
 
     @Resource
-    private ZhandianDao zhandianDao;
+    private ZhandianMapper zhandianMapper;
 
     private String[] jingweidu;
 
@@ -61,8 +60,8 @@ public class addbanche extends ActionSupport implements ModelDriven<Object> {
             }
         }
         jingweidu = null;
-        bancheDao.save(banche);
-        List<Banche> banches = bancheDao.findByBancheNameAndComidAndstatus(searchInfo.getAddbanchename(), (Integer) request.getSession().getAttribute("comid"), searchInfo.getAddbanchestatus());
+        bancheMapper.insert(banche);
+        List<Banche> banches = bancheMapper.findByBancheNameAndComidAndstatus(searchInfo.getAddbanchename(), (Integer) request.getSession().getAttribute("comid"), searchInfo.getAddbanchestatus());
         if (banches.size() > 0) {
 
             if (zhandianname != null && zhandianname.length > 0) {

@@ -2,8 +2,8 @@ package com.qrj.banche.action.weixin;
 
 import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.ModelDriven;
-import com.qrj.banche.dao.WxlocationDao;
-import com.qrj.banche.model.Wxlocation;
+import com.qrj.banche.entity.Wxlocation;
+import com.qrj.banche.repository.WxlocationMapper;
 import com.qrj.banche.vo.SearchInfo;
 import org.apache.struts2.ServletActionContext;
 import org.dom4j.Document;
@@ -25,7 +25,7 @@ public class wxdingwei extends ActionSupport implements ModelDriven<Object> {
     private SearchInfo searchInfo = new SearchInfo();
 
     @Resource
-    private WxlocationDao wxlocationDao;
+    private WxlocationMapper wxlocationMapper;
 
     @Override
     public String execute() throws Exception {
@@ -37,17 +37,17 @@ public class wxdingwei extends ActionSupport implements ModelDriven<Object> {
         Element errorelement = rootelement.addElement("error");
 
         String baidujingweidu = changtobaidu(searchInfo.getWxjsjingdu(), searchInfo.getWxjsweidu());
-        List<Wxlocation> wxlocations = wxlocationDao.findByopenId(openId);
+        List<Wxlocation> wxlocations = wxlocationMapper.findByopenId(openId);
         if (wxlocations.size() > 0) {
             wxlocations.get(0).setJingdu(Double.parseDouble(baidujingweidu.split(",")[0]));
             wxlocations.get(0).setWeidu(Double.parseDouble(baidujingweidu.split(",")[1]));
-            wxlocationDao.update(wxlocations.get(0));
+            wxlocationMapper.updateByPrimaryKeySelective(wxlocations.get(0));
         } else {
             Wxlocation wxlocation = new Wxlocation();
-            wxlocation.setOpenId(openId);
+            wxlocation.setOpenid(openId);
             wxlocation.setJingdu(Double.parseDouble(baidujingweidu.split(",")[0]));
             wxlocation.setWeidu(Double.parseDouble(baidujingweidu.split(",")[1]));
-            wxlocationDao.save(wxlocation);
+            wxlocationMapper.insert(wxlocation);
         }
         errorelement.addText("success");
         returnxml(document);
