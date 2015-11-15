@@ -29,11 +29,11 @@
             <artifactId>druid</artifactId>
             <version>1.0.16</version>
         </dependency>
-        <dependency>
-            <groupId>org.hibernate</groupId>
-            <artifactId>hibernate-core</artifactId>
-            <version>4.3.6.Final</version>
-        </dependency>
+        <!--<dependency>-->
+            <!--<groupId>org.hibernate</groupId>-->
+            <!--<artifactId>hibernate-core</artifactId>-->
+            <!--<version>4.3.6.Final</version>-->
+        <!--</dependency>-->
         <!-- mybatis(3.3.0版本会出现order by order by问题) -->
         <dependency>
             <groupId>org.mybatis</groupId>
@@ -77,12 +77,12 @@
             <groupId>org.apache.struts</groupId>
             <artifactId>struts2-core</artifactId>
             <version>2.3.16.3</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>javassist</groupId>
-                    <artifactId>javassist</artifactId>
-                </exclusion>
-            </exclusions>
+            <!--<exclusions>-->
+                <!--<exclusion>-->
+                    <!--<groupId>javassist</groupId>-->
+                    <!--<artifactId>javassist</artifactId>-->
+                <!--</exclusion>-->
+            <!--</exclusions>-->
         </dependency>
         <dependency>
             <groupId>org.apache.struts</groupId>
@@ -105,11 +105,11 @@
             </exclusions>
         </dependency>
 
-        <dependency>
-            <groupId>org.aspectj</groupId>
-            <artifactId>aspectjtools</artifactId>
-            <version>1.8.2</version>
-        </dependency>
+        <!--<dependency>-->
+            <!--<groupId>org.aspectj</groupId>-->
+            <!--<artifactId>aspectjtools</artifactId>-->
+            <!--<version>1.8.2</version>-->
+        <!--</dependency>-->
 
 
 
@@ -144,6 +144,12 @@
             <groupId>org.apache.camel</groupId>
             <artifactId>camel-xstream</artifactId>
             <version>2.15.2</version>
+        </dependency>
+
+        <dependency>
+            <groupId>dom4j</groupId>
+            <artifactId>dom4j</artifactId>
+            <version>1.6.1</version>
         </dependency>
 
         <!-- 日志系统 -->

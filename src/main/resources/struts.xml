@@ -9,48 +9,48 @@
 
     <package name="/" extends="struts-default">
         <action name="denglu" class="denglu">
-            <result name="success">/src/main/webapp/index.jsp</result>
-            <result name="faild">/src/main/webapp/login.jsp</result>
+            <result name="success">/index.jsp</result>
+            <result name="faild">/login.jsp</result>
         </action>
         <action name="addbanche" class="addbanche">
-            <result name="success">/src/main/webapp/index.jsp</result>
+            <result name="success">/index.jsp</result>
         </action>
         <action name="addshebei" class="addshebei">
-            <result name="success">/src/main/webapp/addshebei.jsp</result>
+            <result name="success">/addshebei.jsp</result>
         </action>
         <action name="addcheliang" class="addcheliang">
-            <result name="success">/src/main/webapp/addcheliang.jsp</result>
-            <result name="faild">/src/main/webapp/addcheliang.jsp</result>
+            <result name="success">/addcheliang.jsp</result>
+            <result name="faild">/addcheliang.jsp</result>
         </action>
         <action name="addcompany" class="addcompany">
-            <result name="success">/src/main/webapp/addgongsi.jsp</result>
+            <result name="success">/addgongsi.jsp</result>
         </action>
         <action name="changshebei" class="changshebei">
-            <result name="success">/src/main/webapp/changshebei.jsp</result>
-            <result name="faild">/src/main/webapp/changshebei.jsp</result>
+            <result name="success">/changshebei.jsp</result>
+            <result name="faild">/changshebei.jsp</result>
         </action>
         <action name="changzhandian" class="changzhandian">
-            <result name="success">/src/main/webapp/listzhandian.jsp</result>
-            <result name="xiugai">/src/main/webapp/xiugaizhandian.jsp</result>
-            <result name="update">/src/main/webapp/changzhandian.jsp</result>
-            <result name="delete">/src/main/webapp/changzhandian.jsp</result>
-            <result name="faild">/src/main/webapp/changzhandian.jsp</result>
+            <result name="success">/listzhandian.jsp</result>
+            <result name="xiugai">/xiugaizhandian.jsp</result>
+            <result name="update">/changzhandian.jsp</result>
+            <result name="delete">/changzhandian.jsp</result>
+            <result name="faild">/changzhandian.jsp</result>
         </action>
         <action name="changbanche" class="changbanche">
-            <result name="searchzhandian">/src/main/webapp/changzhandian.jsp</result>
-            <result name="searchbanche">/src/main/webapp/changbanche.jsp</result>
-            <result name="xiugai">/src/main/webapp/listbanche.jsp</result>
+            <result name="searchzhandian">/changzhandian.jsp</result>
+            <result name="searchbanche">/changbanche.jsp</result>
+            <result name="xiugai">/listbanche.jsp</result>
             <result name="wxsearchbanche">/weixin/xianlulist.jsp</result>
         </action>
         <action name="changcheliang" class="changcheliang">
-            <result name="success">/src/main/webapp/changcheliang.jsp</result>
-            <result name="xiugai">/src/main/webapp/xiugaicheliang.jsp</result>
-            <result name="faild">/src/main/webapp/changcheliang.jsp</result>
+            <result name="success">/changcheliang.jsp</result>
+            <result name="xiugai">/xiugaicheliang.jsp</result>
+            <result name="faild">/changcheliang.jsp</result>
         </action>
         <action name="changcompany" class="changcompany">
-            <result name="success">/src/main/webapp/changcompany.jsp</result>
-            <result name="xiugai">/src/main/webapp/listcompany.jsp</result>
-            <result name="faild">/src/main/webapp/index.jsp</result>
+            <result name="success">/changcompany.jsp</result>
+            <result name="xiugai">/listcompany.jsp</result>
+            <result name="faild">/index.jsp</result>
         </action>
         <action name="uploadimage" class="uploadimage">
 
@@ -65,8 +65,8 @@
             <!-- 默认的拦截器，必须要写 -->
             <interceptor-ref name="defaultStack"/>
 
-            <result name="success">/src/main/webapp/login.jsp</result>
-            <result name="input">/src/main/webapp/login.jsp</result>
+            <result name="success">/login.jsp</result>
+            <result name="input">/login.jsp</result>
         </action>
         <action name="gpsservice" class="gpsservice">
         </action>

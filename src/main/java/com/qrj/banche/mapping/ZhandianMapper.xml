@@ -182,7 +182,7 @@
     </select>
 
     <select id="findByZhandianId" parameterType="integer" resultMap="BaseResultMap">
-        select * from zhandian z where z.zhandiand_i=#{zhandianId,jdbcType=INTEGER}
+        select * from zhandian z where z.zhandian_id=#{zhandianId,jdbcType=INTEGER}
     </select>
     <select id="findByBancheIdandXuhao" resultMap="BaseResultMap">
         select * from zhandian z where z.banche_id=#{bancheid,jdbcType=INTEGER} and z.zhandian_xuhao=#{xuhao,jdbcType=INTEGER}
