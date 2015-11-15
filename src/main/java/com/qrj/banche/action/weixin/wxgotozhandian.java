@@ -2,8 +2,12 @@ package com.qrj.banche.action.weixin;
 
 import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.ModelDriven;
-import com.qrj.banche.dao.*;
-import com.qrj.banche.model.*;
+import com.qrj.banche.entity.Cheliang;
+import com.qrj.banche.entity.Shebeilishi;
+import com.qrj.banche.entity.Zhandian;
+import com.qrj.banche.repository.CheliangMapper;
+import com.qrj.banche.repository.ShebeilishiMapper;
+import com.qrj.banche.repository.ZhandianMapper;
 import com.qrj.banche.util.Getdistance;
 import com.qrj.banche.vo.SearchInfo;
 import org.apache.struts2.ServletActionContext;
@@ -25,13 +29,13 @@ public class wxgotozhandian extends ActionSupport
     private SearchInfo searchInfo = new SearchInfo();
 
     @Resource
-    private CheliangDao cheliangDao;
+    private CheliangMapper cheliangMapper;
 
     @Resource
-    private ZhandianDao zhandianDao;
+    private ZhandianMapper zhandianMapper;
 
     @Resource
-    private ShebeilishiDao shebeilishiDao;
+    private ShebeilishiMapper shebeilishiMapper;
     private List<Cheliang> cheliangs;
     private List<Zhandian> zhandians;
     private List<Shebeilishi> shebeilishis;
@@ -46,14 +50,14 @@ public class wxgotozhandian extends ActionSupport
         Date now = new Date();
         Date afterDate = new Date(now.getTime() - 25000);
         String thtime = sdf.format(afterDate);
-        List shebeis = this.shebeilishiDao.findhuodong(thtime);
+        List shebeis = shebeilishiMapper.findhuodong(thtime);
         for (int z = 0; z < shebeis.size(); z++) {
-            this.shebeilishis = this.shebeilishiDao.finddayushebeilishishijianandshebeiid(thtime, Long.valueOf((String)shebeis.get(z)).longValue());
+            this.shebeilishis = shebeilishiMapper.finddayushebeilishishijianandshebeiid(thtime, Long.valueOf((String)shebeis.get(z)).longValue());
             if (this.shebeilishis.size() > 1) {
-                this.cheliangs = this.cheliangDao.findByshebeiid(Long.valueOf((String)shebeis.get(z)).longValue());
+                this.cheliangs = cheliangMapper.findByshebeiid(Long.valueOf((String)shebeis.get(z)).longValue());
                 if (this.cheliangs.size() > 0) {
                     Cheliang cheliang = (Cheliang)this.cheliangs.get(0);
-                    this.zhandians = this.zhandianDao.findByBancheId(cheliang.getBancheId());
+                    this.zhandians = zhandianMapper.findByBancheId(cheliang.getBancheId());
                     changwangfan(cheliang, this.zhandians);
                     if (cheliang.getCheliangWangfan().intValue() == 0) {
                         double yidong1 = Getdistance.GetLongDistance(((Shebeilishi) this.shebeilishis.get(0)).getShebeilishiShebeijingdu().doubleValue(), ((Shebeilishi) this.shebeilishis.get(0)).getShebeilishiShebeiweidu().doubleValue(), ((Zhandian) this.zhandians.get(cheliang.getCheliangCurrentzhandian().intValue() - 1)).getZhandianJingdu().doubleValue(), ((Zhandian) this.zhandians.get(cheliang.getCheliangGotozhandian().intValue() - 1)).getZhandianWeidu().doubleValue());
@@ -61,12 +65,12 @@ public class wxgotozhandian extends ActionSupport
                        if (yidong1 > 100D) {
                            if ((cheliang.getCheliangCurrentzhandian() + 1) < zhandians.size()) {
                                cheliang.setCheliangGotozhandian(cheliang.getCheliangCurrentzhandian() + 1);
-                               cheliangDao.update(cheliang);
+                               cheliangMapper.updateByPrimaryKeySelective(cheliang);
                            }
                        }
                         if (yidong2 < 100D) {
                             cheliang.setCheliangCurrentzhandian(cheliang.getCheliangGotozhandian());
-                            cheliangDao.update(cheliang);
+                            cheliangMapper.updateByPrimaryKeySelective(cheliang);
                         }
                     }
                 }
@@ -97,7 +101,7 @@ public class wxgotozhandian extends ActionSupport
         else {
             timechang = true;
         }
-        List shebeilishis = this.shebeilishiDao.findByshebeilishishijianandshebeiid(time, cheliang.getShebeiId().longValue());
+        List shebeilishis = shebeilishiMapper.findByshebeilishishijianandshebeiid(time, cheliang.getShebeiId().longValue());
         if (shebeilishis.size() > 0) {
             int thegps = 0;
             for (int i = 0; i < shebeilishis.size(); i++) {
@@ -125,7 +129,7 @@ public class wxgotozhandian extends ActionSupport
                 cheliang.setCheliangCurrentzhandian(Integer.valueOf(1));
                 cheliang.setCheliangGotozhandian(Integer.valueOf(1));
                 cheliang.setCheliangWangfantime(time);
-                this.cheliangDao.update(cheliang);
+                cheliangMapper.updateByPrimaryKeySelective(cheliang);
             } else {
                 if ((cheliang.getCheliangWangfan().intValue() == 0) && (diertiao < 200.0D)) {
                     System.out.println("车辆" + cheliang.getCheliangChepai() +"变更为返程");
@@ -133,7 +137,7 @@ public class wxgotozhandian extends ActionSupport
                     cheliang.setCheliangCurrentzhandian(Integer.valueOf(1));
                     cheliang.setCheliangGotozhandian(Integer.valueOf(1));
                     cheliang.setCheliangWangfantime(time);
-                    this.cheliangDao.update(cheliang);
+                    cheliangMapper.updateByPrimaryKeySelective(cheliang);
                 }
                 if ((cheliang.getCheliangWangfan().intValue() == 1) && (diyitiao < 200.0D)) {
                     System.out.println("车辆" + cheliang.getCheliangChepai() +"变更为去程");
@@ -141,7 +145,7 @@ public class wxgotozhandian extends ActionSupport
                     cheliang.setCheliangCurrentzhandian(Integer.valueOf(1));
                     cheliang.setCheliangGotozhandian(Integer.valueOf(1));
                     cheliang.setCheliangWangfantime(time);
-                    this.cheliangDao.update(cheliang);
+                    cheliangMapper.updateByPrimaryKeySelective(cheliang);
                 }
             }
         }

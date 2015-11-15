@@ -1,7 +1,6 @@
 package com.qrj.weixin.servlet;
 
-import com.qrj.banche.dao.WxaccesstokenDao;
-import com.qrj.banche.model.Wxaccesstoken;
+import com.qrj.banche.repository.WxaccesstokenMapper;
 import com.qrj.weixin.pojo.SNSUserInfo;
 import com.qrj.weixin.pojo.WeixinOauth2Token;
 import com.qrj.weixin.util.AdvancedUtil;
@@ -22,8 +21,8 @@ import javax.servlet.http.HttpServletResponse;
 public class OAuthServlet extends HttpServlet {
     private static final long serialVersionUID = -1847238807216447030L;
 
-    @Resource
-    private WxaccesstokenDao wxaccesstokenDao;
+//    @Resource
+//    private WxaccesstokenMapper wxaccesstokenMapper;
 
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");

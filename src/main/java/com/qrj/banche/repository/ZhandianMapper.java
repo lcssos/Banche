@@ -22,5 +22,5 @@ public interface ZhandianMapper {
     List<Zhandian> findByZhandianId(int zhandianid);
     List<Zhandian> findByBancheIdandXuhao(@Param("bancheid") int bancheid, @Param("xuhao") int xuhao);
     List<Zhandian> findByBancheIdandyincang(@Param("bancheid") int bancheid, @Param("yincang") int yincang);
-
+    List<Zhandian> findByBancheIdDESC(int bancheid);
 }

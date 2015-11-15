@@ -2,8 +2,8 @@ package com.qrj.banche.action;
 
 import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.ModelDriven;
-import com.qrj.banche.dao.*;
-import com.qrj.banche.model.*;
+import com.qrj.banche.entity.*;
+import com.qrj.banche.repository.*;
 import com.qrj.banche.util.Getdistance;
 import com.qrj.banche.vo.SearchInfo;
 import org.apache.struts2.ServletActionContext;
@@ -18,10 +18,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
@@ -31,19 +27,19 @@ public class fujinxianlu extends ActionSupport implements ModelDriven<Object> {
     private SearchInfo searchInfo = new SearchInfo();
 
     @Resource
-    private BancheDao bancheDao;
+    private BancheMapper bancheMapper;
 
     @Resource
-    private ZhandianDao zhandianDao;
+    private ZhandianMapper zhandianMapper;
 
     @Resource
-    private CheliangDao cheliangDao;
+    private CheliangMapper cheliangMapper;
 
     @Resource
-    private ShebeiDao shebeiDao;
+    private ShebeiMapper shebeiMapper;
 
     @Resource
-    private ShebeilishiDao shebeilishiDao;
+    private ShebeilishiMapper shebeilishiMapper;
 
     private List<Zhandian> zhandians;
 
@@ -65,13 +61,13 @@ public class fujinxianlu extends ActionSupport implements ModelDriven<Object> {
         HttpServletRequest request = ServletActionContext.getRequest();
         switch (searchInfo.getFujinxianlu()) {
             case 1:
-                banches = bancheDao.findByBancheNameAndstatus(searchInfo.getWxsearchbanche(), 1);
+                banches = bancheMapper.findByBancheNameAndstatus(searchInfo.getWxsearchbanche(), 1);
                 return "success";
             case 2:
-                banches = bancheDao.findByBancheId(searchInfo.getXianluid());
-                zhandians = zhandianDao.findByBancheId(searchInfo.getXianluid());
-                zhandiansdesc = zhandianDao.findByBancheIdDESC(searchInfo.getXianluid());
-                cheliangs = cheliangDao.findByBancheid(searchInfo.getXianluid());
+                banches = bancheMapper.findByBancheId(searchInfo.getXianluid());
+                zhandians = zhandianMapper.findByBancheId(searchInfo.getXianluid());
+                zhandiansdesc = zhandianMapper.findByBancheIdDESC(searchInfo.getXianluid());
+                cheliangs = cheliangMapper.findByBancheid(searchInfo.getXianluid());
                 long sbids[] = new long[cheliangs.size()];
                 int daozhan[] = new int[cheliangs.size()];
                 for (int i = 0; i < cheliangs.size(); i++) {
@@ -100,7 +96,7 @@ public class fujinxianlu extends ActionSupport implements ModelDriven<Object> {
                     }
                 }
                 if (sbids.length > 0) {
-                    shebeis = shebeiDao.fingByshebeiids(sbids);
+                    shebeis = shebeiMapper.findByshebeiids(sbids);
                     Element shebeiselement = rootelement.addElement("Shebeis");
                     for (Shebei shebei : shebeis) {
                         Element shebeielement = shebeiselement.addElement("Shebei");
@@ -131,7 +127,7 @@ public class fujinxianlu extends ActionSupport implements ModelDriven<Object> {
                     zhandianyincangelement.addText(String.valueOf(zhandian.getZhandianYincang()));
                 }
                 if (banches.get(0).getBancheStartday() == null || banches.get(0).getBancheStartday().equals("")){} else {
-                shebeilishis = shebeilishiDao.findguiji(banches.get(0).getBancheStartday(),banches.get(0).getBancheStarttime(),banches.get(0).getBancheEndday(),banches.get(0).getBancheEndtime(),shebeis.get(0).getShebeiId());
+                shebeilishis = shebeilishiMapper.findguiji(banches.get(0).getBancheStartday(),banches.get(0).getBancheStarttime(),banches.get(0).getBancheEndday(),banches.get(0).getBancheEndtime(),shebeis.get(0).getShebeiId());
                 Element biaodianselement = rootelement.addElement("Biaodians");
                 for (Shebeilishi shebeilishi : shebeilishis) {
                     Element biaodianelement = biaodianselement.addElement("Biaodian");
@@ -144,18 +140,18 @@ public class fujinxianlu extends ActionSupport implements ModelDriven<Object> {
                 return null;
             case 3:
                 Boolean refrsh = false;
-                cheliangs = cheliangDao.findByBancheid(searchInfo.getXianluid());
+                cheliangs = cheliangMapper.findByBancheid(searchInfo.getXianluid());
 
                 sbids = new long[cheliangs.size()];
                 daozhan = new int[cheliangs.size()];
                 for (Cheliang cl : cheliangs) {
-                    if ((System.currentTimeMillis() / 1000) - cl.getCheliangUpdatetime() > 60) {
+                    if ((System.currentTimeMillis() / 1000) - Long.valueOf(cl.getCheliangUpdatetime()) > 60) {
                         refrsh = true;
                     }
                 }
                 if (refrsh) {
-                    zhandians = zhandianDao.findByBancheId(searchInfo.getXianluid());
-                    zhandiansdesc = zhandianDao.findByBancheIdDESC(searchInfo.getXianluid());
+                    zhandians = zhandianMapper.findByBancheId(searchInfo.getXianluid());
+                    zhandiansdesc = zhandianMapper.findByBancheIdDESC(searchInfo.getXianluid());
                 }
                 for (int i = 0; i < cheliangs.size(); i++) {
                     sbids[i] = cheliangs.get(i).getShebeiId();
@@ -189,7 +185,7 @@ public class fujinxianlu extends ActionSupport implements ModelDriven<Object> {
                 }
 
                 if (sbids.length > 0) {
-                    shebeis = shebeiDao.fingByshebeiids(sbids);
+                    shebeis = shebeiMapper.findByshebeiids(sbids);
                     Element shebeiselement = rootelement.addElement("Shebeis");
                     for (Shebei shebei : shebeis) {
                         Element shebeielement = shebeiselement.addElement("Shebei");
@@ -237,7 +233,7 @@ public class fujinxianlu extends ActionSupport implements ModelDriven<Object> {
      * @author 刘健
      */
     private int daozhanshijian(Cheliang cheliang, long shebeiid, List<Zhandian> zhandians, List<Zhandian> zhandiansdesc) {
-        List<Shebei> theshebei = shebeiDao.findByshebeiId(shebeiid);
+        List<Shebei> theshebei = shebeiMapper.findByshebeiId(shebeiid);
         Shebei shebei = theshebei.get(0);
         List<Zhandian> thezhandian;
         if (cheliang.getCheliangWangfan() == 1) {
@@ -248,7 +244,7 @@ public class fujinxianlu extends ActionSupport implements ModelDriven<Object> {
             thezhandian = zhandians;
         }
         //获取设备最后5条GPS数据
-        List<Shebeilishi> the5lishi = shebeilishiDao.findByshebeiidthelast5(shebeiid);
+        List<Shebeilishi> the5lishi = shebeilishiMapper.findByshebeiidthelast5(shebeiid);
         int sudu = 0;
         for (int i = 0; i < the5lishi.size(); i++) {
             //最后5条平均速度

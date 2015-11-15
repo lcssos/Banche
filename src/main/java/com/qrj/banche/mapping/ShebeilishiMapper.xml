@@ -120,4 +120,19 @@
         and s.shebeilishi_shebeiid=#{shebeiid,jdbcType=INTEGER}
         order by s.shebeilishi_shebeishijian
     </select>
+    <select id="findhuodong" parameterType="string" resultType="string">
+        SELECT DISTINCT shebeilishi_shebeiid as ffd
+        FROM shebeilishi s
+        where s.shebeilishi_shebeishijian &gt; #{time,jdbcType=VARCHAR}
+    </select>
+    <select id="findByshebeilishishijianandshebeiid" resultMap="BaseResultMap">
+        select * from shebeilishi s
+        where s.shebeilishi_shebeishijian like CONCAT('%',#{time},'%') and s.shebeilishi_shebeiid=#{shebeiid,jdbcType=BIGINT}
+        order by s.shebeilishi_shebeishijian desc
+    </select>
+    <select id="finddayushebeilishishijianandshebeiid" resultMap="BaseResultMap">
+        select * from Shebeilishi s
+        where s.shebeilishi_shebeishijian &gt; #{time,jdbcType=VARCHAR} and s.shebeilishi_shebeiid=#{shebeiid,jdbcType=BIGINT}
+        order by s.shebeilishi_shebeishijian
+    </select>
 </mapper>

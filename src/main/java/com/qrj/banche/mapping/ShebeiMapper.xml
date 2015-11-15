@@ -92,6 +92,12 @@
   </update>
 
     <select id="findByshebeiId" parameterType="long" resultMap="BaseResultMap">
-        select * from shebei  s where s.shebeiId=#{shebeiid,jdbcType=BIGINT}
+        select * from shebei  s where s.shebei_id=#{shebeiid,jdbcType=BIGINT}
+    </select>
+    <select id="fingByshebeiids" resultMap="BaseResultMap">
+        select * from shebei s where s.shebei_id in
+        <foreach collection="shebeiids" item="item" index="index" open="(" separator="," close=")">
+            #{item}
+        </foreach>
     </select>
 </mapper>

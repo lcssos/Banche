@@ -24,4 +24,7 @@ public interface ShebeilishiMapper {
                                 @Param("endday") String endday,
                                 @Param("endtime") String endtime,
                                 @Param("shebeiid") long shebeiid);
+    List<String> findhuodong(String time);
+    List<Shebeilishi> findByshebeilishishijianandshebeiid(@Param("time") String time, @Param("shebeiid") long shebeiid);
+    List<Shebeilishi> finddayushebeilishishijianandshebeiid(@Param("time") String time,@Param("shebeiid") long shebeiid);
 }

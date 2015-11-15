@@ -85,8 +85,14 @@
 
 
     <select id="findByshebeiid" parameterType="integer" resultMap="BaseResultMap">
-        select * from shebeishuxing s where s.shebeishuxingShebeiid=#{shebeiid,jdbcType=INTEGER}
+        select * from shebeishuxing s where s.shebeishuxing_shebeiid=#{shebeiid,jdbcType=INTEGER}
     </select>
-
+    <select id="findByshebeiIdandStatus" resultMap="BaseResultMap">
+        select * from shebeishuxing s where
+        s.shebeishuxing_shebeistatus=#{status,jdbcType=INTEGER}
+        <if test="shebeiid != 0">
+            and s.shebeishuxing_shebeiid=#{shebeiid,jdbcType=BIGINT}
+        </if>
+    </select>
 
 </mapper>

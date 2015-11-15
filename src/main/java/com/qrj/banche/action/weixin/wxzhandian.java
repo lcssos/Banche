@@ -112,7 +112,6 @@ public class wxzhandian extends ActionSupport implements ModelDriven<Object> {
             return null;
         }
 
-        //todo
         List<Fujinzd> list;
         if (((String)request.getSession().getAttribute("openId")) == null || ((String) request.getSession().getAttribute("openId")).equals("")) {
         list = functionMapper.callfujinzd(10,"ol-XJwr-LwhyQcHFnfxQQkyl4v5o",searchInfo.getXiugaibancheid());

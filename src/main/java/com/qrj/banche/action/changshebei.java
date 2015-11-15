@@ -2,14 +2,8 @@ package com.qrj.banche.action;
 
 import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.ModelDriven;
-import com.qrj.banche.dao.BancheDao;
-import com.qrj.banche.dao.CheliangDao;
-import com.qrj.banche.dao.ShebeiDao;
-import com.qrj.banche.dao.ShebeishuxingDao;
-import com.qrj.banche.model.Banche;
-import com.qrj.banche.model.Cheliang;
-import com.qrj.banche.model.Shebei;
-import com.qrj.banche.model.Shebeishuxing;
+import com.qrj.banche.entity.Shebeishuxing;
+import com.qrj.banche.repository.ShebeishuxingMapper;
 import com.qrj.banche.vo.SearchInfo;
 import org.apache.struts2.ServletActionContext;
 import org.springframework.context.annotation.Scope;
@@ -26,7 +20,7 @@ public class changshebei extends ActionSupport implements ModelDriven<Object> {
     private SearchInfo searchInfo = new SearchInfo();
 
     @Resource
-    private ShebeishuxingDao shebeishuxingDao;
+    private ShebeishuxingMapper shebeishuxingMapper;
 
     private List<Shebeishuxing> shebeis;
 
@@ -41,22 +35,22 @@ public class changshebei extends ActionSupport implements ModelDriven<Object> {
             //searchshebei 1 查询 2删除 3更改状态
             switch (searchInfo.getSearchshebei()) {
                 case 1:
-                    shebeis = shebeishuxingDao.findByshebeiIdandStatus(searchInfo.getSearchsheibeiid(), searchInfo.getSearchshebeizhuangtai());
+                    shebeis = shebeishuxingMapper.findByshebeiIdandStatus(searchInfo.getSearchsheibeiid(), searchInfo.getSearchshebeizhuangtai());
                     return "success";
                 case 2:
                     //暂时没有删除需要，但是暂时保留
 
                 case 3:
-                    shebeis = shebeishuxingDao.findByshebeiid(searchInfo.getDeleteshebeiid());
+                    shebeis = shebeishuxingMapper.findByshebeiid(searchInfo.getDeleteshebeiid());
                     if (shebeis.size() > 0) {
                         if (searchInfo.getUpdatestatus() == 0) {
                             shebeis.get(0).setShebeishuxingShebeistatus(1);
                         } else {
                             shebeis.get(0).setShebeishuxingShebeistatus(0);
                         }
-                        shebeishuxingDao.update(shebeis.get(0));
+                        shebeishuxingMapper.updateByPrimaryKeySelective(shebeis.get(0));
                     }
-                    shebeis = shebeishuxingDao.findByshebeiIdandStatus(0, 1);
+                    shebeis = shebeishuxingMapper.findByshebeiIdandStatus(0, 1);
                     return "success";
                 default:
                     break;

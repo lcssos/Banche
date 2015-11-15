@@ -275,4 +275,7 @@
     <select id="findByCheliangid" parameterType="integer" resultMap="BaseResultMap">
         select * from cheliang c where c.cheliang_id=#{cheliangid,jdbcType=INTEGER}
     </select>
+    <select id="findByshebeiid" parameterType="long" resultMap="BaseResultMap">
+        select * from cheliang c where c.shebei_id=#{shebeiid,jdbcType=BIGINT}
+    </select>
 </mapper>

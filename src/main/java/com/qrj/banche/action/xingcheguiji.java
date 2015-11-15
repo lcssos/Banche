@@ -45,7 +45,6 @@ public class xingcheguiji extends ActionSupport implements ModelDriven<Object> {
             cheliangs = cheliangMapper.findByChepaiAndcomid(searchInfo.getChepai(), comid);
         }
         if (cheliangs.size() > 0) {
-            //todo
             List<Shebeilishi> shebeilishis = shebeilishiMapper.findguiji(searchInfo.getStartday(), searchInfo.getStarttime(), searchInfo.getEndday(), searchInfo.getEndtime(), cheliangs.get(0).getShebeiId());
             Document document = DocumentHelper.createDocument();
             Element rootelement = document.addElement("Message");

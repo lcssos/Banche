@@ -25,4 +25,5 @@ public interface CheliangMapper {
     List<Cheliang> findByChepai(String cheliang_chepai);
     List<Cheliang> findByChepaiAndcomid(@Param("chepai") String chepai, @Param("comdetid") int comid);
     List<Cheliang> findByCheliangid(int cheliangid);
+    List<Cheliang> findByshebeiid(long shebeiid);
 }

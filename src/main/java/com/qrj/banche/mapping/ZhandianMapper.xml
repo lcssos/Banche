@@ -178,16 +178,19 @@
 
 
     <select id="findByBancheId" parameterType="integer" resultMap="BaseResultMap">
-        select * from zhandian z where z.bancheId=#{bancheid,jdbcType=INTEGER} order by z.zhandianXuhao
+        select * from zhandian z where z.banche_id=#{bancheid,jdbcType=INTEGER} order by z.zhandian_xuhao
     </select>
 
     <select id="findByZhandianId" parameterType="integer" resultMap="BaseResultMap">
-        select * from zhandian z where z.zhandianId=#{zhandianId,jdbcType=INTEGER}
+        select * from zhandian z where z.zhandiand_i=#{zhandianId,jdbcType=INTEGER}
     </select>
     <select id="findByBancheIdandXuhao" resultMap="BaseResultMap">
-        select * from zhandian z where z.bancheId=#{bancheid,jdbcType=INTEGER} and z.zhandianXuhao=#{xuhao,jdbcType=INTEGER}
+        select * from zhandian z where z.banche_id=#{bancheid,jdbcType=INTEGER} and z.zhandian_xuhao=#{xuhao,jdbcType=INTEGER}
     </select>
     <select id="findByBancheIdandyincang" resultMap="BaseResultMap">
-        select * from zhandian z where z.bancheId=#{bancheid,jdbcType=INTEGER} and z.zhandianYincang=#{yincang,jdbcType=INTEGER}
+        select * from zhandian z where z.banche_id=#{bancheid,jdbcType=INTEGER} and z.zhandian_yincang=#{yincang,jdbcType=INTEGER}
+    </select>
+    <select id="findByBancheIdDESC" parameterType="integer" resultMap="BaseResultMap">
+        select * from zhandian z where z.banche_id=#{bancheid,jdbcType=INTEGER} order by z.zhandian_xuhao desc
     </select>
 </mapper>

@@ -1,6 +1,7 @@
 package com.qrj.banche.repository;
 
 import com.qrj.banche.entity.Shebei;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -18,4 +19,5 @@ public interface ShebeiMapper {
     int updateByPrimaryKey(Shebei record);
 
     List<Shebei> findByshebeiId(long shebeiid);
+    List<Shebei> findByshebeiids(@Param("shebeiids") long[] shebeiids);
 }
