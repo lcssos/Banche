@@ -1,0 +1,259 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.qrj.banche.repository.BancheMapper" >
+  <resultMap id="BaseResultMap" type="com.qrj.banche.entity.Banche" >
+    <id column="banche_id" property="bancheId" jdbcType="INTEGER" />
+    <result column="banche_name" property="bancheName" jdbcType="VARCHAR" />
+    <result column="banche_time" property="bancheTime" jdbcType="VARCHAR" />
+    <result column="banche_xianshi" property="bancheXianshi" jdbcType="VARCHAR" />
+    <result column="banche_yincang" property="bancheYincang" jdbcType="VARCHAR" />
+    <result column="comdet_id" property="comdetId" jdbcType="INTEGER" />
+    <result column="banche_yunxingtime" property="bancheYunxingtime" jdbcType="VARCHAR" />
+    <result column="banche_status" property="bancheStatus" jdbcType="INTEGER" />
+    <result column="banche_jieshao" property="bancheJieshao" jdbcType="VARCHAR" />
+    <result column="banche_start" property="bancheStart" jdbcType="VARCHAR" />
+    <result column="banche_end" property="bancheEnd" jdbcType="VARCHAR" />
+    <result column="banche_jiange" property="bancheJiange" jdbcType="VARCHAR" />
+    <result column="banche_quancheng" property="bancheQuancheng" jdbcType="VARCHAR" />
+    <result column="banche_startday" property="bancheStartday" jdbcType="VARCHAR" />
+    <result column="banche_starttime" property="bancheStarttime" jdbcType="VARCHAR" />
+    <result column="banche_endday" property="bancheEndday" jdbcType="VARCHAR" />
+    <result column="banche_endtime" property="bancheEndtime" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    banche_id, banche_name, banche_time, banche_xianshi, banche_yincang, comdet_id, banche_yunxingtime, 
+    banche_status, banche_jieshao, banche_start, banche_end, banche_jiange, banche_quancheng, 
+    banche_startday, banche_starttime, banche_endday, banche_endtime
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from banche
+    where banche_id = #{bancheId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from banche
+    where banche_id = #{bancheId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.qrj.banche.entity.Banche" >
+    insert into banche (banche_id, banche_name, banche_time, 
+      banche_xianshi, banche_yincang, comdet_id, 
+      banche_yunxingtime, banche_status, banche_jieshao, 
+      banche_start, banche_end, banche_jiange, 
+      banche_quancheng, banche_startday, banche_starttime, 
+      banche_endday, banche_endtime)
+    values (#{bancheId,jdbcType=INTEGER}, #{bancheName,jdbcType=VARCHAR}, #{bancheTime,jdbcType=VARCHAR}, 
+      #{bancheXianshi,jdbcType=VARCHAR}, #{bancheYincang,jdbcType=VARCHAR}, #{comdetId,jdbcType=INTEGER}, 
+      #{bancheYunxingtime,jdbcType=VARCHAR}, #{bancheStatus,jdbcType=INTEGER}, #{bancheJieshao,jdbcType=VARCHAR}, 
+      #{bancheStart,jdbcType=VARCHAR}, #{bancheEnd,jdbcType=VARCHAR}, #{bancheJiange,jdbcType=VARCHAR}, 
+      #{bancheQuancheng,jdbcType=VARCHAR}, #{bancheStartday,jdbcType=VARCHAR}, #{bancheStarttime,jdbcType=VARCHAR}, 
+      #{bancheEndday,jdbcType=VARCHAR}, #{bancheEndtime,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.qrj.banche.entity.Banche" >
+    insert into banche
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="bancheId != null" >
+        banche_id,
+      </if>
+      <if test="bancheName != null" >
+        banche_name,
+      </if>
+      <if test="bancheTime != null" >
+        banche_time,
+      </if>
+      <if test="bancheXianshi != null" >
+        banche_xianshi,
+      </if>
+      <if test="bancheYincang != null" >
+        banche_yincang,
+      </if>
+      <if test="comdetId != null" >
+        comdet_id,
+      </if>
+      <if test="bancheYunxingtime != null" >
+        banche_yunxingtime,
+      </if>
+      <if test="bancheStatus != null" >
+        banche_status,
+      </if>
+      <if test="bancheJieshao != null" >
+        banche_jieshao,
+      </if>
+      <if test="bancheStart != null" >
+        banche_start,
+      </if>
+      <if test="bancheEnd != null" >
+        banche_end,
+      </if>
+      <if test="bancheJiange != null" >
+        banche_jiange,
+      </if>
+      <if test="bancheQuancheng != null" >
+        banche_quancheng,
+      </if>
+      <if test="bancheStartday != null" >
+        banche_startday,
+      </if>
+      <if test="bancheStarttime != null" >
+        banche_starttime,
+      </if>
+      <if test="bancheEndday != null" >
+        banche_endday,
+      </if>
+      <if test="bancheEndtime != null" >
+        banche_endtime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="bancheId != null" >
+        #{bancheId,jdbcType=INTEGER},
+      </if>
+      <if test="bancheName != null" >
+        #{bancheName,jdbcType=VARCHAR},
+      </if>
+      <if test="bancheTime != null" >
+        #{bancheTime,jdbcType=VARCHAR},
+      </if>
+      <if test="bancheXianshi != null" >
+        #{bancheXianshi,jdbcType=VARCHAR},
+      </if>
+      <if test="bancheYincang != null" >
+        #{bancheYincang,jdbcType=VARCHAR},
+      </if>
+      <if test="comdetId != null" >
+        #{comdetId,jdbcType=INTEGER},
+      </if>
+      <if test="bancheYunxingtime != null" >
+        #{bancheYunxingtime,jdbcType=VARCHAR},
+      </if>
+      <if test="bancheStatus != null" >
+        #{bancheStatus,jdbcType=INTEGER},
+      </if>
+      <if test="bancheJieshao != null" >
+        #{bancheJieshao,jdbcType=VARCHAR},
+      </if>
+      <if test="bancheStart != null" >
+        #{bancheStart,jdbcType=VARCHAR},
+      </if>
+      <if test="bancheEnd != null" >
+        #{bancheEnd,jdbcType=VARCHAR},
+      </if>
+      <if test="bancheJiange != null" >
+        #{bancheJiange,jdbcType=VARCHAR},
+      </if>
+      <if test="bancheQuancheng != null" >
+        #{bancheQuancheng,jdbcType=VARCHAR},
+      </if>
+      <if test="bancheStartday != null" >
+        #{bancheStartday,jdbcType=VARCHAR},
+      </if>
+      <if test="bancheStarttime != null" >
+        #{bancheStarttime,jdbcType=VARCHAR},
+      </if>
+      <if test="bancheEndday != null" >
+        #{bancheEndday,jdbcType=VARCHAR},
+      </if>
+      <if test="bancheEndtime != null" >
+        #{bancheEndtime,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.qrj.banche.entity.Banche" >
+    update banche
+    <set >
+      <if test="bancheName != null" >
+        banche_name = #{bancheName,jdbcType=VARCHAR},
+      </if>
+      <if test="bancheTime != null" >
+        banche_time = #{bancheTime,jdbcType=VARCHAR},
+      </if>
+      <if test="bancheXianshi != null" >
+        banche_xianshi = #{bancheXianshi,jdbcType=VARCHAR},
+      </if>
+      <if test="bancheYincang != null" >
+        banche_yincang = #{bancheYincang,jdbcType=VARCHAR},
+      </if>
+      <if test="comdetId != null" >
+        comdet_id = #{comdetId,jdbcType=INTEGER},
+      </if>
+      <if test="bancheYunxingtime != null" >
+        banche_yunxingtime = #{bancheYunxingtime,jdbcType=VARCHAR},
+      </if>
+      <if test="bancheStatus != null" >
+        banche_status = #{bancheStatus,jdbcType=INTEGER},
+      </if>
+      <if test="bancheJieshao != null" >
+        banche_jieshao = #{bancheJieshao,jdbcType=VARCHAR},
+      </if>
+      <if test="bancheStart != null" >
+        banche_start = #{bancheStart,jdbcType=VARCHAR},
+      </if>
+      <if test="bancheEnd != null" >
+        banche_end = #{bancheEnd,jdbcType=VARCHAR},
+      </if>
+      <if test="bancheJiange != null" >
+        banche_jiange = #{bancheJiange,jdbcType=VARCHAR},
+      </if>
+      <if test="bancheQuancheng != null" >
+        banche_quancheng = #{bancheQuancheng,jdbcType=VARCHAR},
+      </if>
+      <if test="bancheStartday != null" >
+        banche_startday = #{bancheStartday,jdbcType=VARCHAR},
+      </if>
+      <if test="bancheStarttime != null" >
+        banche_starttime = #{bancheStarttime,jdbcType=VARCHAR},
+      </if>
+      <if test="bancheEndday != null" >
+        banche_endday = #{bancheEndday,jdbcType=VARCHAR},
+      </if>
+      <if test="bancheEndtime != null" >
+        banche_endtime = #{bancheEndtime,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where banche_id = #{bancheId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.qrj.banche.entity.Banche" >
+    update banche
+    set banche_name = #{bancheName,jdbcType=VARCHAR},
+      banche_time = #{bancheTime,jdbcType=VARCHAR},
+      banche_xianshi = #{bancheXianshi,jdbcType=VARCHAR},
+      banche_yincang = #{bancheYincang,jdbcType=VARCHAR},
+      comdet_id = #{comdetId,jdbcType=INTEGER},
+      banche_yunxingtime = #{bancheYunxingtime,jdbcType=VARCHAR},
+      banche_status = #{bancheStatus,jdbcType=INTEGER},
+      banche_jieshao = #{bancheJieshao,jdbcType=VARCHAR},
+      banche_start = #{bancheStart,jdbcType=VARCHAR},
+      banche_end = #{bancheEnd,jdbcType=VARCHAR},
+      banche_jiange = #{bancheJiange,jdbcType=VARCHAR},
+      banche_quancheng = #{bancheQuancheng,jdbcType=VARCHAR},
+      banche_startday = #{bancheStartday,jdbcType=VARCHAR},
+      banche_starttime = #{bancheStarttime,jdbcType=VARCHAR},
+      banche_endday = #{bancheEndday,jdbcType=VARCHAR},
+      banche_endtime = #{bancheEndtime,jdbcType=VARCHAR}
+    where banche_id = #{bancheId,jdbcType=INTEGER}
+  </update>
+
+    <select id="findByBancheId" parameterType="integer" resultMap="BaseResultMap">
+        select * from banche b where b.bancheId=#{bancheid,jdbcType=INTEGER}
+    </select>
+    <select id="findByBancheNameAndComidAndstatus" resultMap="BaseResultMap">
+        select * from banche b WHERE
+        b.banche_id=#{bancheId,jdbcType=INTEGER}
+        and b.banche_status=#{status,jdbcType=INTEGER}
+        <if test="bancheName != null">
+            and b.banche_name like #{bancheName,jdbcType=VARCHAR}
+        </if>
+    </select>
+    <select id="findBycomdetid" parameterType="integer" resultMap="BaseResultMap">
+        select * from banche b where b.comdet_id=#{comdetId,jdbcType=INTEGER}
+    </select>
+    <select id="findByBancheNameAndstatus" resultMap="BaseResultMap">
+        select * from banche b where b.banche_status=#{status,jdbcType=INTEGER}
+        <if test="bancheName != null">
+            and b.banche_name like #{bancheName,jdbcType=VARCHAR}
+        </if>
+    </select>
+    <select id="findAll" resultMap="BaseResultMap">
+        select * from banche
+    </select>
+</mapper>

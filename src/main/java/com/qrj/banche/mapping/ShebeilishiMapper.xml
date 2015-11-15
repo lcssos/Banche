@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.qrj.banche.repository.ShebeilishiMapper" >
+  <resultMap id="BaseResultMap" type="com.qrj.banche.entity.Shebeilishi" >
+    <id column="shebeilishi_id" property="shebeilishiId" jdbcType="INTEGER" />
+    <result column="shebeilishi_shebeiid" property="shebeilishiShebeiid" jdbcType="BIGINT" />
+    <result column="shebeilishi_shebeijingdu" property="shebeilishiShebeijingdu" jdbcType="DOUBLE" />
+    <result column="shebeilishi_shebeiweidu" property="shebeilishiShebeiweidu" jdbcType="DOUBLE" />
+    <result column="shebeilishi_shebeisudu" property="shebeilishiShebeisudu" jdbcType="INTEGER" />
+    <result column="shebeilishi_shebeishijian" property="shebeilishiShebeishijian" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    shebeilishi_id, shebeilishi_shebeiid, shebeilishi_shebeijingdu, shebeilishi_shebeiweidu, 
+    shebeilishi_shebeisudu, shebeilishi_shebeishijian
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from shebeilishi
+    where shebeilishi_id = #{shebeilishiId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from shebeilishi
+    where shebeilishi_id = #{shebeilishiId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.qrj.banche.entity.Shebeilishi" >
+    insert into shebeilishi (shebeilishi_id, shebeilishi_shebeiid, 
+      shebeilishi_shebeijingdu, shebeilishi_shebeiweidu, 
+      shebeilishi_shebeisudu, shebeilishi_shebeishijian
+      )
+    values (#{shebeilishiId,jdbcType=INTEGER}, #{shebeilishiShebeiid,jdbcType=BIGINT}, 
+      #{shebeilishiShebeijingdu,jdbcType=DOUBLE}, #{shebeilishiShebeiweidu,jdbcType=DOUBLE}, 
+      #{shebeilishiShebeisudu,jdbcType=INTEGER}, #{shebeilishiShebeishijian,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.qrj.banche.entity.Shebeilishi" >
+    insert into shebeilishi
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="shebeilishiId != null" >
+        shebeilishi_id,
+      </if>
+      <if test="shebeilishiShebeiid != null" >
+        shebeilishi_shebeiid,
+      </if>
+      <if test="shebeilishiShebeijingdu != null" >
+        shebeilishi_shebeijingdu,
+      </if>
+      <if test="shebeilishiShebeiweidu != null" >
+        shebeilishi_shebeiweidu,
+      </if>
+      <if test="shebeilishiShebeisudu != null" >
+        shebeilishi_shebeisudu,
+      </if>
+      <if test="shebeilishiShebeishijian != null" >
+        shebeilishi_shebeishijian,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="shebeilishiId != null" >
+        #{shebeilishiId,jdbcType=INTEGER},
+      </if>
+      <if test="shebeilishiShebeiid != null" >
+        #{shebeilishiShebeiid,jdbcType=BIGINT},
+      </if>
+      <if test="shebeilishiShebeijingdu != null" >
+        #{shebeilishiShebeijingdu,jdbcType=DOUBLE},
+      </if>
+      <if test="shebeilishiShebeiweidu != null" >
+        #{shebeilishiShebeiweidu,jdbcType=DOUBLE},
+      </if>
+      <if test="shebeilishiShebeisudu != null" >
+        #{shebeilishiShebeisudu,jdbcType=INTEGER},
+      </if>
+      <if test="shebeilishiShebeishijian != null" >
+        #{shebeilishiShebeishijian,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.qrj.banche.entity.Shebeilishi" >
+    update shebeilishi
+    <set >
+      <if test="shebeilishiShebeiid != null" >
+        shebeilishi_shebeiid = #{shebeilishiShebeiid,jdbcType=BIGINT},
+      </if>
+      <if test="shebeilishiShebeijingdu != null" >
+        shebeilishi_shebeijingdu = #{shebeilishiShebeijingdu,jdbcType=DOUBLE},
+      </if>
+      <if test="shebeilishiShebeiweidu != null" >
+        shebeilishi_shebeiweidu = #{shebeilishiShebeiweidu,jdbcType=DOUBLE},
+      </if>
+      <if test="shebeilishiShebeisudu != null" >
+        shebeilishi_shebeisudu = #{shebeilishiShebeisudu,jdbcType=INTEGER},
+      </if>
+      <if test="shebeilishiShebeishijian != null" >
+        shebeilishi_shebeishijian = #{shebeilishiShebeishijian,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where shebeilishi_id = #{shebeilishiId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.qrj.banche.entity.Shebeilishi" >
+    update shebeilishi
+    set shebeilishi_shebeiid = #{shebeilishiShebeiid,jdbcType=BIGINT},
+      shebeilishi_shebeijingdu = #{shebeilishiShebeijingdu,jdbcType=DOUBLE},
+      shebeilishi_shebeiweidu = #{shebeilishiShebeiweidu,jdbcType=DOUBLE},
+      shebeilishi_shebeisudu = #{shebeilishiShebeisudu,jdbcType=INTEGER},
+      shebeilishi_shebeishijian = #{shebeilishiShebeishijian,jdbcType=VARCHAR}
+    where shebeilishi_id = #{shebeilishiId,jdbcType=INTEGER}
+  </update>
+
+    <select id="findByshebeiidthelast5" parameterType="long" resultMap="BaseResultMap">
+        select * from shebeilishi s
+        where s.shebeilishi_shebeiid=#{shebeiid,jdbcType=BIGINT}
+        ORDER BY s.shebeilishi_id desc
+        limit 5
+    </select>
+</mapper>

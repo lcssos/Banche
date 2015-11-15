@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.qrj.banche.repository.ComdetMapper" >
+  <resultMap id="BaseResultMap" type="com.qrj.banche.entity.Comdet" >
+    <id column="comdet_id" property="comdetId" jdbcType="INTEGER" />
+    <result column="comdet_name" property="comdetName" jdbcType="VARCHAR" />
+    <result column="comdet_jianjie" property="comdetJianjie" jdbcType="VARCHAR" />
+    <result column="comdet_dizhi" property="comdetDizhi" jdbcType="VARCHAR" />
+    <result column="comdet_lianxiren" property="comdetLianxiren" jdbcType="VARCHAR" />
+    <result column="comdet_lianxitele" property="comdetLianxitele" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    comdet_id, comdet_name, comdet_jianjie, comdet_dizhi, comdet_lianxiren, comdet_lianxitele
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from comdet
+    where comdet_id = #{comdetId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from comdet
+    where comdet_id = #{comdetId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.qrj.banche.entity.Comdet" >
+    insert into comdet (comdet_id, comdet_name, comdet_jianjie, 
+      comdet_dizhi, comdet_lianxiren, comdet_lianxitele
+      )
+    values (#{comdetId,jdbcType=INTEGER}, #{comdetName,jdbcType=VARCHAR}, #{comdetJianjie,jdbcType=VARCHAR}, 
+      #{comdetDizhi,jdbcType=VARCHAR}, #{comdetLianxiren,jdbcType=VARCHAR}, #{comdetLianxitele,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.qrj.banche.entity.Comdet" >
+    insert into comdet
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="comdetId != null" >
+        comdet_id,
+      </if>
+      <if test="comdetName != null" >
+        comdet_name,
+      </if>
+      <if test="comdetJianjie != null" >
+        comdet_jianjie,
+      </if>
+      <if test="comdetDizhi != null" >
+        comdet_dizhi,
+      </if>
+      <if test="comdetLianxiren != null" >
+        comdet_lianxiren,
+      </if>
+      <if test="comdetLianxitele != null" >
+        comdet_lianxitele,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="comdetId != null" >
+        #{comdetId,jdbcType=INTEGER},
+      </if>
+      <if test="comdetName != null" >
+        #{comdetName,jdbcType=VARCHAR},
+      </if>
+      <if test="comdetJianjie != null" >
+        #{comdetJianjie,jdbcType=VARCHAR},
+      </if>
+      <if test="comdetDizhi != null" >
+        #{comdetDizhi,jdbcType=VARCHAR},
+      </if>
+      <if test="comdetLianxiren != null" >
+        #{comdetLianxiren,jdbcType=VARCHAR},
+      </if>
+      <if test="comdetLianxitele != null" >
+        #{comdetLianxitele,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.qrj.banche.entity.Comdet" >
+    update comdet
+    <set >
+      <if test="comdetName != null" >
+        comdet_name = #{comdetName,jdbcType=VARCHAR},
+      </if>
+      <if test="comdetJianjie != null" >
+        comdet_jianjie = #{comdetJianjie,jdbcType=VARCHAR},
+      </if>
+      <if test="comdetDizhi != null" >
+        comdet_dizhi = #{comdetDizhi,jdbcType=VARCHAR},
+      </if>
+      <if test="comdetLianxiren != null" >
+        comdet_lianxiren = #{comdetLianxiren,jdbcType=VARCHAR},
+      </if>
+      <if test="comdetLianxitele != null" >
+        comdet_lianxitele = #{comdetLianxitele,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where comdet_id = #{comdetId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.qrj.banche.entity.Comdet" >
+    update comdet
+    set comdet_name = #{comdetName,jdbcType=VARCHAR},
+      comdet_jianjie = #{comdetJianjie,jdbcType=VARCHAR},
+      comdet_dizhi = #{comdetDizhi,jdbcType=VARCHAR},
+      comdet_lianxiren = #{comdetLianxiren,jdbcType=VARCHAR},
+      comdet_lianxitele = #{comdetLianxitele,jdbcType=VARCHAR}
+    where comdet_id = #{comdetId,jdbcType=INTEGER}
+  </update>
+
+
+    <select id="findBycomdetId" parameterType="integer" resultMap="BaseResultMap">
+        select * from comdet c where c.comdet_id=#{comdeptid,jdbcType=INTEGER}
+    </select>
+    <select id="findByname" parameterType="string" resultMap="BaseResultMap">
+        select * from comdet c where c.comdet_name=#{comdetName,jdbcType=VARCHAR}
+    </select>
+    <select id="findAll" resultMap="BaseResultMap">
+        select * from comdet
+    </select>
+</mapper>

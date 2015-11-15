@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.qrj.banche.repository.WxlocationMapper" >
+  <resultMap id="BaseResultMap" type="com.qrj.banche.entity.Wxlocation" >
+    <id column="openId" property="openid" jdbcType="VARCHAR" />
+    <result column="jingdu" property="jingdu" jdbcType="DOUBLE" />
+    <result column="weidu" property="weidu" jdbcType="DOUBLE" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    openId, jingdu, weidu
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from wxlocation
+    where openId = #{openid,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from wxlocation
+    where openId = #{openid,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.qrj.banche.entity.Wxlocation" >
+    insert into wxlocation (openId, jingdu, weidu
+      )
+    values (#{openid,jdbcType=VARCHAR}, #{jingdu,jdbcType=DOUBLE}, #{weidu,jdbcType=DOUBLE}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.qrj.banche.entity.Wxlocation" >
+    insert into wxlocation
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="openid != null" >
+        openId,
+      </if>
+      <if test="jingdu != null" >
+        jingdu,
+      </if>
+      <if test="weidu != null" >
+        weidu,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="openid != null" >
+        #{openid,jdbcType=VARCHAR},
+      </if>
+      <if test="jingdu != null" >
+        #{jingdu,jdbcType=DOUBLE},
+      </if>
+      <if test="weidu != null" >
+        #{weidu,jdbcType=DOUBLE},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.qrj.banche.entity.Wxlocation" >
+    update wxlocation
+    <set >
+      <if test="jingdu != null" >
+        jingdu = #{jingdu,jdbcType=DOUBLE},
+      </if>
+      <if test="weidu != null" >
+        weidu = #{weidu,jdbcType=DOUBLE},
+      </if>
+    </set>
+    where openId = #{openid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.qrj.banche.entity.Wxlocation" >
+    update wxlocation
+    set jingdu = #{jingdu,jdbcType=DOUBLE},
+      weidu = #{weidu,jdbcType=DOUBLE}
+    where openId = #{openid,jdbcType=VARCHAR}
+  </update>
+
+    <select id="findByopenId" parameterType="string" resultMap="BaseResultMap">
+        select * from wxlocation w where w.openId=#{openId,jdbcType=VARCHAR}
+    </select>
+</mapper>

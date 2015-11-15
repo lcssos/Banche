@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.qrj.banche.repository.WxguanzhuMapper" >
+  <resultMap id="BaseResultMap" type="com.qrj.banche.entity.Wxguanzhu" >
+    <id column="wxguanzhu_id" property="wxguanzhuId" jdbcType="INTEGER" />
+    <result column="wxguanzhu_banchid" property="wxguanzhuBanchid" jdbcType="INTEGER" />
+    <result column="wxguanzhu_wxuserid" property="wxguanzhuWxuserid" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    wxguanzhu_id, wxguanzhu_banchid, wxguanzhu_wxuserid
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from wxguanzhu
+    where wxguanzhu_id = #{wxguanzhuId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from wxguanzhu
+    where wxguanzhu_id = #{wxguanzhuId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.qrj.banche.entity.Wxguanzhu" >
+    insert into wxguanzhu (wxguanzhu_id, wxguanzhu_banchid, wxguanzhu_wxuserid
+      )
+    values (#{wxguanzhuId,jdbcType=INTEGER}, #{wxguanzhuBanchid,jdbcType=INTEGER}, #{wxguanzhuWxuserid,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.qrj.banche.entity.Wxguanzhu" >
+    insert into wxguanzhu
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="wxguanzhuId != null" >
+        wxguanzhu_id,
+      </if>
+      <if test="wxguanzhuBanchid != null" >
+        wxguanzhu_banchid,
+      </if>
+      <if test="wxguanzhuWxuserid != null" >
+        wxguanzhu_wxuserid,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="wxguanzhuId != null" >
+        #{wxguanzhuId,jdbcType=INTEGER},
+      </if>
+      <if test="wxguanzhuBanchid != null" >
+        #{wxguanzhuBanchid,jdbcType=INTEGER},
+      </if>
+      <if test="wxguanzhuWxuserid != null" >
+        #{wxguanzhuWxuserid,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.qrj.banche.entity.Wxguanzhu" >
+    update wxguanzhu
+    <set >
+      <if test="wxguanzhuBanchid != null" >
+        wxguanzhu_banchid = #{wxguanzhuBanchid,jdbcType=INTEGER},
+      </if>
+      <if test="wxguanzhuWxuserid != null" >
+        wxguanzhu_wxuserid = #{wxguanzhuWxuserid,jdbcType=INTEGER},
+      </if>
+    </set>
+    where wxguanzhu_id = #{wxguanzhuId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.qrj.banche.entity.Wxguanzhu" >
+    update wxguanzhu
+    set wxguanzhu_banchid = #{wxguanzhuBanchid,jdbcType=INTEGER},
+      wxguanzhu_wxuserid = #{wxguanzhuWxuserid,jdbcType=INTEGER}
+    where wxguanzhu_id = #{wxguanzhuId,jdbcType=INTEGER}
+  </update>
+</mapper>

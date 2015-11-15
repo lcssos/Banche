@@ -1,0 +1,278 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.qrj.banche.repository.CheliangMapper" >
+  <resultMap id="BaseResultMap" type="com.qrj.banche.entity.Cheliang" >
+    <id column="cheliang_id" property="cheliangId" jdbcType="INTEGER" />
+    <result column="cheliang_chepai" property="cheliangChepai" jdbcType="VARCHAR" />
+    <result column="cheliang_daozhanshijian" property="cheliangDaozhanshijian" jdbcType="INTEGER" />
+    <result column="cheliang_chexing" property="cheliangChexing" jdbcType="VARCHAR" />
+    <result column="cheliang_zuoweishu" property="cheliangZuoweishu" jdbcType="INTEGER" />
+    <result column="cheliang_cheling" property="cheliangCheling" jdbcType="INTEGER" />
+    <result column="cheliang_jiashiyuan" property="cheliangJiashiyuan" jdbcType="VARCHAR" />
+    <result column="cheliang_tele" property="cheliangTele" jdbcType="VARCHAR" />
+    <result column="cheliang_wangfan" property="cheliangWangfan" jdbcType="INTEGER" />
+    <result column="cheliang_wangfantime" property="cheliangWangfantime" jdbcType="VARCHAR" />
+    <result column="cheliang_image" property="cheliangImage" jdbcType="VARCHAR" />
+    <result column="banche_id" property="bancheId" jdbcType="INTEGER" />
+    <result column="shebei_id" property="shebeiId" jdbcType="BIGINT" />
+    <result column="comdet_id" property="comdetId" jdbcType="INTEGER" />
+    <result column="cheliang_currentzhandian" property="cheliangCurrentzhandian" jdbcType="INTEGER" />
+    <result column="cheliang_gotozhandian" property="cheliangGotozhandian" jdbcType="INTEGER" />
+    <result column="cheliang_updatetime" property="cheliangUpdatetime" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    cheliang_id, cheliang_chepai, cheliang_daozhanshijian, cheliang_chexing, cheliang_zuoweishu, 
+    cheliang_cheling, cheliang_jiashiyuan, cheliang_tele, cheliang_wangfan, cheliang_wangfantime, 
+    cheliang_image, banche_id, shebei_id, comdet_id, cheliang_currentzhandian, cheliang_gotozhandian, 
+    cheliang_updatetime
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from cheliang
+    where cheliang_id = #{cheliangId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from cheliang
+    where cheliang_id = #{cheliangId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.qrj.banche.entity.Cheliang" >
+    insert into cheliang (cheliang_id, cheliang_chepai, cheliang_daozhanshijian, 
+      cheliang_chexing, cheliang_zuoweishu, cheliang_cheling, 
+      cheliang_jiashiyuan, cheliang_tele, cheliang_wangfan, 
+      cheliang_wangfantime, cheliang_image, banche_id, 
+      shebei_id, comdet_id, cheliang_currentzhandian, 
+      cheliang_gotozhandian, cheliang_updatetime
+      )
+    values (#{cheliangId,jdbcType=INTEGER}, #{cheliangChepai,jdbcType=VARCHAR}, #{cheliangDaozhanshijian,jdbcType=INTEGER}, 
+      #{cheliangChexing,jdbcType=VARCHAR}, #{cheliangZuoweishu,jdbcType=INTEGER}, #{cheliangCheling,jdbcType=INTEGER}, 
+      #{cheliangJiashiyuan,jdbcType=VARCHAR}, #{cheliangTele,jdbcType=VARCHAR}, #{cheliangWangfan,jdbcType=INTEGER}, 
+      #{cheliangWangfantime,jdbcType=VARCHAR}, #{cheliangImage,jdbcType=VARCHAR}, #{bancheId,jdbcType=INTEGER}, 
+      #{shebeiId,jdbcType=BIGINT}, #{comdetId,jdbcType=INTEGER}, #{cheliangCurrentzhandian,jdbcType=INTEGER}, 
+      #{cheliangGotozhandian,jdbcType=INTEGER}, #{cheliangUpdatetime,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.qrj.banche.entity.Cheliang" >
+    insert into cheliang
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="cheliangId != null" >
+        cheliang_id,
+      </if>
+      <if test="cheliangChepai != null" >
+        cheliang_chepai,
+      </if>
+      <if test="cheliangDaozhanshijian != null" >
+        cheliang_daozhanshijian,
+      </if>
+      <if test="cheliangChexing != null" >
+        cheliang_chexing,
+      </if>
+      <if test="cheliangZuoweishu != null" >
+        cheliang_zuoweishu,
+      </if>
+      <if test="cheliangCheling != null" >
+        cheliang_cheling,
+      </if>
+      <if test="cheliangJiashiyuan != null" >
+        cheliang_jiashiyuan,
+      </if>
+      <if test="cheliangTele != null" >
+        cheliang_tele,
+      </if>
+      <if test="cheliangWangfan != null" >
+        cheliang_wangfan,
+      </if>
+      <if test="cheliangWangfantime != null" >
+        cheliang_wangfantime,
+      </if>
+      <if test="cheliangImage != null" >
+        cheliang_image,
+      </if>
+      <if test="bancheId != null" >
+        banche_id,
+      </if>
+      <if test="shebeiId != null" >
+        shebei_id,
+      </if>
+      <if test="comdetId != null" >
+        comdet_id,
+      </if>
+      <if test="cheliangCurrentzhandian != null" >
+        cheliang_currentzhandian,
+      </if>
+      <if test="cheliangGotozhandian != null" >
+        cheliang_gotozhandian,
+      </if>
+      <if test="cheliangUpdatetime != null" >
+        cheliang_updatetime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="cheliangId != null" >
+        #{cheliangId,jdbcType=INTEGER},
+      </if>
+      <if test="cheliangChepai != null" >
+        #{cheliangChepai,jdbcType=VARCHAR},
+      </if>
+      <if test="cheliangDaozhanshijian != null" >
+        #{cheliangDaozhanshijian,jdbcType=INTEGER},
+      </if>
+      <if test="cheliangChexing != null" >
+        #{cheliangChexing,jdbcType=VARCHAR},
+      </if>
+      <if test="cheliangZuoweishu != null" >
+        #{cheliangZuoweishu,jdbcType=INTEGER},
+      </if>
+      <if test="cheliangCheling != null" >
+        #{cheliangCheling,jdbcType=INTEGER},
+      </if>
+      <if test="cheliangJiashiyuan != null" >
+        #{cheliangJiashiyuan,jdbcType=VARCHAR},
+      </if>
+      <if test="cheliangTele != null" >
+        #{cheliangTele,jdbcType=VARCHAR},
+      </if>
+      <if test="cheliangWangfan != null" >
+        #{cheliangWangfan,jdbcType=INTEGER},
+      </if>
+      <if test="cheliangWangfantime != null" >
+        #{cheliangWangfantime,jdbcType=VARCHAR},
+      </if>
+      <if test="cheliangImage != null" >
+        #{cheliangImage,jdbcType=VARCHAR},
+      </if>
+      <if test="bancheId != null" >
+        #{bancheId,jdbcType=INTEGER},
+      </if>
+      <if test="shebeiId != null" >
+        #{shebeiId,jdbcType=BIGINT},
+      </if>
+      <if test="comdetId != null" >
+        #{comdetId,jdbcType=INTEGER},
+      </if>
+      <if test="cheliangCurrentzhandian != null" >
+        #{cheliangCurrentzhandian,jdbcType=INTEGER},
+      </if>
+      <if test="cheliangGotozhandian != null" >
+        #{cheliangGotozhandian,jdbcType=INTEGER},
+      </if>
+      <if test="cheliangUpdatetime != null" >
+        #{cheliangUpdatetime,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.qrj.banche.entity.Cheliang" >
+    update cheliang
+    <set >
+      <if test="cheliangChepai != null" >
+        cheliang_chepai = #{cheliangChepai,jdbcType=VARCHAR},
+      </if>
+      <if test="cheliangDaozhanshijian != null" >
+        cheliang_daozhanshijian = #{cheliangDaozhanshijian,jdbcType=INTEGER},
+      </if>
+      <if test="cheliangChexing != null" >
+        cheliang_chexing = #{cheliangChexing,jdbcType=VARCHAR},
+      </if>
+      <if test="cheliangZuoweishu != null" >
+        cheliang_zuoweishu = #{cheliangZuoweishu,jdbcType=INTEGER},
+      </if>
+      <if test="cheliangCheling != null" >
+        cheliang_cheling = #{cheliangCheling,jdbcType=INTEGER},
+      </if>
+      <if test="cheliangJiashiyuan != null" >
+        cheliang_jiashiyuan = #{cheliangJiashiyuan,jdbcType=VARCHAR},
+      </if>
+      <if test="cheliangTele != null" >
+        cheliang_tele = #{cheliangTele,jdbcType=VARCHAR},
+      </if>
+      <if test="cheliangWangfan != null" >
+        cheliang_wangfan = #{cheliangWangfan,jdbcType=INTEGER},
+      </if>
+      <if test="cheliangWangfantime != null" >
+        cheliang_wangfantime = #{cheliangWangfantime,jdbcType=VARCHAR},
+      </if>
+      <if test="cheliangImage != null" >
+        cheliang_image = #{cheliangImage,jdbcType=VARCHAR},
+      </if>
+      <if test="bancheId != null" >
+        banche_id = #{bancheId,jdbcType=INTEGER},
+      </if>
+      <if test="shebeiId != null" >
+        shebei_id = #{shebeiId,jdbcType=BIGINT},
+      </if>
+      <if test="comdetId != null" >
+        comdet_id = #{comdetId,jdbcType=INTEGER},
+      </if>
+      <if test="cheliangCurrentzhandian != null" >
+        cheliang_currentzhandian = #{cheliangCurrentzhandian,jdbcType=INTEGER},
+      </if>
+      <if test="cheliangGotozhandian != null" >
+        cheliang_gotozhandian = #{cheliangGotozhandian,jdbcType=INTEGER},
+      </if>
+      <if test="cheliangUpdatetime != null" >
+        cheliang_updatetime = #{cheliangUpdatetime,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where cheliang_id = #{cheliangId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.qrj.banche.entity.Cheliang" >
+    update cheliang
+    set cheliang_chepai = #{cheliangChepai,jdbcType=VARCHAR},
+      cheliang_daozhanshijian = #{cheliangDaozhanshijian,jdbcType=INTEGER},
+      cheliang_chexing = #{cheliangChexing,jdbcType=VARCHAR},
+      cheliang_zuoweishu = #{cheliangZuoweishu,jdbcType=INTEGER},
+      cheliang_cheling = #{cheliangCheling,jdbcType=INTEGER},
+      cheliang_jiashiyuan = #{cheliangJiashiyuan,jdbcType=VARCHAR},
+      cheliang_tele = #{cheliangTele,jdbcType=VARCHAR},
+      cheliang_wangfan = #{cheliangWangfan,jdbcType=INTEGER},
+      cheliang_wangfantime = #{cheliangWangfantime,jdbcType=VARCHAR},
+      cheliang_image = #{cheliangImage,jdbcType=VARCHAR},
+      banche_id = #{bancheId,jdbcType=INTEGER},
+      shebei_id = #{shebeiId,jdbcType=BIGINT},
+      comdet_id = #{comdetId,jdbcType=INTEGER},
+      cheliang_currentzhandian = #{cheliangCurrentzhandian,jdbcType=INTEGER},
+      cheliang_gotozhandian = #{cheliangGotozhandian,jdbcType=INTEGER},
+      cheliang_updatetime = #{cheliangUpdatetime,jdbcType=VARCHAR}
+    where cheliang_id = #{cheliangId,jdbcType=INTEGER}
+  </update>
+
+
+    <select id="findByBancheid" parameterType="integer" resultMap="BaseResultMap">
+        select * from cheliang c where c.bancheId=#{bancheid,jdbcType=INTEGER}
+    </select>
+
+    <select id="findByChepaiAndshebeiId" resultMap="BaseResultMap">
+        select * from cheliang c
+        <where>
+            <if test="chepai !=null and chepai != ''">
+                and c.cheliang_chepai=#{chepai,jdbcType=VARCHAR}
+            </if>
+            <if test="shebeiid != 0">
+                and c.shebei_id=#{shebeiid,jdbcType=BIGINT}
+            </if>
+        </where>
+    </select>
+    <select id="findByChepaiAndshebeiIdandcomid" resultMap="BaseResultMap">
+        select * from cheliang c
+        <where>
+            <if test="chepai !=null">
+                and c.cheliang_chepai like #{chepai,jdbcType=VARCHAR}
+            </if>
+            <if test="shebeiid != 0">
+                and c.shebei_id=#{shebeiid,jdbcType=BIGINT}
+            </if>
+            <if test="comdetid != null">
+                and c.comdet_id=#{comdetid,jdbcType=INTEGER}
+            </if>
+        </where>
+    </select>
+    <select id="findByChepai" parameterType="string" resultMap="BaseResultMap">
+        select * from cheliang c where c.cheliang_chepai like #{chepai,jdbcType=VARCHAR}
+    </select>
+    <select id="findByChepaiAndcomid" resultMap="BaseResultMap">
+      select * from cheliang c where c.cheliang_chepai like #{chepai,jdbcType=VARCHAR} and c.comdet_id=#{comdetid,jdbcType=INTEGER}
+    </select>
+    <select id="findByCheliangid" parameterType="integer" resultMap="BaseResultMap">
+        select * from cheliang c where c.cheliang_id=#{cheliangid,jdbcType=INTEGER}
+    </select>
+</mapper>

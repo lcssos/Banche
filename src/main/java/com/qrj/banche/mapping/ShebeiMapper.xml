@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.qrj.banche.repository.ShebeiMapper" >
+  <resultMap id="BaseResultMap" type="com.qrj.banche.entity.Shebei" >
+    <id column="shebei_id" property="shebeiId" jdbcType="BIGINT" />
+    <result column="shebei_jingdu" property="shebeiJingdu" jdbcType="DOUBLE" />
+    <result column="shebei_weidu" property="shebeiWeidu" jdbcType="DOUBLE" />
+    <result column="shebei_sudu" property="shebeiSudu" jdbcType="INTEGER" />
+    <result column="shebei_shijian" property="shebeiShijian" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    shebei_id, shebei_jingdu, shebei_weidu, shebei_sudu, shebei_shijian
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from shebei
+    where shebei_id = #{shebeiId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from shebei
+    where shebei_id = #{shebeiId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.qrj.banche.entity.Shebei" >
+    insert into shebei (shebei_id, shebei_jingdu, shebei_weidu, 
+      shebei_sudu, shebei_shijian)
+    values (#{shebeiId,jdbcType=BIGINT}, #{shebeiJingdu,jdbcType=DOUBLE}, #{shebeiWeidu,jdbcType=DOUBLE}, 
+      #{shebeiSudu,jdbcType=INTEGER}, #{shebeiShijian,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.qrj.banche.entity.Shebei" >
+    insert into shebei
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="shebeiId != null" >
+        shebei_id,
+      </if>
+      <if test="shebeiJingdu != null" >
+        shebei_jingdu,
+      </if>
+      <if test="shebeiWeidu != null" >
+        shebei_weidu,
+      </if>
+      <if test="shebeiSudu != null" >
+        shebei_sudu,
+      </if>
+      <if test="shebeiShijian != null" >
+        shebei_shijian,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="shebeiId != null" >
+        #{shebeiId,jdbcType=BIGINT},
+      </if>
+      <if test="shebeiJingdu != null" >
+        #{shebeiJingdu,jdbcType=DOUBLE},
+      </if>
+      <if test="shebeiWeidu != null" >
+        #{shebeiWeidu,jdbcType=DOUBLE},
+      </if>
+      <if test="shebeiSudu != null" >
+        #{shebeiSudu,jdbcType=INTEGER},
+      </if>
+      <if test="shebeiShijian != null" >
+        #{shebeiShijian,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.qrj.banche.entity.Shebei" >
+    update shebei
+    <set >
+      <if test="shebeiJingdu != null" >
+        shebei_jingdu = #{shebeiJingdu,jdbcType=DOUBLE},
+      </if>
+      <if test="shebeiWeidu != null" >
+        shebei_weidu = #{shebeiWeidu,jdbcType=DOUBLE},
+      </if>
+      <if test="shebeiSudu != null" >
+        shebei_sudu = #{shebeiSudu,jdbcType=INTEGER},
+      </if>
+      <if test="shebeiShijian != null" >
+        shebei_shijian = #{shebeiShijian,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where shebei_id = #{shebeiId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.qrj.banche.entity.Shebei" >
+    update shebei
+    set shebei_jingdu = #{shebeiJingdu,jdbcType=DOUBLE},
+      shebei_weidu = #{shebeiWeidu,jdbcType=DOUBLE},
+      shebei_sudu = #{shebeiSudu,jdbcType=INTEGER},
+      shebei_shijian = #{shebeiShijian,jdbcType=VARCHAR}
+    where shebei_id = #{shebeiId,jdbcType=BIGINT}
+  </update>
+
+    <select id="findByshebeiId" parameterType="long" resultMap="BaseResultMap">
+        select * from shebei  s where s.shebeiId=#{shebeiid,jdbcType=BIGINT}
+    </select>
+</mapper>

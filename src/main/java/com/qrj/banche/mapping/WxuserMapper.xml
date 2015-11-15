@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.qrj.banche.repository.WxuserMapper" >
+  <resultMap id="BaseResultMap" type="com.qrj.banche.entity.Wxuser" >
+    <id column="wxuser_id" property="wxuserId" jdbcType="INTEGER" />
+    <result column="wxuser_username" property="wxuserUsername" jdbcType="VARCHAR" />
+    <result column="wxuser_password" property="wxuserPassword" jdbcType="VARCHAR" />
+    <result column="wxuser_tele" property="wxuserTele" jdbcType="VARCHAR" />
+    <result column="wxuser_quanxian" property="wxuserQuanxian" jdbcType="VARCHAR" />
+    <result column="wxuser_touxiang" property="wxuserTouxiang" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    wxuser_id, wxuser_username, wxuser_password, wxuser_tele, wxuser_quanxian, wxuser_touxiang
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from wxuser
+    where wxuser_id = #{wxuserId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from wxuser
+    where wxuser_id = #{wxuserId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.qrj.banche.entity.Wxuser" >
+    insert into wxuser (wxuser_id, wxuser_username, wxuser_password, 
+      wxuser_tele, wxuser_quanxian, wxuser_touxiang
+      )
+    values (#{wxuserId,jdbcType=INTEGER}, #{wxuserUsername,jdbcType=VARCHAR}, #{wxuserPassword,jdbcType=VARCHAR}, 
+      #{wxuserTele,jdbcType=VARCHAR}, #{wxuserQuanxian,jdbcType=VARCHAR}, #{wxuserTouxiang,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.qrj.banche.entity.Wxuser" >
+    insert into wxuser
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="wxuserId != null" >
+        wxuser_id,
+      </if>
+      <if test="wxuserUsername != null" >
+        wxuser_username,
+      </if>
+      <if test="wxuserPassword != null" >
+        wxuser_password,
+      </if>
+      <if test="wxuserTele != null" >
+        wxuser_tele,
+      </if>
+      <if test="wxuserQuanxian != null" >
+        wxuser_quanxian,
+      </if>
+      <if test="wxuserTouxiang != null" >
+        wxuser_touxiang,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="wxuserId != null" >
+        #{wxuserId,jdbcType=INTEGER},
+      </if>
+      <if test="wxuserUsername != null" >
+        #{wxuserUsername,jdbcType=VARCHAR},
+      </if>
+      <if test="wxuserPassword != null" >
+        #{wxuserPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="wxuserTele != null" >
+        #{wxuserTele,jdbcType=VARCHAR},
+      </if>
+      <if test="wxuserQuanxian != null" >
+        #{wxuserQuanxian,jdbcType=VARCHAR},
+      </if>
+      <if test="wxuserTouxiang != null" >
+        #{wxuserTouxiang,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.qrj.banche.entity.Wxuser" >
+    update wxuser
+    <set >
+      <if test="wxuserUsername != null" >
+        wxuser_username = #{wxuserUsername,jdbcType=VARCHAR},
+      </if>
+      <if test="wxuserPassword != null" >
+        wxuser_password = #{wxuserPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="wxuserTele != null" >
+        wxuser_tele = #{wxuserTele,jdbcType=VARCHAR},
+      </if>
+      <if test="wxuserQuanxian != null" >
+        wxuser_quanxian = #{wxuserQuanxian,jdbcType=VARCHAR},
+      </if>
+      <if test="wxuserTouxiang != null" >
+        wxuser_touxiang = #{wxuserTouxiang,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where wxuser_id = #{wxuserId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.qrj.banche.entity.Wxuser" >
+    update wxuser
+    set wxuser_username = #{wxuserUsername,jdbcType=VARCHAR},
+      wxuser_password = #{wxuserPassword,jdbcType=VARCHAR},
+      wxuser_tele = #{wxuserTele,jdbcType=VARCHAR},
+      wxuser_quanxian = #{wxuserQuanxian,jdbcType=VARCHAR},
+      wxuser_touxiang = #{wxuserTouxiang,jdbcType=VARCHAR}
+    where wxuser_id = #{wxuserId,jdbcType=INTEGER}
+  </update>
+</mapper>

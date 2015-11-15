@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.qrj.banche.repository.ZhandianMapper" >
+  <resultMap id="BaseResultMap" type="com.qrj.banche.entity.Zhandian" >
+    <id column="zhandian_id" property="zhandianId" jdbcType="INTEGER" />
+    <result column="zhandian_name" property="zhandianName" jdbcType="VARCHAR" />
+    <result column="zhandian_jingdu" property="zhandianJingdu" jdbcType="DOUBLE" />
+    <result column="zhandian_weidu" property="zhandianWeidu" jdbcType="DOUBLE" />
+    <result column="zhandian_dizhi" property="zhandianDizhi" jdbcType="VARCHAR" />
+    <result column="zhandian_miaoshu" property="zhandianMiaoshu" jdbcType="VARCHAR" />
+    <result column="zhandian_status" property="zhandianStatus" jdbcType="INTEGER" />
+    <result column="zhandian_image" property="zhandianImage" jdbcType="VARCHAR" />
+    <result column="zhandian_yincang" property="zhandianYincang" jdbcType="INTEGER" />
+    <result column="zhandian_xuhao" property="zhandianXuhao" jdbcType="INTEGER" />
+    <result column="zhandian_yuji" property="zhandianYuji" jdbcType="VARCHAR" />
+    <result column="banche_id" property="bancheId" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    zhandian_id, zhandian_name, zhandian_jingdu, zhandian_weidu, zhandian_dizhi, zhandian_miaoshu, 
+    zhandian_status, zhandian_image, zhandian_yincang, zhandian_xuhao, zhandian_yuji, 
+    banche_id
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from zhandian
+    where zhandian_id = #{zhandianId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from zhandian
+    where zhandian_id = #{zhandianId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.qrj.banche.entity.Zhandian" >
+    insert into zhandian (zhandian_id, zhandian_name, zhandian_jingdu, 
+      zhandian_weidu, zhandian_dizhi, zhandian_miaoshu, 
+      zhandian_status, zhandian_image, zhandian_yincang, 
+      zhandian_xuhao, zhandian_yuji, banche_id
+      )
+    values (#{zhandianId,jdbcType=INTEGER}, #{zhandianName,jdbcType=VARCHAR}, #{zhandianJingdu,jdbcType=DOUBLE}, 
+      #{zhandianWeidu,jdbcType=DOUBLE}, #{zhandianDizhi,jdbcType=VARCHAR}, #{zhandianMiaoshu,jdbcType=VARCHAR}, 
+      #{zhandianStatus,jdbcType=INTEGER}, #{zhandianImage,jdbcType=VARCHAR}, #{zhandianYincang,jdbcType=INTEGER}, 
+      #{zhandianXuhao,jdbcType=INTEGER}, #{zhandianYuji,jdbcType=VARCHAR}, #{bancheId,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.qrj.banche.entity.Zhandian" >
+    insert into zhandian
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="zhandianId != null" >
+        zhandian_id,
+      </if>
+      <if test="zhandianName != null" >
+        zhandian_name,
+      </if>
+      <if test="zhandianJingdu != null" >
+        zhandian_jingdu,
+      </if>
+      <if test="zhandianWeidu != null" >
+        zhandian_weidu,
+      </if>
+      <if test="zhandianDizhi != null" >
+        zhandian_dizhi,
+      </if>
+      <if test="zhandianMiaoshu != null" >
+        zhandian_miaoshu,
+      </if>
+      <if test="zhandianStatus != null" >
+        zhandian_status,
+      </if>
+      <if test="zhandianImage != null" >
+        zhandian_image,
+      </if>
+      <if test="zhandianYincang != null" >
+        zhandian_yincang,
+      </if>
+      <if test="zhandianXuhao != null" >
+        zhandian_xuhao,
+      </if>
+      <if test="zhandianYuji != null" >
+        zhandian_yuji,
+      </if>
+      <if test="bancheId != null" >
+        banche_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="zhandianId != null" >
+        #{zhandianId,jdbcType=INTEGER},
+      </if>
+      <if test="zhandianName != null" >
+        #{zhandianName,jdbcType=VARCHAR},
+      </if>
+      <if test="zhandianJingdu != null" >
+        #{zhandianJingdu,jdbcType=DOUBLE},
+      </if>
+      <if test="zhandianWeidu != null" >
+        #{zhandianWeidu,jdbcType=DOUBLE},
+      </if>
+      <if test="zhandianDizhi != null" >
+        #{zhandianDizhi,jdbcType=VARCHAR},
+      </if>
+      <if test="zhandianMiaoshu != null" >
+        #{zhandianMiaoshu,jdbcType=VARCHAR},
+      </if>
+      <if test="zhandianStatus != null" >
+        #{zhandianStatus,jdbcType=INTEGER},
+      </if>
+      <if test="zhandianImage != null" >
+        #{zhandianImage,jdbcType=VARCHAR},
+      </if>
+      <if test="zhandianYincang != null" >
+        #{zhandianYincang,jdbcType=INTEGER},
+      </if>
+      <if test="zhandianXuhao != null" >
+        #{zhandianXuhao,jdbcType=INTEGER},
+      </if>
+      <if test="zhandianYuji != null" >
+        #{zhandianYuji,jdbcType=VARCHAR},
+      </if>
+      <if test="bancheId != null" >
+        #{bancheId,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.qrj.banche.entity.Zhandian" >
+    update zhandian
+    <set >
+      <if test="zhandianName != null" >
+        zhandian_name = #{zhandianName,jdbcType=VARCHAR},
+      </if>
+      <if test="zhandianJingdu != null" >
+        zhandian_jingdu = #{zhandianJingdu,jdbcType=DOUBLE},
+      </if>
+      <if test="zhandianWeidu != null" >
+        zhandian_weidu = #{zhandianWeidu,jdbcType=DOUBLE},
+      </if>
+      <if test="zhandianDizhi != null" >
+        zhandian_dizhi = #{zhandianDizhi,jdbcType=VARCHAR},
+      </if>
+      <if test="zhandianMiaoshu != null" >
+        zhandian_miaoshu = #{zhandianMiaoshu,jdbcType=VARCHAR},
+      </if>
+      <if test="zhandianStatus != null" >
+        zhandian_status = #{zhandianStatus,jdbcType=INTEGER},
+      </if>
+      <if test="zhandianImage != null" >
+        zhandian_image = #{zhandianImage,jdbcType=VARCHAR},
+      </if>
+      <if test="zhandianYincang != null" >
+        zhandian_yincang = #{zhandianYincang,jdbcType=INTEGER},
+      </if>
+      <if test="zhandianXuhao != null" >
+        zhandian_xuhao = #{zhandianXuhao,jdbcType=INTEGER},
+      </if>
+      <if test="zhandianYuji != null" >
+        zhandian_yuji = #{zhandianYuji,jdbcType=VARCHAR},
+      </if>
+      <if test="bancheId != null" >
+        banche_id = #{bancheId,jdbcType=INTEGER},
+      </if>
+    </set>
+    where zhandian_id = #{zhandianId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.qrj.banche.entity.Zhandian" >
+    update zhandian
+    set zhandian_name = #{zhandianName,jdbcType=VARCHAR},
+      zhandian_jingdu = #{zhandianJingdu,jdbcType=DOUBLE},
+      zhandian_weidu = #{zhandianWeidu,jdbcType=DOUBLE},
+      zhandian_dizhi = #{zhandianDizhi,jdbcType=VARCHAR},
+      zhandian_miaoshu = #{zhandianMiaoshu,jdbcType=VARCHAR},
+      zhandian_status = #{zhandianStatus,jdbcType=INTEGER},
+      zhandian_image = #{zhandianImage,jdbcType=VARCHAR},
+      zhandian_yincang = #{zhandianYincang,jdbcType=INTEGER},
+      zhandian_xuhao = #{zhandianXuhao,jdbcType=INTEGER},
+      zhandian_yuji = #{zhandianYuji,jdbcType=VARCHAR},
+      banche_id = #{bancheId,jdbcType=INTEGER}
+    where zhandian_id = #{zhandianId,jdbcType=INTEGER}
+  </update>
+
+
+    <select id="findByBancheId" parameterType="integer" resultMap="BaseResultMap">
+        select * from zhandian z where z.bancheId=#{bancheid,jdbcType=INTEGER} order by z.zhandianXuhao
+    </select>
+
+    <select id="findByZhandianId" parameterType="integer" resultMap="BaseResultMap">
+        select * from zhandian z where z.zhandianId=#{zhandianId,jdbcType=INTEGER}
+    </select>
+    <select id="findByBancheIdandXuhao" resultMap="BaseResultMap">
+        select * from zhandian z where z.bancheId=#{bancheid,jdbcType=INTEGER} and z.zhandianXuhao=#{xuhao,jdbcType=INTEGER}
+    </select>
+    <select id="findByBancheIdandyincang" resultMap="BaseResultMap">
+        select * from zhandian z where z.bancheId=#{bancheid,jdbcType=INTEGER} and z.zhandianYincang=#{yincang,jdbcType=INTEGER}
+    </select>
+</mapper>

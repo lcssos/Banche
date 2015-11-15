@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.qrj.banche.repository.ShebeishuxingMapper" >
+  <resultMap id="BaseResultMap" type="com.qrj.banche.entity.Shebeishuxing" >
+    <id column="shebeishuxing_id" property="shebeishuxingId" jdbcType="INTEGER" />
+    <result column="shebeishuxing_shebeiid" property="shebeishuxingShebeiid" jdbcType="BIGINT" />
+    <result column="shebeishuxing_shoujihao" property="shebeishuxingShoujihao" jdbcType="VARCHAR" />
+    <result column="shebeishuxing_shebeistatus" property="shebeishuxingShebeistatus" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    shebeishuxing_id, shebeishuxing_shebeiid, shebeishuxing_shoujihao, shebeishuxing_shebeistatus
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from shebeishuxing
+    where shebeishuxing_id = #{shebeishuxingId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from shebeishuxing
+    where shebeishuxing_id = #{shebeishuxingId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.qrj.banche.entity.Shebeishuxing" >
+    insert into shebeishuxing (shebeishuxing_id, shebeishuxing_shebeiid, 
+      shebeishuxing_shoujihao, shebeishuxing_shebeistatus
+      )
+    values (#{shebeishuxingId,jdbcType=INTEGER}, #{shebeishuxingShebeiid,jdbcType=BIGINT}, 
+      #{shebeishuxingShoujihao,jdbcType=VARCHAR}, #{shebeishuxingShebeistatus,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.qrj.banche.entity.Shebeishuxing" >
+    insert into shebeishuxing
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="shebeishuxingId != null" >
+        shebeishuxing_id,
+      </if>
+      <if test="shebeishuxingShebeiid != null" >
+        shebeishuxing_shebeiid,
+      </if>
+      <if test="shebeishuxingShoujihao != null" >
+        shebeishuxing_shoujihao,
+      </if>
+      <if test="shebeishuxingShebeistatus != null" >
+        shebeishuxing_shebeistatus,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="shebeishuxingId != null" >
+        #{shebeishuxingId,jdbcType=INTEGER},
+      </if>
+      <if test="shebeishuxingShebeiid != null" >
+        #{shebeishuxingShebeiid,jdbcType=BIGINT},
+      </if>
+      <if test="shebeishuxingShoujihao != null" >
+        #{shebeishuxingShoujihao,jdbcType=VARCHAR},
+      </if>
+      <if test="shebeishuxingShebeistatus != null" >
+        #{shebeishuxingShebeistatus,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.qrj.banche.entity.Shebeishuxing" >
+    update shebeishuxing
+    <set >
+      <if test="shebeishuxingShebeiid != null" >
+        shebeishuxing_shebeiid = #{shebeishuxingShebeiid,jdbcType=BIGINT},
+      </if>
+      <if test="shebeishuxingShoujihao != null" >
+        shebeishuxing_shoujihao = #{shebeishuxingShoujihao,jdbcType=VARCHAR},
+      </if>
+      <if test="shebeishuxingShebeistatus != null" >
+        shebeishuxing_shebeistatus = #{shebeishuxingShebeistatus,jdbcType=INTEGER},
+      </if>
+    </set>
+    where shebeishuxing_id = #{shebeishuxingId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.qrj.banche.entity.Shebeishuxing" >
+    update shebeishuxing
+    set shebeishuxing_shebeiid = #{shebeishuxingShebeiid,jdbcType=BIGINT},
+      shebeishuxing_shoujihao = #{shebeishuxingShoujihao,jdbcType=VARCHAR},
+      shebeishuxing_shebeistatus = #{shebeishuxingShebeistatus,jdbcType=INTEGER}
+    where shebeishuxing_id = #{shebeishuxingId,jdbcType=INTEGER}
+  </update>
+
+
+
+    <select id="findByshebeiid" parameterType="integer" resultMap="BaseResultMap">
+        select * from shebeishuxing s where s.shebeishuxingShebeiid=#{shebeiid,jdbcType=INTEGER}
+    </select>
+
+
+</mapper>
