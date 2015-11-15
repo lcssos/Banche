@@ -1,6 +1,7 @@
 package com.qrj.banche.repository;
 
 import com.qrj.banche.entity.Shebeilishi;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -18,4 +19,9 @@ public interface ShebeilishiMapper {
     int updateByPrimaryKey(Shebeilishi record);
 
     List<Shebeilishi> findByshebeiidthelast5(long shebeiid);
+    List<Shebeilishi> findguiji(@Param("startday") String startday,
+                                @Param("starttime") String starttime,
+                                @Param("endday") String endday,
+                                @Param("endtime") String endtime,
+                                @Param("shebeiid") long shebeiid);
 }

@@ -113,4 +113,11 @@
         ORDER BY s.shebeilishi_id desc
         limit 5
     </select>
+    <select id="findguiji" resultMap="BaseResultMap">
+        select * from shebeilishi s
+        where s.shebeilishi_shebeishijian &gt;= CONCAT(#{startday},':',#{starttime})
+        and s.shebeilishi_shebeishijian &lt;=CONCAT(#{endday},':',#{endtime})
+        and s.shebeilishi_shebeiid=#{shebeiid,jdbcType=INTEGER}
+        order by s.shebeilishi_shebeishijian
+    </select>
 </mapper>

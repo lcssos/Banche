@@ -1,8 +1,6 @@
 package com.qrj.weixin.service;
 
-import com.qrj.banche.dao.WxlocationDao;
 import com.qrj.banche.entity.Wxlocation;
-import com.qrj.banche.model.Wxlocation;
 import com.qrj.banche.repository.WxlocationMapper;
 import com.qrj.weixin.message.resp.TextMessage;
 import com.qrj.weixin.util.MessageUtil;
@@ -108,17 +106,17 @@ public class CoreService {
                     String Latitude = requestMap.get("Latitude");
                     String baidujingweidu = changtobaidu(Double.parseDouble(Longitude), Double.parseDouble(Latitude));
 
-                    List<Wxlocation> wxlocations = wxlocationDao.findByopenId(openId);
+                    List<Wxlocation> wxlocations = wxlocationMapper.findByopenId(openId);
                     if (wxlocations.size() > 0) {
                         wxlocations.get(0).setJingdu(Double.parseDouble(baidujingweidu.split(",")[0]));
                         wxlocations.get(0).setWeidu(Double.parseDouble(baidujingweidu.split(",")[1]));
-                        wxlocationDao.update(wxlocations.get(0));
+                        wxlocationMapper.updateByPrimaryKeySelective(wxlocations.get(0));
                     } else {
                         Wxlocation wxlocation = new Wxlocation();
                         wxlocation.setOpenid(openId);
                         wxlocation.setJingdu(Double.parseDouble(baidujingweidu.split(",")[0]));
                         wxlocation.setWeidu(Double.parseDouble(baidujingweidu.split(",")[1]));
-                        wxlocationDao.save(wxlocation);
+                        wxlocationMapper.insert(wxlocation);
                     }
 //                    respContent = "<a href='http://120.24.92.204/Banche/weixin/zhanshi2.jsp?openId=" + openId + "'>rtrt</a>";
                 }

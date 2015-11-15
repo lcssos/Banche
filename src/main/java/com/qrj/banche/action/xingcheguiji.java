@@ -2,14 +2,10 @@ package com.qrj.banche.action;
 
 import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.ModelDriven;
-import com.qrj.banche.dao.CheliangDao;
-import com.qrj.banche.dao.CompanyDao;
-import com.qrj.banche.dao.ShebeilishiDao;
-import com.qrj.banche.dao.UserDao;
-import com.qrj.banche.model.Cheliang;
-import com.qrj.banche.model.Company;
-import com.qrj.banche.model.Shebeilishi;
-import com.qrj.banche.model.User;
+import com.qrj.banche.entity.Cheliang;
+import com.qrj.banche.entity.Shebeilishi;
+import com.qrj.banche.repository.CheliangMapper;
+import com.qrj.banche.repository.ShebeilishiMapper;
 import com.qrj.banche.vo.SearchInfo;
 import org.apache.struts2.ServletActionContext;
 import org.dom4j.Document;
@@ -29,10 +25,10 @@ public class xingcheguiji extends ActionSupport implements ModelDriven<Object> {
     private SearchInfo searchInfo = new SearchInfo();
 
     @Resource
-    private ShebeilishiDao shebeilishiDao;
+    private ShebeilishiMapper shebeilishiMapper;
 
     @Resource
-    private CheliangDao cheliangDao;
+    private CheliangMapper cheliangMapper;
 
     private List<Cheliang> cheliangs;
 
@@ -44,12 +40,13 @@ public class xingcheguiji extends ActionSupport implements ModelDriven<Object> {
 
 //        String[] sdf = request.getParameterValues("_submit");
         if (comid == 0) {
-            cheliangs = cheliangDao.findByChepai(searchInfo.getChepai());
+            cheliangs = cheliangMapper.findByChepai(searchInfo.getChepai());
         } else {
-            cheliangs = cheliangDao.findByChepaiAndcomid(searchInfo.getChepai(), comid);
+            cheliangs = cheliangMapper.findByChepaiAndcomid(searchInfo.getChepai(), comid);
         }
         if (cheliangs.size() > 0) {
-            List<Shebeilishi> shebeilishis = shebeilishiDao.findguiji(searchInfo.getStartday(), searchInfo.getStarttime(), searchInfo.getEndday(), searchInfo.getEndtime(), cheliangs.get(0).getShebeiId());
+            //todo
+            List<Shebeilishi> shebeilishis = shebeilishiMapper.findguiji(searchInfo.getStartday(), searchInfo.getStarttime(), searchInfo.getEndday(), searchInfo.getEndtime(), cheliangs.get(0).getShebeiId());
             Document document = DocumentHelper.createDocument();
             Element rootelement = document.addElement("Message");
             Element Shebeilishiselement = rootelement.addElement("Shebeilishis");

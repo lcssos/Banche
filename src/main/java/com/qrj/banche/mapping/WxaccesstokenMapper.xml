@@ -72,4 +72,7 @@
     <select id="findByid" parameterType="integer" resultMap="BaseResultMap">
         select * from wxaccesstoken w where w.id=#{id,jdbcType=INTEGER}
     </select>
+    <select id="findall" resultMap="BaseResultMap">
+        select * from wxaccesstoken w
+    </select>
 </mapper>

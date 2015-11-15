@@ -18,4 +18,5 @@ public interface WxaccesstokenMapper {
     int updateByPrimaryKey(Wxaccesstoken record);
 
     List<Wxaccesstoken> findByid(int id);
+    List<Wxaccesstoken> findall();
 }

@@ -1,7 +1,7 @@
 package com.qrj.weixin.servlet;
 
-import com.qrj.banche.dao.WxaccesstokenDao;
-import com.qrj.banche.model.Wxaccesstoken;
+import com.qrj.banche.entity.Wxaccesstoken;
+import com.qrj.banche.repository.WxaccesstokenMapper;
 import com.qrj.weixin.service.CoreService;
 import com.qrj.weixin.util.CommonUtil;
 import com.qrj.weixin.util.SignUtil;
@@ -32,7 +32,7 @@ public class CoreServlet extends HttpServlet {
     private CoreService coreService;
 
     @Resource
-    private WxaccesstokenDao wxaccesstokenDao;
+    private WxaccesstokenMapper wxaccesstokenMapper;
 
     /**
      * 请求校验（确认请求来自微信服务器）
@@ -63,7 +63,7 @@ public class CoreServlet extends HttpServlet {
         Calendar calendar = Calendar.getInstance();
         DateFormat dateFormat = new SimpleDateFormat("HH");
         String time = dateFormat.format(calendar.getTime());
-        List<Wxaccesstoken> wxaccesstokens = wxaccesstokenDao.findall();
+        List<Wxaccesstoken> wxaccesstokens = wxaccesstokenMapper.findall();
         if (wxaccesstokens.size() > 0) {
             Wxaccesstoken wxaccesstoken = wxaccesstokens.get(0);
             if (Integer.parseInt(wxaccesstoken.getExpirestime()) - Integer.parseInt(time) <= 2 && Integer.parseInt(wxaccesstoken.getExpirestime()) - Integer.parseInt(time) > 0) {
@@ -73,7 +73,7 @@ public class CoreServlet extends HttpServlet {
                 String accessToken = CommonUtil.getToken("wx3d76b0ea7729264d", "6a96d970addf5eebf596cfd72ae1da1b").getAccessToken();
                 wxaccesstoken.setAccessToken(accessToken);
                 wxaccesstoken.setExpirestime(String.valueOf((Integer.parseInt(time) + 2)));
-                wxaccesstokenDao.update(wxaccesstoken);
+                wxaccesstokenMapper.updateByPrimaryKeySelective(wxaccesstoken);
 
                 String jsapi_ticket = CommonUtil.getJsticket(accessToken).getJsapiticket();
                 wxaccesstokens.get(1).setAccessToken(jsapi_ticket);
@@ -85,13 +85,13 @@ public class CoreServlet extends HttpServlet {
             Wxaccesstoken wxaccesstoken = new Wxaccesstoken();
             wxaccesstoken.setAccessToken(accessToken);
             wxaccesstoken.setExpirestime(String.valueOf((Integer.parseInt(time) + 2)));
-            wxaccesstokenDao.save(wxaccesstoken);
+            wxaccesstokenMapper.insert(wxaccesstoken);
 
             String jsapi_ticket = CommonUtil.getJsticket(accessToken).getJsapiticket();
             Wxaccesstoken jsapi  = new Wxaccesstoken();
             jsapi.setAccessToken(jsapi_ticket);
             jsapi.setExpirestime(String.valueOf((Integer.parseInt(time) + 2)));
-            wxaccesstokenDao.save(jsapi);
+            wxaccesstokenMapper.insert(jsapi);
         }
     }
 
