@@ -23,9 +23,19 @@
     <task:scheduler id="scheduler" pool-size="10"/>
     <task:annotation-driven executor="executor" scheduler="scheduler"/>
 
-    <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
-        <property name="locations" value="classpath:jdbc.properties"/>
+    <!-- 初始化配置文件 -->
+    <bean id="configProperties" class="org.springframework.beans.factory.config.PropertiesFactoryBean">
+        <property name="locations">
+            <list>
+                <value>classpath:application.properties</value>
+            </list>
+        </property>
+        <property name="fileEncoding" value="utf-8"/>
     </bean>
+    <bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PreferencesPlaceholderConfigurer">
+        <property name="properties" ref="configProperties" />
+    </bean>
+
     <bean id="dataSource" init-method="init" destroy-method="close" class="com.alibaba.druid.pool.DruidDataSource">
         <!--<property name="driverClassName"-->
                   <!--value="${jdbc.driverClassName}"/>-->
@@ -108,7 +118,7 @@
 
     <!--使用注解方式配置事务-->
     <tx:annotation-driven transaction-manager="transactionManager"/>
-    <context:component-scan base-package="com.qrj.banche"/>
+    <context:component-scan base-package="com.qrj.banche,com.qrj.weixin"/>
 
 
 

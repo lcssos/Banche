@@ -186,6 +186,9 @@
             <resource>
                 <directory>src/main/resources</directory>
             </resource>
+            <resource>
+                <directory>src/main/resources/profiles/${profiles.active}</directory>
+            </resource>
         </resources>
 
 
@@ -242,4 +245,25 @@
 
         </plugins>
     </build>
+
+    <profiles>
+        <!-- 刷新开发环境数据库 -->
+        <profile>
+            <id>localhost</id>
+            <properties>
+                <jdk.version>1.7</jdk.version>
+                <profiles.active>localhost</profiles.active>
+            </properties>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+        </profile>
+        <profile>
+            <id>production</id>
+            <properties>
+                <jdk.version>1.8</jdk.version>
+                <profiles.active>production</profiles.active>
+            </properties>
+        </profile>
+    </profiles>
 </project>

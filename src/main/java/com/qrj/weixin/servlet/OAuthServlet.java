@@ -5,6 +5,7 @@ import com.qrj.weixin.pojo.SNSUserInfo;
 import com.qrj.weixin.pojo.WeixinOauth2Token;
 import com.qrj.weixin.util.AdvancedUtil;
 import org.apache.struts2.ServletActionContext;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
@@ -24,6 +25,12 @@ public class OAuthServlet extends HttpServlet {
 //    @Resource
 //    private WxaccesstokenMapper wxaccesstokenMapper;
 
+    @Value("#{configProperties['wx.appid']}")
+    private String appid;
+
+    @Value("#{configProperties['wx.appsecret']}")
+    private String appsecret;
+
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
         response.setCharacterEncoding("UTF-8");
@@ -35,7 +42,7 @@ public class OAuthServlet extends HttpServlet {
         if (!"authdeny".equals(code)) {
             // 获取网页授权access_token
             //TODO 页面上写点击地址是这个Servlet 更换APPID APPSECRET 为班车在哪的
-            WeixinOauth2Token weixinOauth2Token = AdvancedUtil.getOauth2AccessToken("wx3d76b0ea7729264d", "6a96d970addf5eebf596cfd72ae1da1b", code);
+            WeixinOauth2Token weixinOauth2Token = AdvancedUtil.getOauth2AccessToken(appid, appsecret, code);
             // 网页授权接口访问凭证
             String accessToken = weixinOauth2Token.getAccessToken();
             // 用户标识
