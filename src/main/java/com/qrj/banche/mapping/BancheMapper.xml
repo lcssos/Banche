@@ -234,7 +234,7 @@
   </update>
 
     <select id="findByBancheId" parameterType="integer" resultMap="BaseResultMap">
-        select * from banche b where b.bancheId=#{bancheid,jdbcType=INTEGER}
+        select * from banche b where b.banche_id=#{bancheid,jdbcType=INTEGER}
     </select>
     <select id="findByBancheNameAndComidAndstatus" resultMap="BaseResultMap">
         select * from banche b WHERE

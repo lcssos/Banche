@@ -238,7 +238,7 @@
 
 
     <select id="findByBancheid" parameterType="integer" resultMap="BaseResultMap">
-        select * from cheliang c where c.bancheId=#{bancheid,jdbcType=INTEGER}
+        select * from cheliang c where c.banche_id=#{bancheid,jdbcType=INTEGER}
     </select>
 
     <select id="findByChepaiAndshebeiId" resultMap="BaseResultMap">
