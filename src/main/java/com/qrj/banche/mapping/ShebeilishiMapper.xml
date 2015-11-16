@@ -131,7 +131,7 @@
         order by s.shebeilishi_shebeishijian desc
     </select>
     <select id="finddayushebeilishishijianandshebeiid" resultMap="BaseResultMap">
-        select * from Shebeilishi s
+        select * from shebeilishi s
         where s.shebeilishi_shebeishijian &gt; #{time,jdbcType=VARCHAR} and s.shebeilishi_shebeiid=#{shebeiid,jdbcType=BIGINT}
         order by s.shebeilishi_shebeishijian
     </select>

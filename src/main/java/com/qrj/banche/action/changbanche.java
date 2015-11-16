@@ -50,10 +50,10 @@ public class changbanche extends ActionSupport implements ModelDriven<Object> {
     public String execute() throws Exception {
         HttpServletRequest request = ServletActionContext.getRequest();
         if (searchInfo.getSearchform() == 2) {
-            if ((String)request.getSession().getAttribute("wxcomid") == null) {
+            if ((String) request.getSession().getAttribute("wxcomid") == null) {
                 banches = bancheMapper.findBycomdetid(1);
             } else {
-            banches = bancheMapper.findBycomdetid(Integer.valueOf((String)request.getSession().getAttribute("wxcomid")).intValue());
+                banches = bancheMapper.findBycomdetid(Integer.valueOf((String) request.getSession().getAttribute("wxcomid")).intValue());
             }
 //            creatjsconfig();
             return "wxsearchbanche";
@@ -64,7 +64,7 @@ public class changbanche extends ActionSupport implements ModelDriven<Object> {
             //查询
             case 1:
                 if (comid == 0) {
-                    String bancheName = StringUtils.isBlank(searchInfo.getSearchbanchename()) ? null :("%"+searchInfo.getSearchbanchename()+"%");
+                    String bancheName = StringUtils.isBlank(searchInfo.getSearchbanchename()) ? null : ("%" + searchInfo.getSearchbanchename() + "%");
                     banches = bancheMapper.findByBancheNameAndstatus(bancheName, searchInfo.getSearchbanchezhuangtai());
                 } else {
                     banches = bancheMapper.findByBancheNameAndComidAndstatus(searchInfo.getSearchbanchename(), comid, searchInfo.getSearchbanchezhuangtai());
@@ -72,8 +72,7 @@ public class changbanche extends ActionSupport implements ModelDriven<Object> {
                 //来自修改班车还是修改站点的请求
                 if (searchInfo.getSearchform() == 1) {
                     return "searchbanche";
-                }
-                else {
+                } else {
                     return "searchzhandian";
                 }
                 //修改状态
