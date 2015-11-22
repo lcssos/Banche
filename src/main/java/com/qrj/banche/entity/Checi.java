@@ -7,7 +7,17 @@ public class Checi {
     private Integer id;
     private Banche banche;
     private Cheliang cheliang;
+    //发车时间
+    private String fache;
 
+
+    public String getFache() {
+        return fache;
+    }
+
+    public void setFache(String fache) {
+        this.fache = fache;
+    }
 
     public Integer getId() {
         return id;

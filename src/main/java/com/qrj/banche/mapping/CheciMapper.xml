@@ -4,6 +4,7 @@
 
     <resultMap id="CheciBaseResultMap" type="com.qrj.banche.entity.Checi">
         <id column="id" property="id" jdbcType="INTEGER" />
+        <result column="fache" property="fache" jdbcType="VARCHAR" />
     </resultMap>
 
     <resultMap id="CheciResultMap" type="com.qrj.banche.entity.Checi" extends="CheciBaseResultMap">
@@ -12,15 +13,15 @@
     </resultMap>
 
     <sql id="Checi_Base_Column_List">
-        cc.id,cc.banche_id as cc_banche_id,cc.cheliang_id as cc_cheliang_id
+        cc.id,cc.banche_id as cc_banche_id,cc.cheliang_id as cc_cheliang_id,cc.fache
     </sql>
 
 
     <insert id="insert" parameterType="com.qrj.banche.entity.Checi"  useGeneratedKeys="true" keyProperty="id">
         insert into checi
-        (banche_id,cheliang_id)
+        (banche_id,cheliang_id,fache)
         VALUES
-        (#{banche.bancheId,jdbcType=INTEGER},#{cheliang.cheliangId,jdbcType=INTEGER})
+        (#{banche.bancheId,jdbcType=INTEGER},#{cheliang.cheliangId,jdbcType=INTEGER},#{fache,jdbcType=VARCHAR})
     </insert>
 
     <select id="selectByPrimaryKey" parameterType="integer" resultMap="CheciResultMap">
@@ -41,6 +42,7 @@
         from checi cc,cheliang c,banche b
         where cc.banche_id=b.banche_id and cc.cheliang_id=c.cheliang_id
         and b.banche_id=#{bancheId,jdbcType=INTEGER}
+        order by cc.fache
     </select>
 
 

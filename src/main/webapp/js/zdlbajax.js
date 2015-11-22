@@ -40,8 +40,7 @@ function yujishijian(checi) {
         type: 'POST',
         dataType: 'xml',
         data: {
-            checi: checi,
-            xiugaibancheid: document.getElementById('xiugaibancheid').value
+            checi: checi
         },
         error: function () {
             return false;
@@ -60,12 +59,14 @@ function yujishijian(checi) {
             $(xml).find('Message').each(function (i) {
                 var xx = $(this).children('Yuji').text();
                 var shijian = xx.split(",");
-                for (i = 1; i < shijian.length; i++) {
+                for (var i = 1; i < shijian.length; i++) {
                     var sj = shijian[i - 1];
-                    if (sj.length == 4) {
-                        sj = "0" + sj;
-                    }
-                    document.getElementById(i).innerText = sj;
+                    //if (sj.length == 4) {
+                    //    sj = "0" + sj;
+                    //}
+                    //document.getElementById('tm_'+i).innerText = sj;
+                    $('#tm_'+i).text(sj);
+                    console.log(sj);
                 }
             });
         }//sucess

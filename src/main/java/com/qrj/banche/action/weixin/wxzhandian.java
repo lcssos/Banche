@@ -9,6 +9,7 @@ import com.qrj.banche.util.Getdistance;
 import com.qrj.banche.vo.Fujinzd;
 import com.qrj.banche.vo.SearchInfo;
 import net.sf.json.JSON;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.struts2.ServletActionContext;
 import org.dom4j.Document;
 import org.dom4j.DocumentHelper;
@@ -42,8 +43,8 @@ public class wxzhandian extends ActionSupport implements ModelDriven<Object> {
     @Resource
     private ZhandianMapper zhandianMapper;
 
-    @Resource
-    private CheliangMapper cheliangMapper;
+//    @Resource
+//    private CheliangMapper cheliangMapper;
 
     @Resource
     private ShebeilishiMapper shebeilishiMapper;
@@ -67,9 +68,14 @@ public class wxzhandian extends ActionSupport implements ModelDriven<Object> {
 
     private List<Zhandian> zhandians;
 
+    private List<ZhandianCheci> zcs;
+
     private List<Cheliang> cheliangs;
 
-    private List<Comdet> comdets;
+//    private List<Comdet> comdets;
+    private Comdet comdet;
+
+    private List<Checi> checis;
 
     private int userzhandian = 0;
 
@@ -79,7 +85,7 @@ public class wxzhandian extends ActionSupport implements ModelDriven<Object> {
 
     private int[] strs = new int[2];
 
-    private Map map;
+//    private Map map;
 
     @Override
     public String execute() throws Exception {
@@ -107,23 +113,32 @@ public class wxzhandian extends ActionSupport implements ModelDriven<Object> {
 
         logger.info("searchInfo.getCheci():"+searchInfo.getCheci());
 
+        //ajax获取时间
         if (searchInfo.getCheci() != 0) {
-            this.zhandians = zhandianMapper.findByBancheIdandyincang(this.searchInfo.getXiugaibancheid(), 1);
-            String ss = "";
-            for (Zhandian zhandian : this.zhandians) {
-                zhandian.setZhandianYuji(zhandian.getZhandianYuji().replaceAll("：", ":"));
-                if (zhandian.getZhandianYuji().contains("，")) {
-                    ss = ss + zhandian.getZhandianYuji().split("，")[(this.searchInfo.getCheci() - 1)] + ",";
-                } else if (zhandian.getZhandianYuji().split(",").length <= this.searchInfo.getCheci() - 1)
-                    ss = ss + "无预计,";
-                else {
-                    ss = ss + zhandian.getZhandianYuji().split(",")[(this.searchInfo.getCheci() - 1)] + ",";
-                }
+            zcs = checiService.selectZhandianByCheciId(searchInfo.getCheci());
+//            StringBuilder sb = new StringBuilder();
+            List<String> sList = new ArrayList<>();
+            for(ZhandianCheci zc : zcs){
+                sList.add(zc.getZhandianYuji());
             }
+
+
+//            this.zhandians = zhandianMapper.findByBancheIdandyincang(this.searchInfo.getXiugaibancheid(), 1);
+//            String ss = "";
+//            for (Zhandian zhandian : this.zhandians) {
+//                zhandian.setZhandianYuji(zhandian.getZhandianYuji().replaceAll("：", ":"));
+//                if (zhandian.getZhandianYuji().contains("，")) {
+//                    ss = ss + zhandian.getZhandianYuji().split("，")[(this.searchInfo.getCheci() - 1)] + ",";
+//                } else if (zhandian.getZhandianYuji().split(",").length <= this.searchInfo.getCheci() - 1)
+//                    ss = ss + "无预计,";
+//                else {
+//                    ss = ss + zhandian.getZhandianYuji().split(",")[(this.searchInfo.getCheci() - 1)] + ",";
+//                }
+//            }
             Document document = DocumentHelper.createDocument();
             Element rootelement = document.addElement("Message");
             Element yujielement = rootelement.addElement("Yuji");
-            yujielement.addText(ss);
+            yujielement.addText(StringUtils.join(sList,","));
             returnxml(document);
             return null;
         }
@@ -142,53 +157,77 @@ public class wxzhandian extends ActionSupport implements ModelDriven<Object> {
 
         //指定线路离用户最近的站点?编号
         if (list.size() > 0) {
-            userzhandian = (Integer) list.get(0).getZhandianXuhao();
+            userzhandian = list.get(0).getZhandianXuhao();
         } else {
             userzhandian = 2;
         }
 
-        //获取指定线路的所有站点列表
-        zhandians = zhandianMapper.findByBancheIdandyincang(searchInfo.getXiugaibancheid(), 1);
+//        //获取指定线路的所有站点列表
+//        zhandians = zhandianMapper.findByBancheIdandyincang(searchInfo.getXiugaibancheid(), 1);
+
+
 
         //获取指定线路的车辆列表(此处应修改为车次列表)
-        cheliangs = cheliangMapper.findByBancheid(searchInfo.getXiugaibancheid());
-        if (cheliangs.size() > 0) {
-            this.comdets = comdetMapper.findBycomdetId(((Cheliang) this.cheliangs.get(0)).getComdetId().intValue());
-            dzshijian = daozhanshijian(cheliangs.get(0), cheliangs.get(0).getShebeiId(), zhandians);
+//        cheliangs = cheliangMapper.findByBancheid(searchInfo.getXiugaibancheid());
+//        if (cheliangs.size() > 0) {
+////            this.comdets = comdetMapper.findBycomdetId(((Cheliang) this.cheliangs.get(0)).getComdetId().intValue());
+//            dzshijian = daozhanshijian(cheliangs.get(0), cheliangs.get(0).getShebeiId(), zhandians);
+//
+//        } else {
+////            Banche banche = bancheMapper.findByBancheId(this.searchInfo.getXiugaibancheid());
+////            this.comdets = comdetMapper.findBycomdetId(banche.getComdetId().intValue());
+//            dzshijian = 100;
+//        }
 
-        } else {
-            Banche banche = bancheMapper.findByBancheId(this.searchInfo.getXiugaibancheid());
-            this.comdets = comdetMapper.findBycomdetId(banche.getComdetId().intValue());
-            dzshijian = 100;
-        }
-        String[] yuji = null;
-        if (zhandians.get(0).getZhandianYuji().contains("，")) {
-            yuji = zhandians.get(0).getZhandianYuji().split("，");
-        } else {
-            yuji = zhandians.get(0).getZhandianYuji().split(",");
-        }
-        for (String s : yuji) {
-            if (s.length() == 4) {
-                s = "0" + s;
-            }
-        }
-        map = new LinkedHashMap<String, String>();
-        for (int i = 0; i < yuji.length; i++) {
-            if (cheliangs.size() > 0) {
-                if (i < cheliangs.size()) {
-                    map.put(yuji[i], cheliangs.get(i).getCheliangChepai());
-                } else {
-                    map.put(yuji[i], cheliangs.get(0).getCheliangChepai());
-                }
-            } else {
-                map.put(yuji[i], "暂无车辆");
-            }
-        }
+        //获取线路
+        Banche banche = bancheMapper.selectByPrimaryKey(searchInfo.getXiugaibancheid());
+//        banche.getComdetId();
+        comdet = comdetMapper.selectByPrimaryKey(banche.getComdetId());
+
+//        String[] yuji = null;
+//        if (zhandians.get(0).getZhandianYuji().contains("，")) {
+//            yuji = zhandians.get(0).getZhandianYuji().split("，");
+//        } else {
+//            yuji = zhandians.get(0).getZhandianYuji().split(",");
+//        }
+//        for (String s : yuji) {
+//            if (s.length() == 4) {
+//                s = "0" + s;
+//            }
+//        }
+//        map = new LinkedHashMap<String, String>();
+//        for (int i = 0; i < yuji.length; i++) {
+//            if (cheliangs.size() > 0) {
+//                if (i < cheliangs.size()) {
+//                    map.put(yuji[i], cheliangs.get(i).getCheliangChepai());
+//                } else {
+//                    map.put(yuji[i], cheliangs.get(0).getCheliangChepai());
+//                }
+//            } else {
+//                map.put(yuji[i], "暂无车辆");
+//            }
+//        }
+
 
 
 
         //根据线路获取车次
+        checis = checiService.selectByBancheId(searchInfo.getXiugaibancheid());
+        //获取第一个车次的站点列表
+        zcs = checiService.selectZhandianByCheciId(checis.get(0).getId());
 
+        //todo 计算到站时间
+//        if(checis.size() > 0){
+//            List<ZhandianCheci> zhandians = checiService.selectZhandianByCheciId(checis.get(0).getId());
+//            dzshijian = daozhanshijian(checis.get(0), checis.get(0).getCheliang().getShebeiId(), zhandians);
+//        }else{
+//            dzshijian = 100;
+//        }
+
+
+//        for(Checi checi : checis){
+//            map.put(checi.getFache(),checi.getCheliang().getCheliangChepai());
+//        }
 
 
         return "success";
@@ -209,48 +248,49 @@ public class wxzhandian extends ActionSupport implements ModelDriven<Object> {
      *
      * @author 刘健
      */
-    private int daozhanshijian(Cheliang cheliang, long shebeiid, List<Zhandian> zhandians) {
-        List<Shebei> theshebei = shebeiMapper.findByshebeiId(shebeiid);
-        Shebei shebei = theshebei.get(0);
-        List<Zhandian> thezhandian;
+    private int daozhanshijian(Checi checi, long shebeiid, List<ZhandianCheci> zhandians) {
+//        List<Shebei> theshebei = shebeiMapper.findByshebeiId(shebeiid);
+//        Shebei shebei = theshebei.get(0);
+        Shebei shebei = shebeiMapper.selectByPrimaryKey(shebeiid);
+//        List<Zhandian> thezhandian;
         //出发
-        thezhandian = zhandians;
+//        thezhandian = zhandians;
         //获取设备最后5条GPS数据
         List<Shebeilishi> the5lishi = shebeilishiMapper.findByshebeiidthelast5(shebeiid);
         int sudu = 0;
         for (int i = 0; i < the5lishi.size(); i++) {
             //最后5条平均速度
-            sudu = sudu + the5lishi.get(i).getShebeilishiShebeisudu();
+            sudu += the5lishi.get(i).getShebeilishiShebeisudu();
         }
 
-//        String kaishiandjieshuzhandian = gotozhandian(thezhandian, shebei);
-//        int kaishizhandian = Integer.valueOf(kaishiandjieshuzhandian.split(",")[0]);
-//        int jieshuzhandian = Integer.valueOf(kaishiandjieshuzhandian.split(",")[1]);
-        int kaishizhandian = cheliang.getCheliangCurrentzhandian();
-        int jieshuzhandian = cheliang.getCheliangGotozhandian();
+        int kaishizhandian = checi.getCheliang().getCheliangCurrentzhandian();
+        int jieshuzhandian = checi.getCheliang().getCheliangGotozhandian();
+
         strs[0] = kaishizhandian;
         strs[1] = jieshuzhandian;
+
         jieshuzhandian = userzhandian;
         zhandiancha = jieshuzhandian - kaishizhandian;
+
         //计算所在位置
         int kaishizhandiani = 0;
         int jieshuzhandiani = 0;
-        int userzhandiani = 0;
         for (int i = 0; i < zhandians.size() - 1; i++) {
-            if (Objects.equals(zhandians.get(i).getZhandianXuhao(), kaishizhandian)) {
+            if (zhandians.get(i).getZhandian().getZhandianXuhao() == kaishizhandian) {
                 kaishizhandiani = i;
             }
-            if (Objects.equals(zhandians.get(i).getZhandianXuhao(), jieshuzhandian)) {
+            if (zhandians.get(i).getZhandian().getZhandianXuhao() == jieshuzhandian) {
                 jieshuzhandiani = i;
             }
         }
-        double juli = Getdistance.GetLongDistance(shebei.getShebeiJingdu(), shebei.getShebeiWeidu(), thezhandian.get(kaishizhandiani).getZhandianJingdu(), thezhandian.get(kaishizhandiani).getZhandianWeidu());
+        double juli = Getdistance.GetLongDistance(shebei.getShebeiJingdu(), shebei.getShebeiWeidu(), zhandians.get(kaishizhandiani).getZhandian().getZhandianJingdu(), zhandians.get(kaishizhandiani).getZhandian().getZhandianWeidu());
+
         if ((jieshuzhandiani - kaishizhandiani) >= 1) {
             for (int i = kaishizhandiani; i < jieshuzhandiani - 1; i++) {
-                juli = juli + Getdistance.GetLongDistance(thezhandian.get(i).getZhandianJingdu(), thezhandian.get(i).getZhandianWeidu(), thezhandian.get(i + 1).getZhandianJingdu(), thezhandian.get(i + 1).getZhandianWeidu());
+                juli = juli + Getdistance.GetLongDistance(zhandians.get(i).getZhandian().getZhandianJingdu(), zhandians.get(i).getZhandian().getZhandianWeidu(), zhandians.get(i + 1).getZhandian().getZhandianJingdu(), zhandians.get(i + 1).getZhandian().getZhandianWeidu());
             }
         } else {
-            juli = juli + Getdistance.GetLongDistance(thezhandian.get(kaishizhandiani).getZhandianJingdu(), thezhandian.get(kaishizhandiani).getZhandianWeidu(), thezhandian.get(jieshuzhandiani).getZhandianJingdu(), thezhandian.get(jieshuzhandiani).getZhandianWeidu());
+            juli = juli + Getdistance.GetLongDistance(zhandians.get(kaishizhandiani).getZhandian().getZhandianJingdu(), zhandians.get(kaishizhandiani).getZhandian().getZhandianWeidu(), zhandians.get(jieshuzhandiani).getZhandian().getZhandianJingdu(), zhandians.get(jieshuzhandiani).getZhandian().getZhandianWeidu());
         }
         double doubletime = (juli / 10) / (Double.parseDouble(String.valueOf(sudu / the5lishi.size())) / 36);
         int shijian = 0;
@@ -300,12 +340,12 @@ public class wxzhandian extends ActionSupport implements ModelDriven<Object> {
         this.cheliangs = cheliangs;
     }
 
-    public List<Comdet> getComdets() {
-        return comdets;
+    public Comdet getComdet() {
+        return comdet;
     }
 
-    public void setComdets(List<Comdet> comdets) {
-        this.comdets = comdets;
+    public void setComdet(Comdet comdet) {
+        this.comdet = comdet;
     }
 
     public int getDzshijian() {
@@ -332,13 +372,13 @@ public class wxzhandian extends ActionSupport implements ModelDriven<Object> {
         this.userzhandian = userzhandian;
     }
 
-    public Map getMap() {
-        return map;
-    }
-
-    public void setMap(Map map) {
-        this.map = map;
-    }
+//    public Map getMap() {
+//        return map;
+//    }
+//
+//    public void setMap(Map map) {
+//        this.map = map;
+//    }
 
     public int[] getStrs() {
         return strs;
@@ -348,4 +388,19 @@ public class wxzhandian extends ActionSupport implements ModelDriven<Object> {
         this.strs = strs;
     }
 
+    public List<ZhandianCheci> getZcs() {
+        return zcs;
+    }
+
+    public void setZcs(List<ZhandianCheci> zcs) {
+        this.zcs = zcs;
+    }
+
+    public List<Checi> getChecis() {
+        return checis;
+    }
+
+    public void setChecis(List<Checi> checis) {
+        this.checis = checis;
+    }
 }

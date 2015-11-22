@@ -78,9 +78,10 @@ public class changcheliang extends ActionSupport implements ModelDriven<Object> 
                 if (searchInfo.getXiugaiclshebeiid() == 0 || searchInfo.getXiugaiclbancheid() == 0) {
 
                 } else {
-                    List<Shebei> shebeis = shebeiMapper.findByshebeiId(searchInfo.getXiugaiclshebeiid());
+//                    List<Shebei> shebeis = shebeiMapper.findByshebeiId(searchInfo.getXiugaiclshebeiid());
+                    Shebei shebei = shebeiMapper.selectByPrimaryKey(searchInfo.getXiugaiclshebeiid());
 //                    Banche banche = bancheMapper.findByBancheId(searchInfo.getXiugaiclbancheid());
-                    if (shebeis.size() == 0) {
+                    if (null == shebei) {
                         cuowumessage = "没有该设备ID，请重新修改";
                         return "faild";
                     }

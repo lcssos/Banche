@@ -18,6 +18,6 @@ public interface ShebeiMapper {
 
     int updateByPrimaryKey(Shebei record);
 
-    List<Shebei> findByshebeiId(long shebeiid);
+//    List<Shebei> findByshebeiId(long shebeiid);
     List<Shebei> findByshebeiids(@Param("shebeiids") long[] shebeiids);
 }

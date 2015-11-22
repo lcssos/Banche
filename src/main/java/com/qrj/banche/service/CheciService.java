@@ -52,4 +52,13 @@ public class CheciService {
             checiMapper.updateZhandian(zc);
         }
     }
+
+
+    public List<Checi> selectByBancheId(Integer bancheId){
+        return checiMapper.selectByBancheId(bancheId);
+    }
+
+    public List<ZhandianCheci> selectZhandianByCheciId(Integer checiId){
+        return checiMapper.selectZhandianByCheciId(checiId);
+    }
 }

@@ -236,8 +236,9 @@ public class fujinxianlu extends ActionSupport implements ModelDriven<Object> {
      * @author 刘健
      */
     private int daozhanshijian(Cheliang cheliang, long shebeiid, List<Zhandian> zhandians, List<Zhandian> zhandiansdesc) {
-        List<Shebei> theshebei = shebeiMapper.findByshebeiId(shebeiid);
-        Shebei shebei = theshebei.get(0);
+//        List<Shebei> theshebei = shebeiMapper.findByshebeiId(shebeiid);
+//        Shebei shebei = theshebei.get(0);
+        Shebei shebei = shebeiMapper.selectByPrimaryKey(shebeiid);
         List<Zhandian> thezhandian;
         if (cheliang.getCheliangWangfan() == 1) {
             //返回和出发站点顺序相反
