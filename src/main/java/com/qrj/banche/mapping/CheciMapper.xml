@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.qrj.banche.repository.CheciMapper" >
+
+    <resultMap id="CheciBaseResultMap" type="com.qrj.banche.entity.Checi">
+        <id column="id" property="id" jdbcType="INTEGER" />
+    </resultMap>
+
+    <resultMap id="CheciResultMap" type="com.qrj.banche.entity.Checi" extends="CheciBaseResultMap">
+        <association property="banche" resultMap="com.qrj.banche.repository.BancheMapper.BaseResultMap" />
+        <association property="cheliang" resultMap="com.qrj.banche.repository.CheliangMapper.BaseResultMap" />
+    </resultMap>
+
+    <sql id="Checi_Base_Column_List">
+        cc.id,cc.banche_id as cc_banche_id,cc.cheliang_id as cc_cheliang_id
+    </sql>
+
+
+    <insert id="insert" parameterType="com.qrj.banche.entity.Checi"  useGeneratedKeys="true" keyProperty="id">
+        insert into checi
+        (banche_id,cheliang_id)
+        VALUES
+        (#{banche.bancheId,jdbcType=INTEGER},#{cheliang.cheliangId,jdbcType=INTEGER})
+    </insert>
+
+    <select id="selectByPrimaryKey" parameterType="integer" resultMap="CheciResultMap">
+        SELECT
+        <include refid="Checi_Base_Column_List" />,
+        <include refid="com.qrj.banche.repository.BancheMapper.Base_Column_List" />,
+        <include refid="com.qrj.banche.repository.CheliangMapper.Base_Column_List" />
+        from checi cc,cheliang c,banche b
+        where cc.banche_id=b.banche_id and cc.cheliang_id=c.cheliang_id
+        and cc.id=#{id,jdbcType=INTEGER}
+    </select>
+
+    <select id="selectByBancheId" parameterType="integer" resultMap="CheciResultMap">
+        SELECT
+        <include refid="Checi_Base_Column_List" />,
+        <include refid="com.qrj.banche.repository.BancheMapper.Base_Column_List" />,
+        <include refid="com.qrj.banche.repository.CheliangMapper.Base_Column_List" />
+        from checi cc,cheliang c,banche b
+        where cc.banche_id=b.banche_id and cc.cheliang_id=c.cheliang_id
+        and b.banche_id=#{bancheId,jdbcType=INTEGER}
+    </select>
+
+
+    <select id="findAll" resultMap="CheciResultMap">
+        SELECT
+        <include refid="Checi_Base_Column_List" />,
+        <include refid="com.qrj.banche.repository.BancheMapper.Base_Column_List" />,
+        <include refid="com.qrj.banche.repository.CheliangMapper.Base_Column_List" />
+        from checi cc,cheliang c,banche b
+        where cc.banche_id=b.banche_id and cc.cheliang_id=c.cheliang_id
+        order by b.banche_id desc
+    </select>
+
+
+    <!--车次站点-->
+    <resultMap id="ZhandianResultMap" type="com.qrj.banche.entity.ZhandianCheci">
+        <id column="zc_id" property="id" jdbcType="INTEGER" />
+        <result column="zc_zhandian_yuji" property="zhandianYuji" jdbcType="VARCHAR" />
+        <association property="zhandian" resultMap="com.qrj.banche.repository.ZhandianMapper.BaseResultMap" />
+    </resultMap>
+
+    <select id="selectZhandianByCheciId" parameterType="integer" resultMap="ZhandianResultMap">
+        SELECT
+        zc.id as zc_id,zc.zhandian_yuji as zc_zhandian_yuji,
+        <include refid="com.qrj.banche.repository.ZhandianMapper.Base_Column_List" />
+        from zhandian z
+        left join zhandian_checi zc on z.zhandian_id=zc.zhandian_id
+        where z.banche_id=(select banche_id from checi where id=#{checiId,jdbcType=INTEGER})
+        and (zc.checi_id=#{checiId,jdbcType=INTEGER} or zc.checi_id is null)
+        order by z.zhandian_xuhao
+    </select>
+
+
+
+    <insert id="insertZhandian" parameterType="com.qrj.banche.entity.ZhandianCheci">
+        insert into zhandian_checi (zhandian_id,checi_id,zhandian_yuji) VALUES
+        (#{zhandian.zhandianId,jdbcType=INTEGER},#{checiId,jdbcType=INTEGER},#{zhandianYuji,jdbcType=VARCHAR})
+    </insert>
+
+    <update id="updateZhandian" parameterType="com.qrj.banche.entity.ZhandianCheci">
+        update zhandian_checi set zhandian_yuji=#{zhandianYuji,jdbcType=VARCHAR}
+        where id=#{id,jdbcType=INTEGER}
+    </update>
+
+</mapper>

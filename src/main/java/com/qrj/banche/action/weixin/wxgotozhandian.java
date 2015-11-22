@@ -31,11 +31,12 @@ public class wxgotozhandian extends ActionSupport
     @Resource
     private CheliangMapper cheliangMapper;
 
-    @Resource
-    private ZhandianMapper zhandianMapper;
+//    @Resource
+//    private ZhandianMapper zhandianMapper;
 
     @Resource
     private ShebeilishiMapper shebeilishiMapper;
+
     private List<Cheliang> cheliangs;
     private List<Zhandian> zhandians;
     private List<Shebeilishi> shebeilishis;
@@ -43,7 +44,7 @@ public class wxgotozhandian extends ActionSupport
     public String execute() throws Exception { HttpServletRequest request = ServletActionContext.getRequest();
         return null; }
 
-    @Scheduled(cron="0/25 * * * * ?")
+//    @Scheduled(cron="0/25 * * * * ?")
     public void changgotozhandian()
     {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy:MM:dd:HH:mm:ss");
@@ -57,7 +58,8 @@ public class wxgotozhandian extends ActionSupport
                 this.cheliangs = cheliangMapper.findByshebeiid(Long.valueOf((String)shebeis.get(z)).longValue());
                 if (this.cheliangs.size() > 0) {
                     Cheliang cheliang = (Cheliang)this.cheliangs.get(0);
-                    this.zhandians = zhandianMapper.findByBancheId(cheliang.getBancheId());
+                    //todo
+//                    this.zhandians = zhandianMapper.findByBancheId(cheliang.getBancheId());
                     changwangfan(cheliang, this.zhandians);
                     if (cheliang.getCheliangWangfan().intValue() == 0) {
                         double yidong1 = Getdistance.GetLongDistance(((Shebeilishi) this.shebeilishis.get(0)).getShebeilishiShebeijingdu().doubleValue(), ((Shebeilishi) this.shebeilishis.get(0)).getShebeilishiShebeiweidu().doubleValue(), ((Zhandian) this.zhandians.get(cheliang.getCheliangCurrentzhandian().intValue() - 1)).getZhandianJingdu().doubleValue(), ((Zhandian) this.zhandians.get(cheliang.getCheliangGotozhandian().intValue() - 1)).getZhandianWeidu().doubleValue());

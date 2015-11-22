@@ -89,7 +89,7 @@
                 <s:if test="#attr.myparam.equals('addcheci')">
                     <li class="active"><a href="addcheci.jsp" class="icon-file-text"> 车次管理</a>
                         <%--<ul>--%>
-                            <%--<li class="active"><a href="addcheci.jsp">新增车次</a></li>--%>
+                            <%--<li class="active"><a href="getcheci.jsp">新增车次</a></li>--%>
                             <%--<li><a href="changcheci.jsp">修改车次</a></li>--%>
                         <%--</ul>--%>
                     </li>
@@ -97,7 +97,7 @@
                 <s:elseif test="#attr.myparam.equals('changcheci')">
                     <li class="active"><a href="addcheci.jsp" class="icon-file-text"> 车次管理</a>
                         <%--<ul>--%>
-                            <%--<li><a href="addcheci.jsp">新增车次</a></li>--%>
+                            <%--<li><a href="getcheci.jsp">新增车次</a></li>--%>
                             <%--<li class="active"><a href="changcheci.jsp">修改车次</a></li>--%>
                         <%--</ul>--%>
                     </li>

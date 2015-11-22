@@ -18,7 +18,7 @@ public interface BancheMapper {
 
     int updateByPrimaryKey(Banche record);
 
-    List<Banche> findByBancheId(int bancheid);
+    Banche findByBancheId(int bancheid);
     List<Banche> findByBancheNameAndComidAndstatus(@Param("bancheName") String banche_name, @Param("comdetId") int comdet_id, @Param("status") int status);
     List<Banche> findBycomdetid(int comdetId);
     List<Banche> findByBancheNameAndstatus(@Param("bancheName") String banche_name, @Param("status") int status);

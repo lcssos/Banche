@@ -23,7 +23,7 @@ public class Cheliang {
 
     private String cheliangImage;
 
-    private Integer bancheId;
+//    private Integer bancheId;
 
     private Long shebeiId;
 
@@ -121,14 +121,6 @@ public class Cheliang {
 
     public void setCheliangImage(String cheliangImage) {
         this.cheliangImage = cheliangImage == null ? null : cheliangImage.trim();
-    }
-
-    public Integer getBancheId() {
-        return bancheId;
-    }
-
-    public void setBancheId(Integer bancheId) {
-        this.bancheId = bancheId;
     }
 
     public Long getShebeiId() {

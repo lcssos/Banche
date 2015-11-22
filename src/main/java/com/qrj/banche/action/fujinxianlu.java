@@ -18,6 +18,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -64,9 +65,11 @@ public class fujinxianlu extends ActionSupport implements ModelDriven<Object> {
                 banches = bancheMapper.findByBancheNameAndstatus(searchInfo.getWxsearchbanche(), 1);
                 return "success";
             case 2:
-                banches = bancheMapper.findByBancheId(searchInfo.getXianluid());
+                banches = new ArrayList<>();
+                banches.add(bancheMapper.findByBancheId(searchInfo.getXianluid()));
                 zhandians = zhandianMapper.findByBancheId(searchInfo.getXianluid());
                 zhandiansdesc = zhandianMapper.findByBancheIdDESC(searchInfo.getXianluid());
+                //todo
                 cheliangs = cheliangMapper.findByBancheid(searchInfo.getXianluid());
                 long sbids[] = new long[cheliangs.size()];
                 int daozhan[] = new int[cheliangs.size()];

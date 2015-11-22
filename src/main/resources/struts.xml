@@ -8,6 +8,16 @@
     <constant name="struts.multipart.maxSize" value="1024102400"/>
 
     <package name="/" extends="struts-default">
+        
+        <result-types>
+            <result-type name="json" class="org.apache.struts2.json.JSONResult"></result-type>
+        </result-types>
+        
+        <interceptors>
+            <interceptor name="json" class="org.apache.struts2.json.JSONInterceptor" />
+        </interceptors>
+        
+        
         <action name="denglu" class="denglu">
             <result name="success">/index.jsp</result>
             <result name="faild">/login.jsp</result>
@@ -18,6 +28,20 @@
         <action name="addshebei" class="addshebei">
             <result name="success">/addshebei.jsp</result>
         </action>
+
+        <action name="getcheci" class="getcheci">
+            <result type="json" ></result>
+        </action>
+        <action name="addcheci" class="addcheci">
+            <result type="json"></result>
+        </action>
+        <action name="getzhandiancheci" class="getzhandiancheci">
+            <result type="json" />
+        </action>
+        <action name="addzhandiancheci" class="addzhandiancheci">
+            <result type="json" />
+        </action>
+
         <action name="addcheliang" class="addcheliang">
             <result name="success">/addcheliang.jsp</result>
             <result name="faild">/addcheliang.jsp</result>

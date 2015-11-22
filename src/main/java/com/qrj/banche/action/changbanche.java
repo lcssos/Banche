@@ -39,6 +39,7 @@ public class changbanche extends ActionSupport implements ModelDriven<Object> {
     private WxaccesstokenMapper wxaccesstokenMapper;
 
     private List<Banche> banches;
+//    private Banche banche;
 
     private String nonceStr;
 
@@ -50,6 +51,7 @@ public class changbanche extends ActionSupport implements ModelDriven<Object> {
     public String execute() throws Exception {
         HttpServletRequest request = ServletActionContext.getRequest();
         if (searchInfo.getSearchform() == 2) {
+            //根据单位ID获取所有线路
             if ((String) request.getSession().getAttribute("wxcomid") == null) {
                 banches = bancheMapper.findBycomdetid(1);
             } else {
@@ -77,9 +79,9 @@ public class changbanche extends ActionSupport implements ModelDriven<Object> {
                 }
                 //修改状态
             case 2:
-                banches = bancheMapper.findByBancheId(searchInfo.getXiugaibancheid());
-                if (banches.size() > 0) {
-                    Banche banche = banches.get(0);
+                Banche banche = bancheMapper.findByBancheId(searchInfo.getXiugaibancheid());
+//                if (banches.size() > 0) {
+//                    Banche banche = banches.get(0);
                     if (banche.getComdetId() == comid || comid == 0) {
                         if (searchInfo.getXiugaibanchestatus() == 1) {
                             banche.setBancheStatus(0);
@@ -88,14 +90,14 @@ public class changbanche extends ActionSupport implements ModelDriven<Object> {
                         }
                         bancheMapper.updateByPrimaryKeySelective(banche);
                     }
-                }
-                banches = null;
+//                }
+//                banches = null;
                 return "searchbanche";
             //删除
             case 3:
-                banches = bancheMapper.findByBancheId(searchInfo.getXiugaibancheid());
-                if (banches.size() > 0) {
-                    Banche banche = banches.get(0);
+                 banche = bancheMapper.findByBancheId(searchInfo.getXiugaibancheid());
+//                if (banches.size() > 0) {
+//                    Banche banche = banches.get(0);
                     if (banche.getComdetId() == comid || comid == 0) {
                         List<Zhandian> zhandians = zhandianMapper.findByBancheId(banche.getBancheId());
                         for (Zhandian zhandian : zhandians) {
@@ -103,25 +105,25 @@ public class changbanche extends ActionSupport implements ModelDriven<Object> {
                         }
                         bancheMapper.deleteByPrimaryKey(banche.getBancheId());
                     }
-                }
-                banches = null;
+//                }
+//                banches = null;
                 return "searchbanche";
             //查询
             case 4:
-                banches = bancheMapper.findByBancheId(searchInfo.getXiugaibancheid());
+                banche = bancheMapper.findByBancheId(searchInfo.getXiugaibancheid());
 
-                if (banches.size() > 0) {
-                    Banche banche = banches.get(0);
+//                if (banches.size() > 0) {
+//                    Banche banche = banches.get(0);
                     if (banche.getComdetId() == comid || comid == 0) {
                         return "xiugai";
                     }
-                }
+//                }
                 return "searchbanche";
             //更新
             case 5:
-                banches = bancheMapper.findByBancheId(searchInfo.getXiugaibancheid());
-                if (banches.size() > 0) {
-                    Banche banche = banches.get(0);
+                banche = bancheMapper.findByBancheId(searchInfo.getXiugaibancheid());
+//                if (banches.size() > 0) {
+//                    Banche banche = banches.get(0);
                     if (banche.getComdetId() == comid || comid == 0) {
                         banche.setBancheName(searchInfo.getXiugaibanchename());
                         banche.setBancheJieshao(searchInfo.getXiugaibanchejianjie());
@@ -136,7 +138,7 @@ public class changbanche extends ActionSupport implements ModelDriven<Object> {
                         banche.setBancheEndtime(searchInfo.getXiugaibcendtime());
                         bancheMapper.updateByPrimaryKeySelective(banche);
                     }
-                }
+//                }
                 return "searchbanche";
             default:
                 break;

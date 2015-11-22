@@ -79,7 +79,7 @@ public class changcheliang extends ActionSupport implements ModelDriven<Object> 
 
                 } else {
                     List<Shebei> shebeis = shebeiMapper.findByshebeiId(searchInfo.getXiugaiclshebeiid());
-                    List<Banche> banches = bancheMapper.findByBancheId(searchInfo.getXiugaiclbancheid());
+//                    Banche banche = bancheMapper.findByBancheId(searchInfo.getXiugaiclbancheid());
                     if (shebeis.size() == 0) {
                         cuowumessage = "没有该设备ID，请重新修改";
                         return "faild";
@@ -115,7 +115,7 @@ public class changcheliang extends ActionSupport implements ModelDriven<Object> 
                     cheliang.setCheliangTele(searchInfo.getXiugaicltele());
                     cheliang.setCheliangImage(searchInfo.getXiugaicheliangzhaopian());
                     cheliang.setShebeiId(searchInfo.getXiugaiclshebeiid());
-                    cheliang.setBancheId(searchInfo.getXiugaiclbancheid());
+//                    cheliang.setBancheId(searchInfo.getXiugaiclbancheid());
                     if (searchInfo.getClfilename().length() > 0) {
                         cheliang.setCheliangImage("/upload/" + time + prefix);
                     }

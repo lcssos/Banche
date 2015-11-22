@@ -13,7 +13,7 @@
     <result column="cheliang_wangfan" property="cheliangWangfan" jdbcType="INTEGER" />
     <result column="cheliang_wangfantime" property="cheliangWangfantime" jdbcType="VARCHAR" />
     <result column="cheliang_image" property="cheliangImage" jdbcType="VARCHAR" />
-    <result column="banche_id" property="bancheId" jdbcType="INTEGER" />
+    <!--<result column="banche_id" property="bancheId" jdbcType="INTEGER" />-->
     <result column="shebei_id" property="shebeiId" jdbcType="BIGINT" />
     <result column="comdet_id" property="comdetId" jdbcType="INTEGER" />
     <result column="cheliang_currentzhandian" property="cheliangCurrentzhandian" jdbcType="INTEGER" />
@@ -21,15 +21,15 @@
     <result column="cheliang_updatetime" property="cheliangUpdatetime" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
-    cheliang_id, cheliang_chepai, cheliang_daozhanshijian, cheliang_chexing, cheliang_zuoweishu, 
-    cheliang_cheling, cheliang_jiashiyuan, cheliang_tele, cheliang_wangfan, cheliang_wangfantime, 
-    cheliang_image, banche_id, shebei_id, comdet_id, cheliang_currentzhandian, cheliang_gotozhandian, 
-    cheliang_updatetime
+    c.cheliang_id, c.cheliang_chepai, c.cheliang_daozhanshijian, c.cheliang_chexing, c.cheliang_zuoweishu,
+    c.cheliang_cheling, c.cheliang_jiashiyuan, c.cheliang_tele, c.cheliang_wangfan, c.cheliang_wangfantime,
+    c.cheliang_image, c.banche_id, c.shebei_id, c.comdet_id, c.cheliang_currentzhandian, c.cheliang_gotozhandian,
+    c.cheliang_updatetime
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
-    select 
+    select
     <include refid="Base_Column_List" />
-    from cheliang
+    from cheliang c
     where cheliang_id = #{cheliangId,jdbcType=INTEGER}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
@@ -40,14 +40,14 @@
     insert into cheliang (cheliang_id, cheliang_chepai, cheliang_daozhanshijian, 
       cheliang_chexing, cheliang_zuoweishu, cheliang_cheling, 
       cheliang_jiashiyuan, cheliang_tele, cheliang_wangfan, 
-      cheliang_wangfantime, cheliang_image, banche_id, 
+      cheliang_wangfantime, cheliang_image,
       shebei_id, comdet_id, cheliang_currentzhandian, 
       cheliang_gotozhandian, cheliang_updatetime
       )
     values (#{cheliangId,jdbcType=INTEGER}, #{cheliangChepai,jdbcType=VARCHAR}, #{cheliangDaozhanshijian,jdbcType=INTEGER}, 
       #{cheliangChexing,jdbcType=VARCHAR}, #{cheliangZuoweishu,jdbcType=INTEGER}, #{cheliangCheling,jdbcType=INTEGER}, 
       #{cheliangJiashiyuan,jdbcType=VARCHAR}, #{cheliangTele,jdbcType=VARCHAR}, #{cheliangWangfan,jdbcType=INTEGER}, 
-      #{cheliangWangfantime,jdbcType=VARCHAR}, #{cheliangImage,jdbcType=VARCHAR}, #{bancheId,jdbcType=INTEGER}, 
+      #{cheliangWangfantime,jdbcType=VARCHAR}, #{cheliangImage,jdbcType=VARCHAR},
       #{shebeiId,jdbcType=BIGINT}, #{comdetId,jdbcType=INTEGER}, #{cheliangCurrentzhandian,jdbcType=INTEGER}, 
       #{cheliangGotozhandian,jdbcType=INTEGER}, #{cheliangUpdatetime,jdbcType=VARCHAR}
       )
@@ -88,9 +88,9 @@
       <if test="cheliangImage != null" >
         cheliang_image,
       </if>
-      <if test="bancheId != null" >
-        banche_id,
-      </if>
+      <!--<if test="bancheId != null" >-->
+        <!--banche_id,-->
+      <!--</if>-->
       <if test="shebeiId != null" >
         shebei_id,
       </if>
@@ -141,9 +141,9 @@
       <if test="cheliangImage != null" >
         #{cheliangImage,jdbcType=VARCHAR},
       </if>
-      <if test="bancheId != null" >
-        #{bancheId,jdbcType=INTEGER},
-      </if>
+      <!--<if test="bancheId != null" >-->
+        <!--#{bancheId,jdbcType=INTEGER},-->
+      <!--</if>-->
       <if test="shebeiId != null" >
         #{shebeiId,jdbcType=BIGINT},
       </if>
@@ -194,9 +194,9 @@
       <if test="cheliangImage != null" >
         cheliang_image = #{cheliangImage,jdbcType=VARCHAR},
       </if>
-      <if test="bancheId != null" >
-        banche_id = #{bancheId,jdbcType=INTEGER},
-      </if>
+      <!--<if test="bancheId != null" >-->
+        <!--banche_id = #{bancheId,jdbcType=INTEGER},-->
+      <!--</if>-->
       <if test="shebeiId != null" >
         shebei_id = #{shebeiId,jdbcType=BIGINT},
       </if>
@@ -227,7 +227,7 @@
       cheliang_wangfan = #{cheliangWangfan,jdbcType=INTEGER},
       cheliang_wangfantime = #{cheliangWangfantime,jdbcType=VARCHAR},
       cheliang_image = #{cheliangImage,jdbcType=VARCHAR},
-      banche_id = #{bancheId,jdbcType=INTEGER},
+      <!-- banche_id = #{bancheId,jdbcType=INTEGER},-->
       shebei_id = #{shebeiId,jdbcType=BIGINT},
       comdet_id = #{comdetId,jdbcType=INTEGER},
       cheliang_currentzhandian = #{cheliangCurrentzhandian,jdbcType=INTEGER},
@@ -238,11 +238,11 @@
 
 
     <select id="findByBancheid" parameterType="integer" resultMap="BaseResultMap">
-        select * from cheliang c where c.banche_id=#{bancheid,jdbcType=INTEGER}
+        select <include refid="Base_Column_List" /> from cheliang c where c.banche_id=#{bancheid,jdbcType=INTEGER}
     </select>
 
     <select id="findByChepaiAndshebeiId" resultMap="BaseResultMap">
-        select * from cheliang c
+        select <include refid="Base_Column_List" /> from cheliang c
         <where>
             <if test="chepai !=null and chepai != ''">
                 and c.cheliang_chepai=#{chepai,jdbcType=VARCHAR}
@@ -253,7 +253,7 @@
         </where>
     </select>
     <select id="findByChepaiAndshebeiIdandcomid" resultMap="BaseResultMap">
-        select * from cheliang c
+        select <include refid="Base_Column_List" /> from cheliang c
         <where>
             <if test="chepai !=null">
                 and c.cheliang_chepai like #{chepai,jdbcType=VARCHAR}
@@ -267,15 +267,15 @@
         </where>
     </select>
     <select id="findByChepai" parameterType="string" resultMap="BaseResultMap">
-        select * from cheliang c where c.cheliang_chepai like #{chepai,jdbcType=VARCHAR}
+        select <include refid="Base_Column_List" /> from cheliang c where c.cheliang_chepai like #{chepai,jdbcType=VARCHAR}
     </select>
     <select id="findByChepaiAndcomid" resultMap="BaseResultMap">
-      select * from cheliang c where c.cheliang_chepai like #{chepai,jdbcType=VARCHAR} and c.comdet_id=#{comdetid,jdbcType=INTEGER}
+      select <include refid="Base_Column_List" /> from cheliang c where c.cheliang_chepai like #{chepai,jdbcType=VARCHAR} and c.comdet_id=#{comdetid,jdbcType=INTEGER}
     </select>
     <select id="findByCheliangid" parameterType="integer" resultMap="BaseResultMap">
-        select * from cheliang c where c.cheliang_id=#{cheliangid,jdbcType=INTEGER}
+        select <include refid="Base_Column_List" /> from cheliang c where c.cheliang_id=#{cheliangid,jdbcType=INTEGER}
     </select>
     <select id="findByshebeiid" parameterType="long" resultMap="BaseResultMap">
-        select * from cheliang c where c.shebei_id=#{shebeiid,jdbcType=BIGINT}
+        select <include refid="Base_Column_List" /> from cheliang c where c.shebei_id=#{shebeiid,jdbcType=BIGINT}
     </select>
 </mapper>

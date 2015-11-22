@@ -2,29 +2,31 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.qrj.banche.repository.ZhandianMapper" >
   <resultMap id="BaseResultMap" type="com.qrj.banche.entity.Zhandian" >
-    <id column="zhandian_id" property="zhandianId" jdbcType="INTEGER" />
-    <result column="zhandian_name" property="zhandianName" jdbcType="VARCHAR" />
-    <result column="zhandian_jingdu" property="zhandianJingdu" jdbcType="DOUBLE" />
-    <result column="zhandian_weidu" property="zhandianWeidu" jdbcType="DOUBLE" />
-    <result column="zhandian_dizhi" property="zhandianDizhi" jdbcType="VARCHAR" />
-    <result column="zhandian_miaoshu" property="zhandianMiaoshu" jdbcType="VARCHAR" />
-    <result column="zhandian_status" property="zhandianStatus" jdbcType="INTEGER" />
-    <result column="zhandian_image" property="zhandianImage" jdbcType="VARCHAR" />
-    <result column="zhandian_yincang" property="zhandianYincang" jdbcType="INTEGER" />
-    <result column="zhandian_xuhao" property="zhandianXuhao" jdbcType="INTEGER" />
-    <result column="zhandian_yuji" property="zhandianYuji" jdbcType="VARCHAR" />
-    <result column="banche_id" property="bancheId" jdbcType="INTEGER" />
+    <id column="z_zhandian_id" property="zhandianId" jdbcType="INTEGER" />
+    <result column="z_zhandian_name" property="zhandianName" jdbcType="VARCHAR" />
+    <result column="z_zhandian_jingdu" property="zhandianJingdu" jdbcType="DOUBLE" />
+    <result column="z_zhandian_weidu" property="zhandianWeidu" jdbcType="DOUBLE" />
+    <result column="z_zhandian_dizhi" property="zhandianDizhi" jdbcType="VARCHAR" />
+    <result column="z_zhandian_miaoshu" property="zhandianMiaoshu" jdbcType="VARCHAR" />
+    <result column="z_zhandian_status" property="zhandianStatus" jdbcType="INTEGER" />
+    <result column="z_zhandian_image" property="zhandianImage" jdbcType="VARCHAR" />
+    <result column="z_zhandian_yincang" property="zhandianYincang" jdbcType="INTEGER" />
+    <result column="z_zhandian_xuhao" property="zhandianXuhao" jdbcType="INTEGER" />
+    <result column="z_zhandian_yuji" property="zhandianYuji" jdbcType="VARCHAR" />
+    <result column="z_banche_id" property="bancheId" jdbcType="INTEGER" />
   </resultMap>
   <sql id="Base_Column_List" >
-    zhandian_id, zhandian_name, zhandian_jingdu, zhandian_weidu, zhandian_dizhi, zhandian_miaoshu, 
-    zhandian_status, zhandian_image, zhandian_yincang, zhandian_xuhao, zhandian_yuji, 
-    banche_id
+    z.zhandian_id as z_zhandian_id, z.zhandian_name as z_zhandian_name, z.zhandian_jingdu as z_zhandian_jingdu,
+    z.zhandian_weidu as z_zhandian_weidu, z.zhandian_dizhi as z_zhandian_dizhi, z.zhandian_miaoshu as z_zhandian_miaoshu,
+    z.zhandian_status as z_zhandian_status, z.zhandian_image as z_zhandian_image,
+    z.zhandian_yincang as z_zhandian_yincang, z.zhandian_xuhao  as z_zhandian_xuhao, z.zhandian_yuji as z_zhandian_yuji,
+    z.banche_id as z_banche_id
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
     <include refid="Base_Column_List" />
-    from zhandian
-    where zhandian_id = #{zhandianId,jdbcType=INTEGER}
+    from zhandian z
+    where z.zhandian_id = #{zhandianId,jdbcType=INTEGER}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from zhandian
@@ -178,19 +180,19 @@
 
 
     <select id="findByBancheId" parameterType="integer" resultMap="BaseResultMap">
-        select * from zhandian z where z.banche_id=#{bancheid,jdbcType=INTEGER} order by z.zhandian_xuhao
+        select <include refid="Base_Column_List" /> from zhandian z where z.banche_id=#{bancheid,jdbcType=INTEGER} order by z.zhandian_xuhao
     </select>
 
     <select id="findByZhandianId" parameterType="integer" resultMap="BaseResultMap">
-        select * from zhandian z where z.zhandian_id=#{zhandianId,jdbcType=INTEGER}
+        select <include refid="Base_Column_List" /> from zhandian z where z.zhandian_id=#{zhandianId,jdbcType=INTEGER}
     </select>
     <select id="findByBancheIdandXuhao" resultMap="BaseResultMap">
-        select * from zhandian z where z.banche_id=#{bancheid,jdbcType=INTEGER} and z.zhandian_xuhao=#{xuhao,jdbcType=INTEGER}
+        select <include refid="Base_Column_List" /> from zhandian z where z.banche_id=#{bancheid,jdbcType=INTEGER} and z.zhandian_xuhao=#{xuhao,jdbcType=INTEGER}
     </select>
     <select id="findByBancheIdandyincang" resultMap="BaseResultMap">
-        select * from zhandian z where z.banche_id=#{bancheid,jdbcType=INTEGER} and z.zhandian_yincang=#{yincang,jdbcType=INTEGER}
+        select <include refid="Base_Column_List" /> from zhandian z where z.banche_id=#{bancheid,jdbcType=INTEGER} and z.zhandian_yincang=#{yincang,jdbcType=INTEGER}
     </select>
     <select id="findByBancheIdDESC" parameterType="integer" resultMap="BaseResultMap">
-        select * from zhandian z where z.banche_id=#{bancheid,jdbcType=INTEGER} order by z.zhandian_xuhao desc
+        select <include refid="Base_Column_List" /> from zhandian z where z.banche_id=#{bancheid,jdbcType=INTEGER} order by z.zhandian_xuhao desc
     </select>
 </mapper>

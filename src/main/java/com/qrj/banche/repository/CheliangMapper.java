@@ -18,6 +18,7 @@ public interface CheliangMapper {
 
     int updateByPrimaryKey(Cheliang record);
 
+    @Deprecated
     List<Cheliang> findByBancheid(int bancheid);
 
     List<Cheliang> findByChepaiAndshebeiId(@Param("chepai") String chepai, @Param("shebeiid") long shebeiid);

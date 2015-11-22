@@ -41,12 +41,12 @@ public class addcheliang extends ActionSupport implements ModelDriven<Object> {
 
         } else {
             List<Shebeishuxing> shebeis = shebeishuxingMapper.findByshebeiid(searchInfo.getAddclshebeiid());
-            List<Banche> banches = bancheMapper.findByBancheId(searchInfo.getAddclbancheid());
+            Banche banche = bancheMapper.findByBancheId(searchInfo.getAddclbancheid());
             if (shebeis.size() == 0) {
                 cuowumessage = "没有该设备ID，请重新添加";
                 return "faild";
             }
-            if (banches.size() == 0) {
+            if (null == banche) {
                 cuowumessage = "没有该条班车线路，请重新添加";
                 return "faild";
             }
@@ -60,7 +60,7 @@ public class addcheliang extends ActionSupport implements ModelDriven<Object> {
         cheliang.setCheliangTele(searchInfo.getAddtele());
         cheliang.setCheliangImage(searchInfo.getAddcheliangzhaopian());
         cheliang.setShebeiId(searchInfo.getAddclshebeiid());
-        cheliang.setBancheId(searchInfo.getAddclbancheid());
+//        cheliang.setBancheId(searchInfo.getAddclbancheid());
         cheliang.setComdetId(comid);
         cheliangMapper.insert(cheliang);
         return "success";

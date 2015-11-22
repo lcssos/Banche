@@ -21,14 +21,15 @@
     <result column="banche_endtime" property="bancheEndtime" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
-    banche_id, banche_name, banche_time, banche_xianshi, banche_yincang, comdet_id, banche_yunxingtime, 
-    banche_status, banche_jieshao, banche_start, banche_end, banche_jiange, banche_quancheng, 
-    banche_startday, banche_starttime, banche_endday, banche_endtime
+    b.banche_id, b.banche_name, b.banche_time, b.banche_xianshi, b.banche_yincang,
+    b.comdet_id, b.banche_yunxingtime,
+    b.banche_status, b.banche_jieshao, b.banche_start, b.banche_end, b.banche_jiange, b.banche_quancheng,
+    b.banche_startday, b.banche_starttime, b.banche_endday, b.banche_endtime
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
     <include refid="Base_Column_List" />
-    from banche
+    from banche b
     where banche_id = #{bancheId,jdbcType=INTEGER}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
@@ -234,10 +235,11 @@
   </update>
 
     <select id="findByBancheId" parameterType="integer" resultMap="BaseResultMap">
-        select * from banche b where b.banche_id=#{bancheid,jdbcType=INTEGER}
+        select <include refid="Base_Column_List" />
+        from banche b where b.banche_id=#{bancheid,jdbcType=INTEGER}
     </select>
     <select id="findByBancheNameAndComidAndstatus" resultMap="BaseResultMap">
-        select * from banche b WHERE
+        select  <include refid="Base_Column_List" />  from banche b WHERE
         b.banche_id=#{bancheId,jdbcType=INTEGER}
         and b.banche_status=#{status,jdbcType=INTEGER}
         <if test="bancheName != null">
@@ -245,7 +247,7 @@
         </if>
     </select>
     <select id="findBycomdetid" parameterType="integer" resultMap="BaseResultMap">
-        select * from banche b where b.comdet_id=#{comdetId,jdbcType=INTEGER}
+        select  <include refid="Base_Column_List" />  from banche b where b.comdet_id=#{comdetId,jdbcType=INTEGER}
     </select>
     <select id="findByBancheNameAndstatus" resultMap="BaseResultMap">
         select * from banche b where b.banche_status=#{status,jdbcType=INTEGER}
@@ -254,6 +256,6 @@
         </if>
     </select>
     <select id="findAll" resultMap="BaseResultMap">
-        select * from banche
+        select  <include refid="Base_Column_List" />  from banche b
     </select>
 </mapper>
