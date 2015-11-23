@@ -161,17 +161,17 @@ var aa = document.getElementById('xiugaibancheid').value;
         <div>
             <div class="daozhan">
                 <s:iterator value="checis" var="checi" status="status">
-                    <input type="hidden" name="gogoshijian" value="<s:property value="fache"/>"/>
+                    <%--<input type="hidden" name="gogoshijian" value="<s:property value="fache"/>"/>--%>
                     <s:if test="#status.first">
                     <div style="width:24%; margin:0px -2px;display: inline-block;border-style: solid; color: #f5a06d; background-color:#f5a06d; border-width: 1px;border-radius:15px;"
-                            onclick="yujishijian(<s:property value="id"></s:property>)">
+                            fache="<s:property value="fache"/>" checi="<s:property value="id"></s:property>" onclick="yujishijian(<s:property value="id"></s:property>)">
                         <p style="color: #873300"><s:property value="cheliang.cheliangChepai"/></p>
                         <img src="images/baiyan.png" style="margin-top: -9px;"/>
                         <p style="color: #873300;margin-top: 7px;">
                     </s:if>
                     <s:else>
                         <div style="width:24%; margin:0px -3px;display: inline-block;border-style: solid; border-color: #dcdcdc;border-width: 1px;border-radius:15px;"
-                                onclick="yujishijian(<s:property value="id"></s:property>)">
+                             fache="<s:property value="fache"/>" checi="<s:property value="id"></s:property>" onclick="yujishijian(<s:property value="id"></s:property>)">
                         <p><s:property value="cheliang.cheliangChepai"/></p>
                         <img src="images/huiyan.png" style="margin-top: -9px;"/>
                         <p style="margin-top: 7px;">
@@ -288,7 +288,7 @@ var aa = document.getElementById('xiugaibancheid').value;
 </div>
 
 <script>
-//    onld();
+    onld();
 
 </script>
 </body>
