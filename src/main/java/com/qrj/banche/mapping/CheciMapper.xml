@@ -53,7 +53,7 @@
         <include refid="com.qrj.banche.repository.CheliangMapper.Base_Column_List" />
         from checi cc,cheliang c,banche b
         where cc.banche_id=b.banche_id and cc.cheliang_id=c.cheliang_id
-        order by b.banche_id desc
+        order by b.comdet_id,b.banche_id desc,cc.id desc
     </select>
 
 

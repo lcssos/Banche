@@ -238,7 +238,10 @@
 
 
     <select id="findByBancheid" parameterType="integer" resultMap="BaseResultMap">
-        select <include refid="Base_Column_List" /> from cheliang c where c.banche_id=#{bancheid,jdbcType=INTEGER}
+        select DISTINCT <include refid="Base_Column_List" />
+        from cheliang c
+        inner join checi cc on c.cheliang_id=cc.cheliang_id
+        where cc.banche_id=#{bancheid,jdbcType=INTEGER}
     </select>
 
     <select id="findByChepaiAndshebeiId" resultMap="BaseResultMap">

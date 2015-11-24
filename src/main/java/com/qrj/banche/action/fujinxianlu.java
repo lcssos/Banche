@@ -69,7 +69,7 @@ public class fujinxianlu extends ActionSupport implements ModelDriven<Object> {
                 banches.add(bancheMapper.findByBancheId(searchInfo.getXianluid()));
                 zhandians = zhandianMapper.findByBancheId(searchInfo.getXianluid());
                 zhandiansdesc = zhandianMapper.findByBancheIdDESC(searchInfo.getXianluid());
-                //todo
+                //
                 cheliangs = cheliangMapper.findByBancheid(searchInfo.getXianluid());
                 long sbids[] = new long[cheliangs.size()];
                 int daozhan[] = new int[cheliangs.size()];

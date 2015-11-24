@@ -150,11 +150,7 @@
                     <font color="#FFFFFF"><s:property value="comdet.comdetName" /></font>
             </div>
             <div style=" display: inline-block;float: right; margin-right: 10%;padding-top: 20px;">
-                <input type="button" onclick="function tiaozhuan() {
-var aa = document.getElementById('xiugaibancheid').value;
-                window.location.href = 'weixin/shishimap.jsp?xiugaibancheid=' + aa;
-                }
-                tiaozhuan()"
+                <input type="button" onclick="window.location.href = 'weixin/shishimap.jsp?xiugaibancheid=' + $('#xiugaibancheid').val();"
                        style="display:inline-block; background-image:url('images/ditu.png');height:21px; width:21px; background-color:#40403e; border:none;vertical-align:middle;margin-right: 15%;"/>
             </div>
         </div>
