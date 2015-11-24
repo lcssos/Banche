@@ -94,7 +94,7 @@ public class wxzhandian extends ActionSupport implements ModelDriven<Object> {
         //TODO 查询车辆信息，有用的是当前站点，算出和用户所在地差几站（可以前台），到站时间
         // TODO 处理预计时间看当前时间和预计时间，超过就下一个预计时间，都超过就不显示
         logger.info("------------wxzhandian");
-        logger.info("searchInfo.getSearchform():"+searchInfo.getSearchform());
+//        logger.info("searchInfo.getSearchform():"+searchInfo.getSearchform());
         if (searchInfo.getSearchform() == 3) {
             zhandians = zhandianMapper.findByZhandianId(searchInfo.getXiugaizhandianid());
             Document document = DocumentHelper.createDocument();
@@ -111,7 +111,7 @@ public class wxzhandian extends ActionSupport implements ModelDriven<Object> {
             return null;
         }
 
-        logger.info("searchInfo.getCheci():"+searchInfo.getCheci());
+//        logger.info("searchInfo.getCheci():"+searchInfo.getCheci());
 
         //ajax获取时间
         if (searchInfo.getCheci() != 0) {
