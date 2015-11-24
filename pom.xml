@@ -170,11 +170,11 @@
             <version>1.7.7</version>
         </dependency>
         <!-- 代码直接调用log4j会被桥接到slf4j -->
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>log4j-over-slf4j</artifactId>
-            <version>1.7.7</version>
-        </dependency>
+        <!--<dependency>-->
+            <!--<groupId>org.slf4j</groupId>-->
+            <!--<artifactId>log4j-over-slf4j</artifactId>-->
+            <!--<version>1.7.7</version>-->
+        <!--</dependency>-->
         <!-- 代码直接调用common-logging会被桥接到slf4j -->
         <dependency>
             <groupId>org.slf4j</groupId>
