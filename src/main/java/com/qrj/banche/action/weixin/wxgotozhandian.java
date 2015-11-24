@@ -11,6 +11,8 @@ import com.qrj.banche.repository.ZhandianMapper;
 import com.qrj.banche.util.Getdistance;
 import com.qrj.banche.vo.SearchInfo;
 import org.apache.struts2.ServletActionContext;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
@@ -26,6 +28,9 @@ import java.util.List;
 public class wxgotozhandian extends ActionSupport
         implements ModelDriven<Object>
 {
+
+    Logger logger = LoggerFactory.getLogger(wxgotozhandian.class);
+
     private SearchInfo searchInfo = new SearchInfo();
 
     @Resource
@@ -47,6 +52,8 @@ public class wxgotozhandian extends ActionSupport
     @Scheduled(cron="0/25 * * * * ?")
     public void changgotozhandian()
     {
+        logger.info("---更新车辆位置定时器---");
+
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy:MM:dd:HH:mm:ss");
         Date now = new Date();
         Date afterDate = new Date(now.getTime() - 25000);

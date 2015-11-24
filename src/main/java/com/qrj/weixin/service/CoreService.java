@@ -7,6 +7,8 @@ import com.qrj.weixin.util.MessageUtil;
 import org.dom4j.Document;
 import org.dom4j.Element;
 import org.dom4j.io.SAXReader;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
@@ -23,6 +25,8 @@ import javax.servlet.http.HttpServletRequest;
 @Service
 @Scope("prototype")
 public class CoreService {
+
+    Logger logger = LoggerFactory.getLogger(CoreService.class);
 
     @Resource
     private WxlocationMapper wxlocationMapper;
@@ -86,6 +90,7 @@ public class CoreService {
             }
             // 事件推送
             else if (msgType.equals(MessageUtil.REQ_MESSAGE_TYPE_EVENT)) {
+                logger.info("---处理微信事件推送---");
                 // 事件类型
                 String eventType = requestMap.get("Event");
                 // 关注
@@ -102,6 +107,7 @@ public class CoreService {
                 }
                 // 上报地理位置
                 else if (eventType.equals(MessageUtil.EVENT_TYPE_LOCATION)) {
+                    logger.info("---微信上报地理位置---");
                     String Longitude = requestMap.get("Longitude");
                     String Latitude = requestMap.get("Latitude");
                     String baidujingweidu = changtobaidu(Double.parseDouble(Longitude), Double.parseDouble(Latitude));
