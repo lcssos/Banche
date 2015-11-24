@@ -49,12 +49,11 @@ function yujishijian(checi) {
             return false;
         },
         success: function (xml) {
-            $('.daozhan > div').css("background-color", "").css("color", "").css("border-color", "#dcdcdc");
+            $('.daozhan > div').css("background-color", "");
+            $('.daozhan > div').css("color", "");
+            $('.daozhan > div').css("border-color", "#dcdcdc");
             $('.daozhan > div > p').css("color", "#9C9999");
             $('.daozhan > div > img').attr("src", "images/huiyan.png");
-            $('.daozhan > div[checi=' + checi + ']').css("background-color", "#f5a06d").css("color", "#f5a06d").css("border-color", "");
-            $('.daozhan > div[checi=' + checi + '] > p').css("color", "#873300");
-            $('.daozhan > div[checi=' + checi + '] > img').attr("src", "images/baiyan.png");
             $(xml).find('Message').each(function (i) {
                 var xx = $(this).children('Yuji').text();
                 var shijian = xx.split(",");
@@ -63,6 +62,12 @@ function yujishijian(checi) {
                     $('#tm_' + i).text(sj);
                 }
             });
+            $('.daozhan > div[checi=' + checi + ']').css("background-color", "#f5a06d");
+            $('.daozhan > div[checi=' + checi + ']').css("color", "#f5a06d");
+            $('.daozhan > div[checi=' + checi + ']').css("border-color", "");
+            $('.daozhan > div[checi=' + checi + '] > p').css("color", "#873300");
+            $('.daozhan > div[checi=' + checi + '] > img').attr("src", "images/baiyan.png");
+
         }//sucess
     })//ajax
 }//document
