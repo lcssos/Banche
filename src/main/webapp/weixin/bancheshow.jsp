@@ -131,7 +131,7 @@
         }
     </style>
     <script type="application/javascript" src="js/jquery-2.1.4.min.js"></script>
-    <script type="application/javascript" src="js/zdlbajax.js"></script>
+    <script type="application/javascript" src="js/zdlbajax_1.js"></script>
     <script src="js/layer.m.js"></script>
     <script src="js/zdshijingajax.js"></script>
 </head>
