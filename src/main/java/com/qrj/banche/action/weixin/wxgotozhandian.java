@@ -44,7 +44,7 @@ public class wxgotozhandian extends ActionSupport
     public String execute() throws Exception { HttpServletRequest request = ServletActionContext.getRequest();
         return null; }
 
-//    @Scheduled(cron="0/25 * * * * ?")
+    @Scheduled(cron="0/25 * * * * ?")
     public void changgotozhandian()
     {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy:MM:dd:HH:mm:ss");
